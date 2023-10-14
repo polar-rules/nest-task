@@ -1,0 +1,15 @@
+{
+  "name": "@bear-hugs/nestjs/task",
+  "version": "0.0.1",
+  "description": "Execute commands from from NestJS environment",
+  "repository": "git@github.com:bear-hugs/nestjs-task.git",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Andrii Drozdov",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.2.2"
+  }
+}
