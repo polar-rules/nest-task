@@ -1,13 +1,17 @@
+# NPM
 node_modules
-coverage
-data
-dist
-dist:check
-tmp
-packages
 
-*.template
+# Tests
+coverage
+tmp
 jest.config.js
 
-/lib/cli/create/migration/templates/
-/specs/migrations/
+# Typescript
+dist
+dist:check
+
+# Templates
+*.template
+
+# Samples
+example
