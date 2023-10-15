@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Define colors and formatting
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m'
+
+local_branch_name="$(git branch --show-current)"
+valid_branch_regex='([0-9]+)-([a-z]+-)*[a-z]+'
+
+if [[ ! $local_branch_name =~ $valid_branch_regex ]]; then
+    echo "${RED}There is something wrong with your branch name.${NC}"
+    echo "${RED}Branch names in this project must adhere to this contract: $valid_branch_regex.${NC}"
+    echo "${RED}Your commit will be rejected. You should rename your branch to a valid name and try again.${NC}"
+    echo ""
+    echo "Example: \`1-add-dragons\`"
+    exit 1
+fi
+
+echo "${GREEN}Branch name is OK.${NC}"
+exit 0

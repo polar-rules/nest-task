@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+npm run check:branch-name
+
+npm run check:lint
+npm run check:prettier
+npm run check:typescript

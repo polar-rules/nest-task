@@ -36,9 +36,7 @@ export class _Builder {
             switch (moduleName.toString()) {
                 case "Constants":
                     fileLines.imports.constants.push(
-                        _Constants.Template.Import.file
-                            .namedInterpolation({ variableName, exportFrom })
-                            .toString(),
+                        _Constants.Template.Import.file.namedInterpolation({ variableName, exportFrom }).toString(),
                     );
                     fileLines.exports.constants.push(
                         _Constants.Template.Export.statement
@@ -48,9 +46,7 @@ export class _Builder {
                     break;
                 case "Types":
                     fileLines.imports.types.push(
-                        _Constants.Template.Import.file
-                            .namedInterpolation({ variableName, exportFrom })
-                            .toString(),
+                        _Constants.Template.Import.file.namedInterpolation({ variableName, exportFrom }).toString(),
                     );
                     fileLines.exports.types.push(
                         _Constants.Template.Export.statement
@@ -60,9 +56,7 @@ export class _Builder {
                     break;
                 default:
                     fileLines.imports.files.push(
-                        _Constants.Template.Import.file
-                            .namedInterpolation({ variableName, exportFrom })
-                            .toString(),
+                        _Constants.Template.Import.file.namedInterpolation({ variableName, exportFrom }).toString(),
                     );
                     fileLines.exports.files.push(
                         _Constants.Template.Export.statement
