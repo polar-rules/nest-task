@@ -1,27 +1,30 @@
+# NPM
+node_modules
 _bundle
+
+# Typescript
 dist
 dist:check
-node_modules
-packages
+
+# Tests
+.husky
 coverage
 tmp
-
 jest.config.js
 
+# Environment
 .env
-.husky
+
+# Samples
+example
+
+# Extensions
 *.yml
 *.yaml
-
 *.json
 *.svg
 *.png
-
 *.md
 *.xml
-
 *.hbs
 *.template
-
-/lib/cli/create/migration/templates/
-/specs/migrations/
