@@ -1,3 +1,3 @@
-import { _Runner } from "./assembler.runner";
+import { _Runner } from "./assembler.runner.js";
 
-_Runner();
+await _Runner();

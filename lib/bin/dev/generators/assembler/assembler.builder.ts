@@ -1,7 +1,7 @@
-import { Patches } from "@patches";
+import { Patches } from "@patches/index.js";
 
-import { _Types } from "./assembler.types";
-import { _Constants } from "./assembler.constants";
+import { _Types } from "./assembler.types.js";
+import { _Constants } from "./assembler.constants.js";
 
 export class _Builder {
     public folder(fileLines: _Types.FileLines): _Types.Builder.Folder.Return {
@@ -12,7 +12,7 @@ export class _Builder {
             const subModuleName = [variableName, moduleName].join("._");
 
             fileLines.imports.folders.push(
-                _Constants.Template.Import.statement.namedInterpolation({ variableName, exportFrom }).toString(),
+                _Constants.Template.Import.folder.namedInterpolation({ variableName, exportFrom }).toString(),
             );
             fileLines.exports.folders.push(
                 _Constants.Template.Export.statement.namedInterpolation({ moduleName, subModuleName }).toString(),
@@ -34,9 +34,9 @@ export class _Builder {
             const subModuleName = [variableName, moduleName].join("._");
 
             switch (moduleName.toString()) {
-                case "constants":
+                case "Constants":
                     fileLines.imports.constants.push(
-                        _Constants.Template.Import.statement
+                        _Constants.Template.Import.file
                             .namedInterpolation({ variableName, exportFrom })
                             .toString(),
                     );
@@ -46,9 +46,9 @@ export class _Builder {
                             .toString(),
                     );
                     break;
-                case "types":
+                case "Types":
                     fileLines.imports.types.push(
-                        _Constants.Template.Import.statement
+                        _Constants.Template.Import.file
                             .namedInterpolation({ variableName, exportFrom })
                             .toString(),
                     );
@@ -60,7 +60,7 @@ export class _Builder {
                     break;
                 default:
                     fileLines.imports.files.push(
-                        _Constants.Template.Import.statement
+                        _Constants.Template.Import.file
                             .namedInterpolation({ variableName, exportFrom })
                             .toString(),
                     );

@@ -4,17 +4,32 @@
   "description": "Execute commands from from NestJS environment",
   "repository": "git@github.com:bear-hugs/nestjs-task.git",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:pre-compile": "npm run build:clean",
+    "build:compile": "tsc -p tsconfig.build.json && tsc-alias -p tsconfig.build.json",
+    "build:post-compile": "npm run build:copy-non-ts",
+    "build:clean": "rm -rf dist && rm -rf dist:check",
+    "build:run": "npm run build:pre-compile && npm run build:compile && npm run build:post-compile",
+    "build:copy-non-ts": "copyfiles -u 1 lib/**/*.template dist/",
+    "nest:task": "node ./dist/bin"
   },
   "author": "Andrii Drozdov",
   "license": "MIT",
   "devDependencies": {
     "@types/eslint": "^8.44.4",
     "@types/find-package-json": "^1.2.4",
+    "@types/lodash.clonedeep": "^4.5.7",
     "@types/node": "^20.8.6",
+    "copyfiles": "^2.4.1",
     "eslint": "^8.51.0",
+    "find-package-json": "^1.2.0",
     "prettier": "^3.0.3",
+    "tsc-alias": "^1.8.8",
     "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "lodash.clonedeep": "^4.5.0",
+    "ora": "^7.0.1"
   }
 }

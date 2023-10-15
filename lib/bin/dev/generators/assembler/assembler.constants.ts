@@ -1,10 +1,11 @@
 import path from "path";
 import fs from "fs";
+import url from 'url';
 
-import { Patches } from "@patches";
-import { Tools } from "@tools";
+import { Patches } from "@patches/index.js";
+import { Tools } from "@tools/index.js";
 
-import { _Types } from "./assembler.types";
+import { _Types } from "./assembler.types.js";
 
 export namespace _Constants {
     export namespace Dummies {
@@ -81,11 +82,19 @@ export namespace _Constants {
     }
 
     export namespace Template {
-        export const location: Readonly<string> = path.resolve(__dirname, "assembler.template");
+        const filename: Readonly<string> = url.fileURLToPath(import.meta.url);
+
+        const dirname: Readonly<string> = path.dirname(filename);
+
+        export const location: Readonly<string> = path.resolve(dirname, "assembler.template");
 
         export namespace Import {
-            export const statement: Readonly<Patches.String> = new Patches.String(
-                'import * as $variableName from "$exportFrom"',
+            export const file: Readonly<Patches.String> = new Patches.String(
+                'import * as $variableName from "$exportFrom.js"',
+            );
+
+            export const folder: Readonly<Patches.String> = new Patches.String(
+                'import * as $variableName from "$exportFrom/index.js"',
             );
         }
 

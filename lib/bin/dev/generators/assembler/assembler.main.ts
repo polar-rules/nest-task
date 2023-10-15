@@ -1,14 +1,16 @@
 import fs from "fs";
 import path from "path";
+import Ora from "ora";
+import cloneDeep from "lodash.clonedeep";
 
-import { Patches } from "@patches";
+import { Patches } from "@patches/index.js";
 
-import { _Errors } from "./errors";
+import { _Errors } from "./errors/index.js";
 
-import { _Types } from "./assembler.types";
-import { _Constants } from "./assembler.constants";
-import { _Builder } from "./assembler.builder";
-import { _Linter } from "./assembler.linter";
+import { _Types } from "./assembler.types.js";
+import { _Constants } from "./assembler.constants.js";
+import { _Builder } from "./assembler.builder.js";
+import { _Linter } from "./assembler.linter.js";
 
 export class _Main {
     private ora!: any;
@@ -18,8 +20,6 @@ export class _Main {
     private readonly linter: _Linter = new _Linter();
 
     public async loadPackages(): Promise<void> {
-        const { default: Ora } = await import("ora");
-
         this.ora = Ora({ text: "Configuring" }).start();
     }
 
@@ -40,8 +40,8 @@ export class _Main {
         }
 
         const moduleName = new Patches.String(moduleNameInKebabCase).capitalize().toPascalCase();
-        const fileLines = structuredClone(_Constants.Dummies.fileLines);
-        const entities = structuredClone(_Constants.Dummies.fileLines);
+        const fileLines = cloneDeep(_Constants.Dummies.fileLines);
+        const entities =cloneDeep(_Constants.Dummies.fileLines);
 
         for (const file of filesAndFoldersInDirectory) {
             await this.queueOrDiveDeeper(entities, directory, file);
@@ -80,13 +80,13 @@ export class _Main {
 
         fs.writeFileSync(indexPath, content.toString(), { encoding: "utf8", flag: "w" });
 
-        const formattedContent = await this.linter.format(content.toString(), indexPath);
-
-        if (!formattedContent) {
-            return;
-        }
-
-        fs.writeFileSync(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
+        // const formattedContent = await this.linter.format(content.toString(), indexPath);
+        //
+        // if (!formattedContent) {
+        //     return;
+        // }
+        //
+        // fs.writeFileSync(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
     }
 
     private async queueOrDiveDeeper(entities: _Types.FileLines, directory: string, file: string): Promise<void> {

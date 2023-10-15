@@ -1,5 +1,5 @@
-import { _Constants } from "./assembler.constants";
-import { _Main } from "./assembler.main";
+import { _Constants } from "./assembler.constants.js";
+import { _Main } from "./assembler.main.js";
 
 export async function _Runner(): Promise<void> {
     try {

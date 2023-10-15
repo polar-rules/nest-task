@@ -6,12 +6,12 @@
 
 
 
-import * as $_Generators from "./generators/index.js"
 
 
-export namespace _Dev {
+
+export namespace Generator {
     
     
-    export import Generators = $_Generators._Generators
+    
     
 }

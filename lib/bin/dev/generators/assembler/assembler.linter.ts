@@ -1,7 +1,7 @@
 import { ESLint } from "eslint";
 import Prettier from "prettier";
 
-import { _Constants } from "./assembler.constants";
+import { _Constants } from "./assembler.constants.js";
 
 export class _Linter {
     private get eslint(): ESLint {

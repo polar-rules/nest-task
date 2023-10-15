@@ -1,4 +1,4 @@
-import { Transformers } from "@transformers";
+import { Transformers } from "@transformers/index.js";
 
 export class _String extends String {
     public static randomSequence(length: number): _String {

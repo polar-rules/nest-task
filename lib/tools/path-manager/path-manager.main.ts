@@ -1,7 +1,7 @@
 import path from "path";
 import findPackageJson from "find-package-json";
 
-import { _Errors } from "./errors";
+import { _Errors } from "./errors/index.js";
 
 export class _Main {
     public static get projectRoot(): string {

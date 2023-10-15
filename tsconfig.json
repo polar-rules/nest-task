@@ -33,8 +33,8 @@
             "@lib/*": ["lib/*"],
             "@cli": ["lib/cli/index"],
             "@cli/*": ["lib/cli/*"],
-            "@db": ["lib/db/index"],
-            "@db/*": ["lib/db/*"],
+            "@core": ["lib/core/index"],
+            "@core/*": ["lib/core/*"],
             "@decorators": ["lib/decorators/index"],
             "@decorators/*": ["lib/decorators/*"],
             "@generators": ["lib/generators/index"],
@@ -53,14 +53,6 @@
             "@types/*": ["lib/types/*"],
             "@validators": ["lib/validators/index"],
             "@validators/*": ["lib/validators/*"],
-            "~specs": ["specs/index"],
-            "~specs/*": ["specs/*"],
-            "~configs": ["specs/configs/index"],
-            "~errors": ["specs/errors/index"],
-            "~fails": ["specs/fails/index"],
-            "~helpers": ["specs/helpers/index"],
-            "~lifecycles": ["specs/lifecycles/index"],
-            "~mocks": ["specs/mocks/index"]
         }
     },
     "exclude": [
