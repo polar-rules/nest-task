@@ -41,7 +41,7 @@ export class _Main {
 
         const moduleName = new Patches.String(moduleNameInKebabCase).capitalize().toPascalCase();
         const fileLines = cloneDeep(_Constants.Dummies.fileLines);
-        const entities =cloneDeep(_Constants.Dummies.fileLines);
+        const entities = cloneDeep(_Constants.Dummies.fileLines);
 
         for (const file of filesAndFoldersInDirectory) {
             await this.queueOrDiveDeeper(entities, directory, file);

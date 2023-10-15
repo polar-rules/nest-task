@@ -1,6 +1,6 @@
 import path from "path";
 import fs from "fs";
-import url from 'url';
+import url from "url";
 
 import { Patches } from "@patches/index.js";
 import { Tools } from "@tools/index.js";

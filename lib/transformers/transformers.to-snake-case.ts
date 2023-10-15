@@ -1,4 +1,4 @@
-import { _ToLowerCase } from "./transformers.to-lower-case.js"
+import { _ToLowerCase } from "./transformers.to-lower-case.js";
 
 export function _ToSnakeCase(input: string): string {
     return input

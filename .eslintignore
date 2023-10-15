@@ -1,0 +1,13 @@
+node_modules
+coverage
+data
+dist
+dist:check
+tmp
+packages
+
+*.template
+jest.config.js
+
+/lib/cli/create/migration/templates/
+/specs/migrations/
