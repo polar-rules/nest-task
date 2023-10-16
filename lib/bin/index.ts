@@ -5,7 +5,9 @@
  */
 
 import * as $_Dev from "./dev/index.js";
+import * as $_ProjectConfiguration from "./project-configuration/index.js";
 
 export namespace Bin {
     export import Dev = $_Dev._Dev;
+    export import ProjectConfiguration = $_ProjectConfiguration._ProjectConfiguration;
 }
