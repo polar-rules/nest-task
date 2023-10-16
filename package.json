@@ -1,8 +1,8 @@
 {
-  "name": "@bear-hugs/nestjs/task",
+  "name": "@bear-hugs/nest-task",
   "version": "0.0.1",
   "description": "Execute commands from from NestJS environment",
-  "repository": "git@github.com:bear-hugs/nestjs-task.git",
+  "repository": "git@github.com:bear-hugs/nest-task.git",
   "main": "index.js",
   "type": "module",
   "scripts": {
@@ -21,6 +21,9 @@
     "check:typescript": "tsc -p 'tsconfig.check.json' && rm -rf dist:check",
     "check:commit-message": "git log -1 --pretty=format:%s | npx commitlint",
     "check:branch-name": "./.husky/branch-name"
+  },
+  "bin": {
+    "nest-task": "./dist/bin/project-configuration/project-configuration.exec.js"
   },
   "author": "Andrii Drozdov",
   "license": "MIT",

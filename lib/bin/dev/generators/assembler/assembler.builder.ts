@@ -4,6 +4,8 @@ import { _Types } from "./assembler.types.js";
 import { _Constants } from "./assembler.constants.js";
 
 export class _Builder {
+    public constructor() {}
+
     public folder(fileLines: _Types.FileLines): _Types.Builder.Folder.Return {
         return function (folder: string): void {
             const moduleName = new Patches.String(folder).capitalize().toPascalCase();
