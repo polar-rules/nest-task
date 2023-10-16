@@ -4,4 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace Core {}
+import * as $_ProjectConfiguration from "./project-configuration/index.js";
+
+export namespace Core {
+    export import ProjectConfiguration = $_ProjectConfiguration._ProjectConfiguration;
+}

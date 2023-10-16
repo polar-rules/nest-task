@@ -19,20 +19,36 @@ export class _Main {
 
     private readonly linter: _Linter = new _Linter();
 
-    public async loadPackages(): Promise<void> {
-        this.ora = Ora({ text: "Configuring" }).start();
-    }
+    public constructor() {}
 
     public finish(): void {
         this.ora.succeed("Finished creating all `index.ts` files.");
     }
 
+    public async loadPackages(): Promise<void> {
+        this.ora = Ora({ text: "Configuring" }).start();
+    }
+
+    public async topLevelDirectories(): Promise<string[]> {
+        const libDir = await fs.promises.readdir(_Constants.Directories.Paths.lib);
+        const specsDir = await fs.promises.readdir(_Constants.Directories.Paths.specs);
+
+        const lib = libDir
+            .filter((item) => !item.includes("."))
+            .map((item) => path.resolve(_Constants.Directories.Paths.lib, item));
+        const specs = specsDir
+            .filter((item) => !item.includes("."))
+            .map((item) => path.resolve(_Constants.Directories.Paths.specs, item));
+
+        return [...lib, ...specs];
+    }
+
     public async generate(directory: string): Promise<void> {
         this.ora.text = `Creating \`index.ts\` files for ${directory}`;
 
-        const templateFile = fs.readFileSync(_Constants.Template.location);
+        const templateFile = await fs.promises.readFile(_Constants.Template.location);
         const template = new Patches.String(templateFile.toString().split("\n").slice(1).join("\n"));
-        const filesAndFoldersInDirectory = fs.readdirSync(directory);
+        const filesAndFoldersInDirectory = await fs.promises.readdir(directory);
         const moduleNameInKebabCase = directory.split("/").at(-1);
 
         if (!moduleNameInKebabCase) {
@@ -60,9 +76,8 @@ export class _Main {
         entities.imports.types.forEach(this.builder.file(fileLines));
         entities.imports.constants.forEach(this.builder.file(fileLines));
 
-        const isPublicModule = _Constants.Directories.TopLevel.all.some((item: string): boolean =>
-            directory.endsWith(item),
-        );
+        const topLevelDirectories = await this.topLevelDirectories();
+        const isPublicModule = topLevelDirectories.some((item: string): boolean => directory.endsWith(item));
 
         const content = template.namedInterpolation({
             moduleName: isPublicModule ? moduleName.toString() : `_${moduleName.toString()}`,
@@ -80,19 +95,19 @@ export class _Main {
 
         fs.writeFileSync(indexPath, content.toString(), { encoding: "utf8", flag: "w" });
 
-        // const formattedContent = await this.linter.format(content.toString(), indexPath);
-        //
-        // if (!formattedContent) {
-        //     return;
-        // }
-        //
-        // fs.writeFileSync(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
+        const formattedContent = await this.linter.format(content.toString(), indexPath);
+
+        if (!formattedContent) {
+            return;
+        }
+
+        fs.writeFileSync(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
     }
 
     private async queueOrDiveDeeper(entities: _Types.FileLines, directory: string, file: string): Promise<void> {
         const filePath = path.join(directory, file);
 
-        const fileStats = fs.statSync(filePath);
+        const fileStats = await fs.promises.stat(filePath);
         const isDirectory = fileStats.isDirectory();
         const importFrom = filePath.split("/").at(-1);
 

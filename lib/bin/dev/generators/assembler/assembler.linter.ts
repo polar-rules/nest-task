@@ -4,6 +4,8 @@ import Prettier from "prettier";
 import { _Constants } from "./assembler.constants.js";
 
 export class _Linter {
+    public constructor() {}
+
     private get eslint(): ESLint {
         return new ESLint({
             overrideConfigFile: _Constants.Files.eslintConfig,
