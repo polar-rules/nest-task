@@ -5,7 +5,9 @@
  */
 
 import * as $_Assembler from "./assembler/index.js";
+import * as $_Jest from "./jest/index.js";
 
 export namespace _Generators {
     export import Assembler = $_Assembler._Assembler;
+    export import Jest = $_Jest._Jest;
 }

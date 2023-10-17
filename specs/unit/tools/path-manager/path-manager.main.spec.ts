@@ -1,0 +1,1 @@
+describe("Tools -> PathManager", (): void => {});

@@ -5,7 +5,9 @@
  */
 
 import * as $_Generators from "./generators/index.js";
+import * as $_Runner from "./dev.runner.js";
 
 export namespace _Dev {
     export import Generators = $_Generators._Generators;
+    export import Runner = $_Runner._Runner;
 }

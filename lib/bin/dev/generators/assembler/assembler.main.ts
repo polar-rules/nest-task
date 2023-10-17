@@ -1,9 +1,10 @@
 import fs from "fs";
-import path from "path";
-import Ora from "ora";
+import path from "node:path";
 import cloneDeep from "lodash.clonedeep";
 
 import { Patches } from "@patches/index.js";
+
+import { _Abstractions as _BinAbstractions } from "@bin/abstractions/index.js";
 
 import { _Errors } from "./errors/index.js";
 
@@ -12,21 +13,13 @@ import { _Constants } from "./assembler.constants.js";
 import { _Builder } from "./assembler.builder.js";
 import { _Linter } from "./assembler.linter.js";
 
-export class _Main {
-    private ora!: any;
-
+export class _Main extends _BinAbstractions.Loader {
     private readonly builder: _Builder = new _Builder();
 
     private readonly linter: _Linter = new _Linter();
 
-    public constructor() {}
-
     public finish(): void {
-        this.ora.succeed("Finished creating all `index.ts` files.");
-    }
-
-    public async loadPackages(): Promise<void> {
-        this.ora = Ora({ text: "Configuring" }).start();
+        this.ora.finish("Finished creating all `index.ts` files.");
     }
 
     public async topLevelDirectories(): Promise<string[]> {
@@ -44,7 +37,7 @@ export class _Main {
     }
 
     public async generate(directory: string): Promise<void> {
-        this.ora.text = `Creating \`index.ts\` files for ${directory}`;
+        this.ora.message(`Creating \`index.ts\` files for ${directory}`);
 
         const templateFile = await fs.promises.readFile(_Constants.Template.location);
         const template = new Patches.String(templateFile.toString().split("\n").slice(1).join("\n"));

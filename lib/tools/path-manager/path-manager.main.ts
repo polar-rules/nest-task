@@ -1,4 +1,4 @@
-import path from "path";
+import path from "node:path";
 import findPackageJson from "find-package-json";
 
 import { _Errors } from "./errors/index.js";
