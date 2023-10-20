@@ -13,7 +13,7 @@
         "noImplicitReturns": true,
         "noPropertyAccessFromIndexSignature": true,
         "noUncheckedIndexedAccess": true,
-        "target": "es2022",
+        "target": "ESNext",
         "sourceMap": true,
         "outDir": "./dist",
         "baseUrl": "./",
@@ -26,11 +26,12 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "resolveJsonModule": true,
-        "esModuleInterop": true,
+        "esModuleInterop": false,
         "paths": {
-            "@root/*": ["./*"],
             "@lib": ["lib/index"],
             "@lib/*": ["lib/*"],
+            "@bin": ["lib/bin/index"],
+            "@bin/*": ["lib/bin/*"],
             "@cli": ["lib/cli/index"],
             "@cli/*": ["lib/cli/*"],
             "@core": ["lib/core/index"],
@@ -53,6 +54,9 @@
             "@types/*": ["lib/types/*"],
             "@validators": ["lib/validators/index"],
             "@validators/*": ["lib/validators/*"],
+
+            "@specs": ["specs/index"],
+            "@specs/*": ["specs/*"]
         }
     },
     "exclude": [

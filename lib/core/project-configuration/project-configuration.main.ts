@@ -1,6 +1,7 @@
-import fs from "node:fs";
-import path from "node:path";
+import * as fs from "fs/promises";
+import * as path from "path";
 
+import { Patches } from "@patches/index.js";
 import { Tools } from "@tools/index.js";
 
 import { _Types } from "./project-configuration.types.js";
@@ -14,8 +15,9 @@ export class _Main {
     public async readAndLoad(): Promise<void> {
         const root = Tools.PathManager.Main.instance.projectRoot;
         const configFilePath = path.join(root, _Constants.configurationFile);
-        const file = await fs.promises.readFile(configFilePath);
-        const parsedFile = <_Types.ApproximateConfiguration>JSON.parse(file.toString("utf-8"));
+
+        const file = await fs.readFile(configFilePath);
+        const parsedFile = Patches.Json.parse<_Types.ApproximateConfiguration>(file.toString("utf-8"));
 
         if (!parsedFile?.projects) {
             return;

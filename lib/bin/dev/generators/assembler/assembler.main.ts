@@ -1,9 +1,10 @@
-import fs from "fs";
-import path from "path";
-import Ora from "ora";
+import * as fs from "fs/promises";
+import * as path from "path";
 import cloneDeep from "lodash.clonedeep";
 
 import { Patches } from "@patches/index.js";
+
+import { _Abstractions as _BinAbstractions } from "@bin/abstractions/index.js";
 
 import { _Errors } from "./errors/index.js";
 
@@ -12,26 +13,18 @@ import { _Constants } from "./assembler.constants.js";
 import { _Builder } from "./assembler.builder.js";
 import { _Linter } from "./assembler.linter.js";
 
-export class _Main {
-    private ora!: any;
-
+export class _Main extends _BinAbstractions.Loader {
     private readonly builder: _Builder = new _Builder();
 
     private readonly linter: _Linter = new _Linter();
 
-    public constructor() {}
-
     public finish(): void {
-        this.ora.succeed("Finished creating all `index.ts` files.");
-    }
-
-    public async loadPackages(): Promise<void> {
-        this.ora = Ora({ text: "Configuring" }).start();
+        this.ora.finish("Finished creating all `index.ts` files.");
     }
 
     public async topLevelDirectories(): Promise<string[]> {
-        const libDir = await fs.promises.readdir(_Constants.Directories.Paths.lib);
-        const specsDir = await fs.promises.readdir(_Constants.Directories.Paths.specs);
+        const libDir = await fs.readdir(_Constants.Directories.Paths.lib);
+        const specsDir = await fs.readdir(_Constants.Directories.Paths.specs);
 
         const lib = libDir
             .filter((item) => !item.includes("."))
@@ -44,11 +37,11 @@ export class _Main {
     }
 
     public async generate(directory: string): Promise<void> {
-        this.ora.text = `Creating \`index.ts\` files for ${directory}`;
+        this.ora.message(`Creating \`index.ts\` files for ${directory}`);
 
-        const templateFile = await fs.promises.readFile(_Constants.Template.location);
+        const templateFile = await fs.readFile(_Constants.Template.location);
         const template = new Patches.String(templateFile.toString().split("\n").slice(1).join("\n"));
-        const filesAndFoldersInDirectory = await fs.promises.readdir(directory);
+        const filesAndFoldersInDirectory = await fs.readdir(directory);
         const moduleNameInKebabCase = directory.split("/").at(-1);
 
         if (!moduleNameInKebabCase) {
@@ -93,7 +86,7 @@ export class _Main {
 
         const indexPath = path.join(directory, "index.ts");
 
-        fs.writeFileSync(indexPath, content.toString(), { encoding: "utf8", flag: "w" });
+        await fs.writeFile(indexPath, content.toString(), { encoding: "utf8", flag: "w" });
 
         const formattedContent = await this.linter.format(content.toString(), indexPath);
 
@@ -101,13 +94,13 @@ export class _Main {
             return;
         }
 
-        fs.writeFileSync(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
+        await fs.writeFile(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
     }
 
     private async queueOrDiveDeeper(entities: _Types.FileLines, directory: string, file: string): Promise<void> {
         const filePath = path.join(directory, file);
 
-        const fileStats = await fs.promises.stat(filePath);
+        const fileStats = await fs.stat(filePath);
         const isDirectory = fileStats.isDirectory();
         const importFrom = filePath.split("/").at(-1);
 

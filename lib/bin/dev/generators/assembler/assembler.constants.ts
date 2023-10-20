@@ -1,5 +1,4 @@
-import path from "path";
-import url from "url";
+import * as path from "path";
 
 import { Patches } from "@patches/index.js";
 import { Tools } from "@tools/index.js";
@@ -63,11 +62,9 @@ export namespace _Constants {
     }
 
     export namespace Template {
-        const filename: Readonly<string> = url.fileURLToPath(import.meta.url);
-
-        const dirname: Readonly<string> = path.dirname(filename);
-
-        export const location: Readonly<string> = path.resolve(dirname, "assembler.template");
+        export const location: Readonly<string> = Tools.PathManager.Main.instance.moduleTypePathResolver(
+            "bin/dev/generators/assembler/assembler.template",
+        );
 
         export namespace Import {
             export const file: Readonly<Patches.String> = new Patches.String(

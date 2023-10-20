@@ -1,0 +1,132 @@
+{
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+        "^@lib/(.*).js": [
+            "<rootDir>/lib/$1"
+        ],
+        "^@bin/(.*).js": [
+            "<rootDir>/lib/bin/$1"
+        ],
+        "^@cli/(.*).js": [
+            "<rootDir>/lib/cli/$1"
+        ],
+        "^@core/(.*).js": [
+            "<rootDir>/lib/core/$1"
+        ],
+        "^@decorators/(.*).js": [
+            "<rootDir>/lib/decorators/$1"
+        ],
+        "^@generators/(.*).js": [
+            "<rootDir>/lib/generators/$1"
+        ],
+        "^@logger/(.*).js": [
+            "<rootDir>/lib/logger/$1"
+        ],
+        "^@patches/(.*).js": [
+            "<rootDir>/lib/patches/$1"
+        ],
+        "^@tools/(.*).js": [
+            "<rootDir>/lib/tools/$1"
+        ],
+        "^@transformers/(.*).js": [
+            "<rootDir>/lib/transformers/$1"
+        ],
+        "^@testing/(.*).js": [
+            "<rootDir>/lib/testing/$1"
+        ],
+        "^@types/(.*).js": [
+            "<rootDir>/lib/types/$1"
+        ],
+        "^@validators/(.*).js": [
+            "<rootDir>/lib/validators/$1"
+        ],
+        "^@specs/(.*).js": [
+            "<rootDir>/specs/$1"
+        ],
+        "^@lib": [
+            "<rootDir>/lib/index/index.js"
+        ],
+        "^@bin": [
+            "<rootDir>/lib/bin/index/index.js"
+        ],
+        "^@cli": [
+            "<rootDir>/lib/cli/index/index.js"
+        ],
+        "^@core": [
+            "<rootDir>/lib/core/index/index.js"
+        ],
+        "^@decorators": [
+            "<rootDir>/lib/decorators/index/index.js"
+        ],
+        "^@generators": [
+            "<rootDir>/lib/generators/index/index.js"
+        ],
+        "^@logger": [
+            "<rootDir>/lib/logger/index/index.js"
+        ],
+        "^@patches": [
+            "<rootDir>/lib/patches/index/index.js"
+        ],
+        "^@tools": [
+            "<rootDir>/lib/tools/index/index.js"
+        ],
+        "^@transformers": [
+            "<rootDir>/lib/transformers/index/index.js"
+        ],
+        "^@testing": [
+            "<rootDir>/lib/testing/index/index.js"
+        ],
+        "^@types": [
+            "<rootDir>/lib/types/index/index.js"
+        ],
+        "^@validators": [
+            "<rootDir>/lib/validators/index/index.js"
+        ],
+        "^@specs": [
+            "<rootDir>/specs/index/index.js"
+        ],
+        "(.*)\\.js$": [
+            "$1"
+        ],
+        "./(.*)\\.js$": [
+            "$1"
+        ]
+    },
+    "notify": true,
+    "moduleFileExtensions": [
+        "js",
+        "json",
+        "ts",
+        "template"
+    ],
+    "rootDir": ".",
+    "testRegex": ".*\\.spec\\.ts$",
+    "transform": {
+        "^.+\\.m?[tj]s?$": [
+            "ts-jest",
+            {
+                "useESM": true,
+                "tsConfig": "tsconfig.coverage.json"
+            }
+        ]
+    },
+    "collectCoverageFrom": [
+        "**/*.(t)s"
+    ],
+    "coverageDirectory": "./coverage",
+    "coveragePathIgnorePatterns": [
+        "dist",
+        "dist:check",
+        "dist:specs",
+        "coverage",
+        "specs",
+        "node_modules"
+    ],
+    "setupFilesAfterEnv": [
+        "<rootDir>/specs/specs.setup.ts"
+    ],
+    "modulePathIgnorePatterns": [
+        "example"
+    ]
+}

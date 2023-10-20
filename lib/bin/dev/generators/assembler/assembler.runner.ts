@@ -5,11 +5,9 @@ export async function _Runner(): Promise<void> {
     try {
         const main = new _Main();
 
-        await main.loadPackages();
-
+        main.configure();
         await main.generate(_Constants.Directories.Paths.lib);
         await main.generate(_Constants.Directories.Paths.specs);
-
         main.finish();
 
         process.exit(0);

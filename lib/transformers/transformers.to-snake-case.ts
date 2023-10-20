@@ -1,9 +1,5 @@
-import { _ToLowerCase } from "./transformers.to-lower-case.js";
+import { Patches } from "@patches/index.js";
 
 export function _ToSnakeCase(input: string): string {
-    return input
-        .replace(/\W+/g, " ")
-        .split(/ |\B(?=[A-Z])/)
-        .map(_ToLowerCase)
-        .join("_");
+    return new Patches.String(input).toSnakeCase().toString();
 }
