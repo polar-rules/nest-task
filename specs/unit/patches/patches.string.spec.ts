@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 import { Patches } from "@patches/index.js";
 
 describe("Patches::String", (): void => {
-    const Subject: typeof Patches.String = Patches.String;
+    const Subject = Patches.String;
 
     describe("#namedInterpolation", (): void => {
         it("Will replace single value", (): void => {

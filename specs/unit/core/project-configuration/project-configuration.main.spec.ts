@@ -1,18 +1,14 @@
-import path from "node:path";
 import mockFS from "mock-fs";
 
 import { Core } from "@core/index.js";
-import { Tools } from "@tools/index.js";
 
 describe("Core::ProjectConfiguration::Main", (): void => {
     const Subject: typeof Core.ProjectConfiguration.Main = Core.ProjectConfiguration.Main;
 
     describe("#readAndLoad", (): void => {
-        const root = Tools.PathManager.Main.instance.projectRoot;
-        const configFilePath = path.join(root, Core.ProjectConfiguration.Constants.configurationFile);
-
         it("Should read and load config when projects are present", async (): Promise<void> => {
-            const expectations: Core.ProjectConfiguration.Types.ApproximateConfiguration = {
+            const readNestjsConfiguration = new Core.ReadNestjsConfiguration();
+            const expectations: Core.Types.ApproximateNativeConfiguration = {
                 projects: {
                     valid: {
                         type: "application",
@@ -26,7 +22,7 @@ describe("Core::ProjectConfiguration::Main", (): void => {
             const subject = new Subject();
 
             mockFS({
-                [configFilePath]: JSON.stringify(expectations),
+                [readNestjsConfiguration.configurationPath]: JSON.stringify(expectations),
             });
 
             await subject.readAndLoad();
@@ -35,12 +31,13 @@ describe("Core::ProjectConfiguration::Main", (): void => {
         });
 
         it("Should fallback to default config when projects are missing", async (): Promise<void> => {
+            const readNestjsConfiguration = new Core.ReadNestjsConfiguration();
             const expectations = Core.ProjectConfiguration.Constants.defaultConfig;
 
             const subject = new Subject();
 
             mockFS({
-                [configFilePath]: JSON.stringify({}),
+                [readNestjsConfiguration.configurationPath]: JSON.stringify({}),
             });
 
             await subject.readAndLoad();

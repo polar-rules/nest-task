@@ -5,7 +5,9 @@
  */
 
 import * as $_ProjectConfiguration from "./project-configuration/index.js";
+import * as $_Setup from "./setup/index.js";
 
 export namespace _Core {
     export import ProjectConfiguration = $_ProjectConfiguration._ProjectConfiguration;
+    export import Setup = $_Setup._Setup;
 }
