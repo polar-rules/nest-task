@@ -2,7 +2,7 @@ import { faker } from "@faker-js/faker";
 
 import { Patches } from "@patches/index.js";
 
-describe("Patches -> String", (): void => {
+describe("Patches::String", (): void => {
     const Subject: typeof Patches.String = Patches.String;
 
     describe("#namedInterpolation", (): void => {
@@ -137,7 +137,7 @@ describe("Patches -> String", (): void => {
         });
 
         it("Will property interact with numbers in string", (): void => {
-            const expectation = "1camel1_case1";
+            const expectation = "1_camel_1_case_1";
             const value = "1camel1Case1";
 
             const subject = new Subject(value);
@@ -146,7 +146,7 @@ describe("Patches -> String", (): void => {
         });
 
         it("Will property interact with special symbols in string", (): void => {
-            const expectation = "_camel_case_";
+            const expectation = "camel_case";
             const value = "&camel!Case@";
 
             const subject = new Subject(value);
@@ -166,7 +166,7 @@ describe("Patches -> String", (): void => {
         });
 
         it("Will convert PascalCase", (): void => {
-            const expectation = "pascalcase";
+            const expectation = "pascalCase";
             const value = "PascalCase";
 
             const subject = new Subject(value);
@@ -183,8 +183,8 @@ describe("Patches -> String", (): void => {
             expect(subject.toCamelCase().toString()).toEqual(expectation);
         });
 
-        it("Will keep lose camelCase", (): void => {
-            const expectation = "camelcase";
+        it("Will keep camelCase", (): void => {
+            const expectation = "camelCase";
             const value = "camelCase";
 
             const subject = new Subject(value);
@@ -193,7 +193,7 @@ describe("Patches -> String", (): void => {
         });
 
         it("Will property interact with numbers in string", (): void => {
-            const expectation = "1snake1Case1";
+            const expectation = "1Snake1Case1";
             const value = "1snake1_case1";
 
             const subject = new Subject(value);
@@ -202,7 +202,7 @@ describe("Patches -> String", (): void => {
         });
 
         it("Will property interact with special symbols in string", (): void => {
-            const expectation = "snakeCase@";
+            const expectation = "snakeCase";
             const value = "&snake!_case@";
 
             const subject = new Subject(value);
@@ -230,18 +230,18 @@ describe("Patches -> String", (): void => {
             expect(subject.toPascalCase().toString()).toEqual(expectation);
         });
 
-        it("Will lose PascalCase", (): void => {
-            const expectation = "Pascalcase";
-            const value = "PascalCase";
+        it("Will convert camelCase", (): void => {
+            const expectation = "CamelCase";
+            const value = "camelCase";
 
             const subject = new Subject(value);
 
             expect(subject.toPascalCase().toString()).toEqual(expectation);
         });
 
-        it("Will keep lose camelCase", (): void => {
-            const expectation = "Camelcase";
-            const value = "camelCase";
+        it("Will keep PascalCase", (): void => {
+            const expectation = "PascalCase";
+            const value = "PascalCase";
 
             const subject = new Subject(value);
 

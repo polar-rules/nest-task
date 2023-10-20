@@ -2,7 +2,7 @@ export async function _Runner(): Promise<void> {
     const command = process.argv.at(2);
 
     if (!command) {
-        console.error("Error is missing");
+        console.error("Command is missing");
         process.exit(1);
     }
 
@@ -11,12 +11,12 @@ export async function _Runner(): Promise<void> {
     const moduleName = namespaces.at(-1);
 
     if (!moduleName) {
-        console.error("Error is missing");
+        console.error("Module name is missing");
         process.exit(1);
     }
 
     if (!namespace) {
-        console.error("Error is missing");
+        console.error("Namespace is missing");
         process.exit(1);
     }
 

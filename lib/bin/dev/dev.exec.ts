@@ -2,4 +2,4 @@
 
 import { _Runner } from "./dev.runner.js";
 
-await _Runner();
+_Runner();

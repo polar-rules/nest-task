@@ -1,4 +1,6 @@
-import { Transformers } from "@transformers/index.js";
+import camelCase from "lodash.camelcase";
+import snakeCase from "lodash.snakecase";
+import kebabCase from "lodash.kebabcase";
 
 export class _String extends String {
     public namedInterpolation(replacements: Record<string, _String | string>): _String {
@@ -21,20 +23,11 @@ export class _String extends String {
     }
 
     public toSnakeCase(): _String {
-        return new _String(
-            this.replace(/\W+/g, " ")
-                .split(/ |\B(?=[A-Z])/)
-                .map(Transformers.ToLowerCase)
-                .join("_"),
-        );
+        return new _String(snakeCase(this.toString()));
     }
 
     public toCamelCase(): _String {
-        return new _String(
-            this.toLowerCase()
-                .replace(/[^a-zA-Z0-9]+(.)/g, (_: string, char: string) => Transformers.ToUpperCase(char))
-                .replace(/(\b\w)/g, (_: string, char: string) => Transformers.ToUpperCase(char)),
-        ).lowerlize();
+        return new _String(camelCase(this.toString())).lowerlize();
     }
 
     public toPascalCase(): _String {
@@ -42,10 +35,6 @@ export class _String extends String {
     }
 
     public toKebabCase(): _String {
-        return new _String(
-            this.replace(/([a-z])([A-Z])/g, "$1-$2")
-                .replace(/[\s_]+/g, "-")
-                .toLowerCase(),
-        );
+        return new _String(kebabCase(this.toString()));
     }
 }

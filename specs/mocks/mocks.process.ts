@@ -8,7 +8,7 @@ export namespace _Process {
     };
 
     export function exit(): void {
-        process.exit = <any>jest.fn().mockImplementation(() => {});
+        process.exit = <any>jest.fn();
     }
 
     export function clean(): void {

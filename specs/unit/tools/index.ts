@@ -5,9 +5,7 @@
  */
 
 import * as $_PathManager from "./path-manager/index.js";
-import * as $_Module from "./tools.module.js";
 
-export namespace Tools {
+export namespace _Tools {
     export import PathManager = $_PathManager._PathManager;
-    export import Module = $_Module._Module;
 }

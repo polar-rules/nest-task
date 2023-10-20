@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "declaration": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
@@ -26,7 +27,7 @@
         "forceConsistentCasingInFileNames": true,
         "noFallthroughCasesInSwitch": true,
         "resolveJsonModule": true,
-        "esModuleInterop": false,
+        "esModuleInterop": true,
         "paths": {
             "@lib": ["lib/index"],
             "@lib/*": ["lib/*"],

@@ -1,10 +1,10 @@
-import Loader, { Ora } from "ora";
+import * as Loader from "ora";
 
 export class _Loader {
-    private ora!: Ora;
+    private ora!: Loader.Ora;
 
     public start(text: string): void {
-        this.ora = Loader({ text }).start();
+        this.ora = (<any>Loader?.default ?? Loader)({ text }).start();
     }
 
     public message(text: string): void {

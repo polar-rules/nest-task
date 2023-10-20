@@ -6,3 +6,5 @@ npm run check:branch-name
 npm run check:lint
 npm run check:prettier
 npm run check:typescript
+
+npm run test:run

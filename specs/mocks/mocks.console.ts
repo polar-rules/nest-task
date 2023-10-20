@@ -10,15 +10,15 @@ export namespace _Console {
     };
 
     function info(): void {
-        console.info = jest.fn().mockImplementation((): void => {});
+        console.info = jest.fn();
     }
 
     function error(): void {
-        console.error = jest.fn().mockImplementation((): void => {});
+        console.error = jest.fn();
     }
 
     function log(): void {
-        console.log = jest.fn().mockImplementation((): void => {});
+        console.log = jest.fn();
     }
 
     export function mock(): void {

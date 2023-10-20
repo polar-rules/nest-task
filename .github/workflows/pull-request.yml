@@ -101,24 +101,22 @@ jobs:
       - name: '[Run] PR Name'
         run: echo "${{ github.event.pull_request.title }}" | npx --no -- commitlint
 
-#  tests:
-#    name: Tests
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: '[Setup] Checkout'
-#        uses: actions/checkout@v4
-#        with:
-#          fetch-depth: 0
-#      - name: '[Setup] Node.js'
-#        uses: actions/setup-node@v3
-#        with:
-#          node-version-file: .nvmrc
-#          check-latest: false
-#          cache: npm
-#          cache-dependency-path: package-lock.json
-#      - name: '[Setup] Install dependencies'
-#        run: npm install
-#      - name: '[Setup] SurrealDB'
-#        run: npm run dev:start:bd:detached
-#      - name: '[Run] Tests'
-#        run: npm run test:run
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Setup] Install dependencies'
+        run: npm install
+      - name: '[Run] Tests'
+        run: npm run test:run
