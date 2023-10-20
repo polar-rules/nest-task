@@ -1,7 +1,7 @@
 import { Patches } from "@patches/index.js";
 
 describe("Patches::Json", (): void => {
-    const Subject: typeof Patches.Json = Patches.Json;
+    const Subject = Patches.Json;
 
     describe(".parse", (): void => {
         it("Will the same results as Object.keys", (): void => {

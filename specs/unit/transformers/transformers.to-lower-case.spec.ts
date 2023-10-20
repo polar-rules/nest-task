@@ -1,7 +1,7 @@
 import { Transformers } from "@transformers/index.js";
 
 describe("Transformers::ToLowerCase", (): void => {
-    const subject: typeof Transformers.ToLowerCase = Transformers.ToLowerCase;
+    const subject = Transformers.ToLowerCase;
 
     it("Should convert string to lower case", (): void => {
         const expectations = "hello my name";

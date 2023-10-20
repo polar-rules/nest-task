@@ -1,10 +1,10 @@
 import * as path from "path";
 
-import { Tools } from "@tools/index.js";
 import { Mocks } from "@specs/mocks/index.js";
+import { Tools } from "@tools/index.js";
 
 describe("Tools::PathManager::Main", (): void => {
-    const Subject: typeof Tools.PathManager.Main = Tools.PathManager.Main;
+    const Subject = Tools.PathManager.Main;
 
     describe(".instance", (): void => {
         it("Should have the same instance", (): void => {

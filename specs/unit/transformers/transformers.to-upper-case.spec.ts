@@ -1,7 +1,7 @@
 import { Transformers } from "@transformers/index.js";
 
 describe("Transformers::ToUpperCase", (): void => {
-    const subject: typeof Transformers.ToUpperCase = Transformers.ToUpperCase;
+    const subject = Transformers.ToUpperCase;
 
     it("Should convert string to upper case", (): void => {
         const expectations = "HELLO MY NAME";

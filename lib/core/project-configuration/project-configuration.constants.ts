@@ -1,9 +1,7 @@
-import { _Types } from "./project-configuration.types.js";
+import { _Types as _CoreTypes } from "@core/core.types.js";
 
 export namespace _Constants {
-    export const configurationFile: Readonly<string> = "nest-cli.json";
-
-    export const defaultConfig: Readonly<_Types.ApproximateConfiguration> = {
+    export const defaultConfig: Readonly<_CoreTypes.ApproximateNativeConfiguration> = {
         projects: {
             default: {
                 type: "application",

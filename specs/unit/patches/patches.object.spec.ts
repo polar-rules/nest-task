@@ -1,7 +1,7 @@
 import { Patches } from "@patches/index.js";
 
 describe("Patches::Object", (): void => {
-    const Subject: typeof Patches.Object = Patches.Object;
+    const Subject = Patches.Object;
 
     describe("#namedInterpolation", (): void => {
         it("Will the same results as Object.keys", (): void => {

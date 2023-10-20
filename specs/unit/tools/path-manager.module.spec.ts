@@ -1,11 +1,7 @@
 import { Tools } from "@tools/index.js";
 
-jest.mock("module", () => {
-    throw new Error("__dirname is not defined");
-});
-
 describe("Tools::Module", (): void => {
-    const Subject: typeof Tools.Module = Tools.Module;
+    const Subject = Tools.Module;
 
     describe(".isCJS", (): void => {
         it("Should return true if __dirname is truthy", (): void => {
