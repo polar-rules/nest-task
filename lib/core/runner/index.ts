@@ -4,4 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace _List {}
+import * as $_Base from "./runner.base.js";
+
+export namespace _Runner {
+    export import Base = $_Base._Base;
+}

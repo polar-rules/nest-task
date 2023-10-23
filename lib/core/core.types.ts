@@ -1,3 +1,5 @@
+import { Interfaces } from "@interfaces/index.js";
+
 export namespace _Types {
     export interface Task {
         configPath: string;
@@ -19,4 +21,8 @@ export namespace _Types {
     }
 
     export type ApproximateConfiguration = ApproximateNativeConfiguration & TaskConfiguration;
+
+    export namespace Main {
+        export type ResolveDependencies = (dependency: Interfaces.General.AnyClass<any, any>) => any | undefined;
+    }
 }

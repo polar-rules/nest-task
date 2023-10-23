@@ -17,9 +17,6 @@
         "^@decorators/(.*).js": [
             "<rootDir>/lib/decorators/$1"
         ],
-        "^@generators/(.*).js": [
-            "<rootDir>/lib/generators/$1"
-        ],
         "^@logger/(.*).js": [
             "<rootDir>/lib/logger/$1"
         ],
@@ -29,17 +26,14 @@
         "^@tools/(.*).js": [
             "<rootDir>/lib/tools/$1"
         ],
+        "^@interfaces/(.*).js": [
+            "<rootDir>/lib/interfaces/$1"
+        ],
         "^@transformers/(.*).js": [
             "<rootDir>/lib/transformers/$1"
         ],
         "^@testing/(.*).js": [
             "<rootDir>/lib/testing/$1"
-        ],
-        "^@types/(.*).js": [
-            "<rootDir>/lib/types/$1"
-        ],
-        "^@validators/(.*).js": [
-            "<rootDir>/lib/validators/$1"
         ],
         "^@specs/(.*).js": [
             "<rootDir>/specs/$1"
@@ -59,9 +53,6 @@
         "^@decorators": [
             "<rootDir>/lib/decorators/index/index.js"
         ],
-        "^@generators": [
-            "<rootDir>/lib/generators/index/index.js"
-        ],
         "^@logger": [
             "<rootDir>/lib/logger/index/index.js"
         ],
@@ -71,25 +62,19 @@
         "^@tools": [
             "<rootDir>/lib/tools/index/index.js"
         ],
+        "^@interfaces": [
+            "<rootDir>/lib/interfaces/index/index.js"
+        ],
         "^@transformers": [
             "<rootDir>/lib/transformers/index/index.js"
         ],
         "^@testing": [
             "<rootDir>/lib/testing/index/index.js"
         ],
-        "^@types": [
-            "<rootDir>/lib/types/index/index.js"
-        ],
-        "^@validators": [
-            "<rootDir>/lib/validators/index/index.js"
-        ],
         "^@specs": [
             "<rootDir>/specs/index/index.js"
         ],
         "(.*)\\.js$": [
-            "$1"
-        ],
-        "./(.*)\\.js$": [
             "$1"
         ]
     },

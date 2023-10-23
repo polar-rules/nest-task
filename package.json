@@ -46,6 +46,8 @@
     "license": "MIT",
     "devDependencies": {
         "@faker-js/faker": "^8.2.0",
+        "@nestjs/platform-express": "^10.2.7",
+        "@nestjs/testing": "^10.2.7",
         "@types/eslint": "^8.44.4",
         "@types/find-package-json": "^1.2.4",
         "@types/jest": "^29.5.5",
@@ -75,10 +77,12 @@
         "typescript": "^5.2.2"
     },
     "dependencies": {
+        "@nestjs/core": "^10.2.7",
         "lodash.camelcase": "^4.3.0",
         "lodash.clonedeep": "^4.5.0",
         "lodash.kebabcase": "^4.1.1",
         "lodash.snakecase": "^4.1.1",
-        "ora": "^5.4.1"
+        "ora": "^5.4.1",
+        "reflect-metadata": "^0.1.13"
     }
 }
