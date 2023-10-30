@@ -10,7 +10,7 @@
         "import": "./esm/index.js"
     },
     "scripts": {
-        "dev": "node ./dist/cjs/bin/dev/dev.exec.js",
+        "dev": "node ./dist/esm/bin/dev/dev.exec.js",
         "dev:assembler": "npm run dev -- generators::assembler",
         "dev:config": "npm run dev -- generators::jest::config",
         "prepare": "husky install",

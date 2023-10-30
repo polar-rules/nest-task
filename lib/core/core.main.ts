@@ -2,6 +2,7 @@ import "reflect-metadata";
 
 import { Factory } from "@factory/index.js";
 import { Interfaces } from "@interfaces/index.js";
+import { Patches } from "@patches/index.js";
 
 import { _Errors } from "./errors/index.js";
 import { _ProjectConfiguration } from "./project-configuration/index.js";
@@ -39,7 +40,7 @@ export class _Main {
 
     private locateTaskClass(): Interfaces.General.AnyClass<any, any> | undefined {
         return this.availableTasks?.find((value: Interfaces.General.AnyClass<any, any>): boolean => {
-            const name = Reflect.getMetadata("name", value);
+            const name = Patches.Reflect.getMetadata<string>("name", value);
 
             return name === this.task;
         });

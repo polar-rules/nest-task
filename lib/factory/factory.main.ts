@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import { Interfaces } from "@interfaces/index.js";
+import { Patches } from "@patches/index.js";
 
 export class _Main {
     public static instance?: _Main;
@@ -16,7 +17,7 @@ export class _Main {
     public tasks: Interfaces.General.AnyClass<any, any>[] | undefined;
 
     private getTasks(module: Interfaces.General.AnyClass<any, any>): void {
-        this.tasks = Reflect.getMetadata("tasks", module);
+        this.tasks = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>("tasks", module);
     }
 
     private async load(module: Interfaces.General.AnyClass<any, any>): Promise<void> {
