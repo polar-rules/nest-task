@@ -1,20 +1,41 @@
 import { _Errors } from "./errors/index.js";
-
-import { _Enums } from "./decorators.enums.js";
+import { _Types } from "./decorators.types.js";
 import { _Constants } from "./decorators.constants.js";
 
 export namespace _Validators {
-    export namespace Task {
-        function validateModuleKey(key: _Enums.Task.MetadataKeys): void | never {
-            if (_Constants.Task.metadataKeys.includes(key)) {
-                return;
-            }
+    export namespace Descriptable {
+        export function keys(keys: (_Types.Task.MetadataKeys | _Types.Module.MetadataKeys)[]): void | never {
+            _Constants.Descriptable.metadataKeys.forEach((key: _Types.DescriptableKeys): void => {
+                if (keys.includes(key)) {
+                    return;
+                }
 
-            throw new _Errors.InvalidMetadataKey(key);
+                throw new _Errors.InvalidMetadataKey(key);
+            });
         }
+    }
 
-        export function validateModuleKeys(keys: _Enums.Task.MetadataKeys[]): void | never {
-            keys.forEach(validateModuleKey);
+    export namespace Task {
+        export function keys(keys: _Types.Task.MetadataKeys[]): void | never {
+            _Constants.Task.metadataKeys.forEach((key: _Types.Task.MetadataKeys): void => {
+                if (keys.includes(key)) {
+                    return;
+                }
+
+                throw new _Errors.InvalidMetadataKey(key);
+            });
+        }
+    }
+
+    export namespace Module {
+        export function keys(keys: _Types.Module.MetadataKeys[]): void | never {
+            _Constants.Module.metadataKeys.forEach((key: _Types.Module.MetadataKeys): void => {
+                if (keys.includes(key)) {
+                    return;
+                }
+
+                throw new _Errors.InvalidMetadataKey(key);
+            });
         }
     }
 }

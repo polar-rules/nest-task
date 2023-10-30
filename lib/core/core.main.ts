@@ -1,61 +1,54 @@
 import "reflect-metadata";
 
-import { NestFactory } from "@nestjs/core";
-import { INestApplication } from "@nestjs/common";
+import { Factory } from "@factory/index.js";
+import { Interfaces } from "@interfaces/index.js";
 
-// todo fix this shite
-import { Interfaces } from "../interfaces/index.js";
-
-import { _Decorators } from "./decorators/index.js";
-import { _Runner } from "./runner/index.js";
-import { _Types } from "./core.types.js";
-import { _Validators } from "./core.validators.js";
+import { _Errors } from "./errors/index.js";
+import { _ProjectConfiguration } from "./project-configuration/index.js";
+import { _Perform } from "./core.perform.js";
 
 export class _Main {
-    public constructor(private readonly task: Interfaces.General.AnyClass<any, any>) {}
+    private availableTasks?: Interfaces.General.AnyClass<any, any>[];
 
-    private get Runner(): Interfaces.General.AnyClass<_Runner.Base, any> {
-        return Reflect.getMetadata(_Decorators.Enums.Task.MetadataKeys.Runner, this.task);
+    private readonly projectConfiguration: _ProjectConfiguration.Main;
+
+    public constructor(
+        private readonly task: string,
+        private readonly projectName?: string,
+    ) {
+        this.projectConfiguration = new _ProjectConfiguration.Main(this.projectName);
     }
 
-    private get Module(): Interfaces.General.AnyClass<any, any> {
-        return Reflect.getMetadata(_Decorators.Enums.Task.MetadataKeys.Module, this.task);
+    public async run(): Promise<void> {
+        await this.load();
+
+        if (!this.availableTasks?.length) {
+            throw new _Errors.NoTasksFound();
+        }
+
+        const taskClass = this.locateTaskClass();
+
+        if (!taskClass) {
+            throw new _Errors.NoSpecificTaskFound(this.task);
+        }
+
+        const perform = new _Perform(taskClass);
+
+        await perform.run();
     }
 
-    private get providers(): Interfaces.General.AnyClass<any, any>[] {
-        return Reflect.getMetadata(_Decorators.Enums.Task.MetadataKeys.Providers, this.task);
+    private locateTaskClass(): Interfaces.General.AnyClass<any, any> | undefined {
+        return this.availableTasks?.find((value: Interfaces.General.AnyClass<any, any>): boolean => {
+            const name = Reflect.getMetadata("name", value);
+
+            return name === this.task;
+        });
     }
 
-    private get dependencies(): Interfaces.General.AnyClass<any, any>[] {
-        return Reflect.getMetadata("design:paramtypes", this.Runner) ?? [];
-    }
+    private async load(): Promise<void> {
+        await this.projectConfiguration.readAndLoad();
+        await import(this.projectConfiguration.entrypointPath);
 
-    public async run(): Promise<void | never> {
-        const app = await NestFactory.create(this.Module);
-
-        const resolvedDependencies = this.dependencies.map(this.resolveDependencies(app, this.providers));
-
-        _Validators.Main.validateDependencies(resolvedDependencies);
-
-        const runner = new this.Runner(...resolvedDependencies);
-
-        await runner.perform(app);
-    }
-
-    private resolveDependencies(
-        app: INestApplication,
-        providers: Interfaces.General.AnyClass<any, any>[],
-    ): _Types.Main.ResolveDependencies {
-        return function (dependency: Interfaces.General.AnyClass<any, any>): any | undefined {
-            const found = providers.find(
-                (provider: Interfaces.General.AnyClass<any, any>): boolean => provider.name === dependency.name,
-            );
-
-            if (!found) {
-                return;
-            }
-
-            return app.get(found);
-        };
+        this.availableTasks = Factory.Main?.instance?.tasks ?? [];
     }
 }

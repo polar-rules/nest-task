@@ -7,11 +7,9 @@
 import * as $_Decorators from "./decorators/index.js";
 import * as $_ProjectConfiguration from "./project-configuration/index.js";
 import * as $_Runner from "./runner/index.js";
-import * as $_Setup from "./setup/index.js";
 
 export namespace _Core {
     export import Decorators = $_Decorators._Decorators;
     export import ProjectConfiguration = $_ProjectConfiguration._ProjectConfiguration;
     export import Runner = $_Runner._Runner;
-    export import Setup = $_Setup._Setup;
 }

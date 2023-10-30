@@ -4,4 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace Fails {}
+import * as $_NoTask from "./fails.no-task.js";
+
+export namespace _Fails {
+    export import NoTask = $_NoTask._NoTask;
+}

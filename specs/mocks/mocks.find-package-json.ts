@@ -1,3 +1,5 @@
+import { jest } from "@jest/globals";
+
 export namespace _FindPackageJson {
     export const projectRoot: Readonly<string> = "test-project";
 
@@ -26,10 +28,5 @@ export namespace _FindPackageJson {
         jest.clearAllMocks();
     }
 
-    jest.mock("find-package-json", () => {
-        return {
-            __esModule: true,
-            default: Mocks.module,
-        };
-    });
+    jest.mock("find-package-json", () => Mocks.module);
 }

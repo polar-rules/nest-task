@@ -1,130 +1,72 @@
-import { Module } from "@nestjs/common";
+import { faker } from "@faker-js/faker";
+import { jest } from "@jest/globals";
 
 import { Core } from "@core/index.js";
-import { Mocks } from "@specs/mocks/index.js";
 
 describe("Core::Main", (): void => {
+    let subject: Core.Main;
+
+    let loadSpy: jest.SpiedFunction<any> | undefined;
+    let validatorsSpy: jest.SpiedFunction<any> | undefined;
+    let performSpy: jest.SpiedFunction<any> | undefined;
+
     const Subject = Core.Main;
 
-    class DummyProvider {
-        static testValue: Readonly<string> = "provider";
-    }
-
-    class DummyOne {
-        static testValue: Readonly<string> = "dummy-one";
-    }
-
-    class DummyTwo {
-        static testValue: Readonly<string> = "dummy-two";
-    }
-
-    @Core.Decorators.Runner()
-    class DummyRunner extends Core.Runner.Base {
-        static testValue: Readonly<string> = "exec";
-
-        constructor(
-            private readonly dummyOne: DummyOne,
-            private readonly dummyTwo: DummyTwo,
-            private readonly provider: DummyProvider,
-        ) {
-            super();
-        }
-
-        public perform(): Promise<void> {
-            return Promise.resolve(undefined);
-        }
-    }
-
-    @Module({})
-    class DummyModule {
-        static testValue: Readonly<string> = "module";
-    }
-
-    @Core.Decorators.Task({
-        module: DummyModule,
-        runner: DummyRunner,
-        providers: [DummyProvider, DummyTwo, DummyOne],
-    })
-    class DummyTask {
-        static testValue: Readonly<string> = "task";
-    }
+    class DummyClass {}
 
     beforeEach((): void => {
-        Mocks.Nest.Create.mock();
+        subject = new Subject("test", "test");
+
+        validatorsSpy = jest.spyOn(<any>Core.Decorators.Validators.Task, "keys").mockImplementation(() => {});
+        loadSpy = jest.spyOn(<any>Core.Main.prototype, "load").mockImplementation(async () => {});
     });
 
     afterEach((): void => {
-        Mocks.Nest.Create.clean();
+        loadSpy?.mockReset();
+        validatorsSpy?.mockReset();
+        performSpy?.mockReset();
     });
 
     describe("#run", (): void => {
-        it("Should call DummyRunner#perform", async (): Promise<void> => {
-            const spyOn = jest.spyOn(DummyRunner.prototype, "perform");
-            const subject = new Subject(DummyTask);
+        it("Should call Dummy#run method", async (): Promise<void> => {
+            const name = faker.person.fullName();
+
+            @Core.Decorators.Task({
+                name,
+                description: faker.person.bio(),
+                module: DummyClass,
+                runner: DummyClass,
+            })
+            class DummyTask {
+                public run(): void {}
+            }
+
+            performSpy = jest.spyOn(<any>Core.Perform.prototype, "run").mockImplementation((): void => {});
+            subject = new Subject(name);
+
+            subject["availableTasks"] = [DummyTask];
 
             await subject.run();
 
-            expect(spyOn).toBeCalled();
-
-            spyOn.mockRestore();
+            expect(performSpy).toBeCalledTimes(1);
         });
 
-        it("Should run Core::Validators::Main.validateDependencies", async (): Promise<void> => {
-            const spyOn = jest.spyOn(Core.Validators.Main, "validateDependencies");
-            const subject = new Subject(DummyTask);
-
-            await subject.run();
-
-            expect(spyOn).toBeCalled();
-
-            spyOn.mockRestore();
+        it("Should throw if no tasks found", async (): Promise<void> => {
+            await expect(() => subject.run()).rejects.toThrowError(Core.Errors.NoTasksFound);
         });
 
-        describe("Dependencies", (): void => {
-            it("Should correctly resolve #dummyOne", async (): Promise<void> => {
-                const spyOn = jest.spyOn(Array.prototype, "map");
+        it("Should throw if no task class found", async (): Promise<void> => {
+            @Core.Decorators.Task({
+                name: faker.person.fullName(),
+                description: faker.person.bio(),
+                module: DummyClass,
+                runner: DummyClass,
+            })
+            class DummyTask {}
 
-                const subject = new Subject(DummyTask);
+            subject["availableTasks"] = [DummyTask];
 
-                await subject.run();
-
-                const results = <any>spyOn.mock.results.at(0);
-                const dependency = results.value.at(0);
-
-                expect(dependency.constructor.name).toEqual("DummyOne");
-
-                spyOn.mockRestore();
-            });
-
-            it("Should correctly resolve #dummyTwo", async (): Promise<void> => {
-                const spyOn = jest.spyOn(Array.prototype, "map");
-
-                const subject = new Subject(DummyTask);
-
-                await subject.run();
-
-                const results = <any>spyOn.mock.results.at(0);
-                const dependency = results.value.at(1);
-
-                expect(dependency.constructor.name).toEqual("DummyTwo");
-
-                spyOn.mockRestore();
-            });
-
-            it("Should correctly resolve #provider", async (): Promise<void> => {
-                const spyOn = jest.spyOn(Array.prototype, "map");
-
-                const subject = new Subject(DummyTask);
-
-                await subject.run();
-
-                const results = <any>spyOn.mock.results.at(0);
-                const dependency = results.value.at(2);
-
-                expect(dependency.constructor.name).toEqual("DummyProvider");
-
-                spyOn.mockRestore();
-            });
+            await expect(() => subject.run()).rejects.toThrowError(Core.Errors.NoSpecificTaskFound);
         });
     });
 });

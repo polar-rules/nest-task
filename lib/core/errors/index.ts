@@ -5,9 +5,13 @@
  */
 
 import * as $_CannotResolveDependencies from "./errors.cannot-resolve-dependencies.js";
+import * as $_NoSpecificTaskFound from "./errors.no-specific-task-found.js";
+import * as $_NoTasksFound from "./errors.no-tasks-found.js";
 import * as $_NotRunnerSubclass from "./errors.not-runner-subclass.js";
 
 export namespace _Errors {
     export import CannotResolveDependencies = $_CannotResolveDependencies._CannotResolveDependencies;
+    export import NoSpecificTaskFound = $_NoSpecificTaskFound._NoSpecificTaskFound;
+    export import NoTasksFound = $_NoTasksFound._NoTasksFound;
     export import NotRunnerSubclass = $_NotRunnerSubclass._NotRunnerSubclass;
 }

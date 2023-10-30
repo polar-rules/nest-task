@@ -1,3 +1,5 @@
+import { jest } from "@jest/globals";
+
 export namespace _Ora {
     export namespace Mocks {
         export const text = jest.fn();
@@ -19,9 +21,6 @@ export namespace _Ora {
     }
 
     jest.mock("ora", () => {
-        return {
-            __esModule: true,
-            default: Mocks.module,
-        };
+        return Mocks.module;
     });
 }

@@ -1,25 +1,34 @@
+import { jest } from "@jest/globals";
+
 import { Bin } from "@bin/index.js";
 
 describe("Abstractions::Loader", (): void => {
+    let subject: Bin.Abstractions.Loader;
+    let startSpy: jest.SpiedFunction<any> | undefined;
+
     class Subject extends Bin.Abstractions.Loader {
         public finish(): void {}
     }
 
+    beforeEach((): void => {
+        subject = new Subject();
+    });
+
+    afterEach((): void => {
+        startSpy?.mockReset();
+    });
+
     describe("#configure", (): void => {
         it("Should call Bin::Loader#start", (): void => {
-            const spyOn = jest.spyOn(Bin.Loader.prototype, "start");
-            const subject = new Subject();
+            startSpy = <jest.SpiedFunction<any>>jest.spyOn(Bin.Loader.prototype, "start");
 
             subject.configure();
-
-            expect(spyOn).toBeCalledTimes(1);
+            expect(startSpy).toBeCalledTimes(1);
         });
     });
 
     describe("#finish", (): void => {
         it("Should be defined", (): void => {
-            const subject = new Subject();
-
             expect(() => subject.finish()).not.toThrow();
         });
     });

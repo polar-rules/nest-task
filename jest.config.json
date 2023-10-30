@@ -17,6 +17,9 @@
         "^@decorators/(.*).js": [
             "<rootDir>/lib/decorators/$1"
         ],
+        "^@factory/(.*).js": [
+            "<rootDir>/lib/factory/$1"
+        ],
         "^@logger/(.*).js": [
             "<rootDir>/lib/logger/$1"
         ],
@@ -38,42 +41,6 @@
         "^@specs/(.*).js": [
             "<rootDir>/specs/$1"
         ],
-        "^@lib": [
-            "<rootDir>/lib/index/index.js"
-        ],
-        "^@bin": [
-            "<rootDir>/lib/bin/index/index.js"
-        ],
-        "^@cli": [
-            "<rootDir>/lib/cli/index/index.js"
-        ],
-        "^@core": [
-            "<rootDir>/lib/core/index/index.js"
-        ],
-        "^@decorators": [
-            "<rootDir>/lib/decorators/index/index.js"
-        ],
-        "^@logger": [
-            "<rootDir>/lib/logger/index/index.js"
-        ],
-        "^@patches": [
-            "<rootDir>/lib/patches/index/index.js"
-        ],
-        "^@tools": [
-            "<rootDir>/lib/tools/index/index.js"
-        ],
-        "^@interfaces": [
-            "<rootDir>/lib/interfaces/index/index.js"
-        ],
-        "^@transformers": [
-            "<rootDir>/lib/transformers/index/index.js"
-        ],
-        "^@testing": [
-            "<rootDir>/lib/testing/index/index.js"
-        ],
-        "^@specs": [
-            "<rootDir>/specs/index/index.js"
-        ],
         "(.*)\\.js$": [
             "$1"
         ]
@@ -92,7 +59,7 @@
             "ts-jest",
             {
                 "useESM": true,
-                "tsConfig": "tsconfig.coverage.json"
+                "tsConfig": "tsconfig.jest.json"
             }
         ]
     },
@@ -113,5 +80,8 @@
     ],
     "modulePathIgnorePatterns": [
         "example"
+    ],
+    "extensionsToTreatAsEsm": [
+        ".ts"
     ]
 }
