@@ -1,6 +1,6 @@
 import { Lifecycles } from "@specs/lifecycles/index.js";
 
-beforeEach(async (): Promise<void> => {
+beforeEach((): void => {
     Lifecycles.Process.Before.Each.exit();
     Lifecycles.Console.Before.Each.global();
     Lifecycles.Essentials.Before.Each.prepareArgv();

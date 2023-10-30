@@ -1,8 +1,9 @@
+import { jest } from "@jest/globals";
 import { NestFactory } from "@nestjs/core";
 
 export namespace _Nest {
     export namespace Create {
-        export let spyOn: jest.SpyInstance;
+        export let spyOn: any;
 
         export function mock(): void {
             spyOn = jest.spyOn(NestFactory, "create").mockReturnValue(<any>{

@@ -81,8 +81,8 @@ export class _Main extends _BinAbstractions.Loader {
                 aliases.value = [`<rootDir>/${modulePath}$1`];
                 break;
             default:
-                aliases.key = `^@${namespace}`;
-                aliases.value = [`<rootDir>/${modulePath}/index.js`];
+                aliases.key = `^@${namespace}/index.js`;
+                aliases.value = [`<rootDir>/${modulePath}.js`];
                 break;
         }
 

@@ -1,21 +1,27 @@
-import { _Types as _CoreTypes } from "@core/core.types.js";
-import { _ReadNestjsConfiguration as _CoreReadNestjsConfiguration } from "@core/core.read-nestjs-configuration.js";
-
-import { _Constants } from "./project-configuration.constants.js";
+import { _Errors } from "./errors/index.js";
+import { _Read } from "./project-configuration.read.js";
+import { _Entrypoint } from "./project-configuration.entrypoint.js";
 
 export class _Main {
-    private config: _CoreTypes.ApproximateNativeConfiguration = _Constants.defaultConfig;
+    private readonly read: _Read;
 
-    public constructor() {}
+    public constructor(private readonly projectName?: string) {
+        this.read = new _Read(this.projectName);
+    }
 
-    public async readAndLoad(): Promise<void> {
-        const readNestjsConfiguration = new _CoreReadNestjsConfiguration();
-        const parsedFile = await readNestjsConfiguration.read();
+    public get entrypointPath(): string | never {
+        const task = this.read.taskConfiguration;
 
-        if (!parsedFile?.projects) {
-            return;
+        if (!task) {
+            throw new _Errors.TaskIsMissing();
         }
 
-        this.config = parsedFile;
+        const entrypoint = new _Entrypoint(task);
+
+        return entrypoint.path;
+    }
+
+    public async readAndLoad(): Promise<void> {
+        await this.read.run();
     }
 }

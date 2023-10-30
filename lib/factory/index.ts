@@ -4,4 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace _Setup {}
+import * as $_Main from "./factory.main.js";
+
+export namespace Factory {
+    export import Main = $_Main._Main;
+}

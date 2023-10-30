@@ -1,3 +1,4 @@
+import { jest } from "@jest/globals";
 import * as path from "path";
 
 import { Mocks } from "@specs/mocks/index.js";
@@ -33,6 +34,22 @@ describe("Tools::PathManager::Main", (): void => {
             const expectations = Tools.PathManager.Errors.NoPackageJson;
 
             expect(() => Subject.instance.projectRoot).toThrow(expectations);
+        });
+    });
+
+    describe("#pathResolver", (): void => {
+        afterEach((): void => {
+            Mocks.FindPackageJson.clean();
+        });
+
+        it("Should return a project root", (): void => {
+            Mocks.FindPackageJson.Mocks.module.mockImplementation(() => Mocks.FindPackageJson.Mocks.defaultBehaviour);
+
+            const fileOrFolderPath = "test";
+            const expectations = path.join(Mocks.FindPackageJson.projectRoot, fileOrFolderPath);
+            const resolvedPath = Subject.instance.pathResolver(fileOrFolderPath);
+
+            expect(resolvedPath).toEqual(expectations);
         });
     });
 

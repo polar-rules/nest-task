@@ -1,0 +1,8 @@
+import { Factory } from "@bear-hugs/nest-task"
+
+async function main(): Promise<void> {
+    await Factory.Main.create()
+}
+
+main();
+

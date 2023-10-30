@@ -3,7 +3,13 @@ import { Bin } from "@bin/index.js";
 import { Mocks } from "@specs/mocks/index.js";
 
 describe("Bin::Loader", (): void => {
+    let subject: Bin.Loader;
+
     const Subject = Bin.Loader;
+
+    beforeEach((): void => {
+        subject = new Subject();
+    });
 
     afterEach((): void => {
         Mocks.Ora.clean();
@@ -12,18 +18,13 @@ describe("Bin::Loader", (): void => {
     describe("#start", (): void => {
         it("Should start with specific text", (): void => {
             const startText = "Start!";
-            const subject = new Subject();
 
             subject.start(startText);
-
             expect(Mocks.Ora.Mocks.defaultBehaviour).toBeCalledWith({ text: startText });
         });
 
         it("Should call Ora#start method", (): void => {
-            const subject = new Subject();
-
             subject.start("");
-
             expect(Mocks.Ora.Mocks.start).toBeCalled();
         });
     });
@@ -31,7 +32,6 @@ describe("Bin::Loader", (): void => {
     describe("#message", (): void => {
         it("Should call Ora#text method", (): void => {
             const messageText = "Message!";
-            const subject = new Subject();
 
             subject.start("");
             subject.message(messageText);
@@ -43,7 +43,6 @@ describe("Bin::Loader", (): void => {
     describe("#finish", (): void => {
         it("Should call Ora#succeed method", (): void => {
             const finishText = "Done!";
-            const subject = new Subject();
 
             subject.start("");
             subject.finish(finishText);

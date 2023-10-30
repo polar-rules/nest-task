@@ -11,7 +11,6 @@ describe("Core::Runner::Base", (): void => {
     describe("#perform", (): void => {
         it("Should be defined", (): void => {
             const subject = new Subject();
-
             expect(() => subject.perform(<any>undefined)).not.toThrow();
         });
     });

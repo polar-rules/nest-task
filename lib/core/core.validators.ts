@@ -1,10 +1,9 @@
-// todo fix this shite
-import { Interfaces } from "../interfaces/index.js";
+import { Interfaces } from "@interfaces/index.js";
 
 import { _Errors } from "./errors/index.js";
 
 export namespace _Validators {
-    export namespace Main {
+    export namespace Perform {
         export function validateDependencies(
             dependencies: (Interfaces.General.AnyClass<any, any> | undefined)[],
         ): void | never {
@@ -13,7 +12,7 @@ export namespace _Validators {
             }
 
             const undefinedIndex = dependencies.findIndex(
-                (dependency: Interfaces.General.AnyClass<any, any> | undefined) => typeof dependency === "undefined",
+                (dependency: Interfaces.General.AnyClass<any, any> | undefined): boolean => dependency === undefined,
             );
 
             if (undefinedIndex === -1) {

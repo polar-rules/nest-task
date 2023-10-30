@@ -1,3 +1,5 @@
+import { jest } from "@jest/globals";
+
 import { _Types } from "./mocks.types.js";
 
 export namespace _Process {

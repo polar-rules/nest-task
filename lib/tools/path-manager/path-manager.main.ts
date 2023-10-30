@@ -20,6 +20,7 @@ export class _Main {
 
     public get projectRoot(): string {
         const someFolderInRoot = process.cwd();
+
         const finder = ((findPackageJson as any)?.default ?? findPackageJson)(someFolderInRoot);
         const packageJson = finder.next().value;
 
@@ -28,6 +29,10 @@ export class _Main {
         }
 
         return path.dirname(packageJson.__path);
+    }
+
+    public pathResolver(fileOrFolderPath: string): string {
+        return path.join(this.projectRoot, fileOrFolderPath);
     }
 
     public moduleTypePathResolver(filePath: string): string {

@@ -4,4 +4,4 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace Helpers {}
+export namespace _Templates {}
