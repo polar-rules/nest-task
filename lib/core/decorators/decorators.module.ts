@@ -16,7 +16,7 @@ export function _Module(metadata: _Types.Module.Metadata): ClassDecorator {
 
         for (const property in metadata) {
             if (metadata.hasOwnProperty(property)) {
-                Reflect.defineMetadata(property, (<any>metadata)[property], target);
+                Reflect.defineMetadata(property, metadata[<keyof typeof metadata>property], target);
             }
         }
     };
