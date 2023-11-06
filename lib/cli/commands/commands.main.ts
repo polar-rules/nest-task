@@ -1,5 +1,6 @@
 import * as chalk from "chalk";
 
+import { _Help } from "./help/index.js";
 import { _Info } from "./info/index.js";
 import { _Run } from "./run/index.js";
 import { _Setup } from "./setup/index.js";
@@ -19,6 +20,9 @@ export class _Main {
 
     public async run(): Promise<void> {
         switch (this.command) {
+            case _Enums.Commands.Help:
+                await new _Help.Main().run();
+                break;
             case _Enums.Commands.Setup:
                 await new _Setup.Main(this.projectName).run();
                 break;
