@@ -9,6 +9,8 @@ export namespace _Constants {
         export const watermark: Readonly<string> = "__task__";
 
         export const metadataKeys: Readonly<_Types.Task.MetadataKeys[]> = ["module", "runner", "providers"];
+
+        export const optionalMetadataKeys: Readonly<Partial<_Types.Task.MetadataKeys[]>> = ["providers"];
     }
 
     export namespace Module {
