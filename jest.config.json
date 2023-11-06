@@ -26,6 +26,9 @@
         "^@patches/(.*).js": [
             "<rootDir>/lib/patches/$1"
         ],
+        "^@prompts/(.*).js": [
+            "<rootDir>/lib/prompts/$1"
+        ],
         "^@tools/(.*).js": [
             "<rootDir>/lib/tools/$1"
         ],

@@ -22,11 +22,13 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
     describe("#run", (): void => {
         describe("When `task` is defined on root level", (): void => {
             it("Should write configuration to `nest-cli.json`", async (): Promise<void> => {
-                const { read, subject, defaultConfig, templatePath } = _Helpers.Setup.Root.prepare(Subject);
+                const { read, subject, defaultConfig, entrypointTemplatePath, moduleTemplatePath } =
+                    _Helpers.Setup.Root.prepare(Subject);
 
                 mockFS({
                     [read.configurationPath]: JSON.stringify(defaultConfig),
-                    [templatePath]: "",
+                    [entrypointTemplatePath]: "",
+                    [moduleTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -38,12 +40,14 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
             });
 
             it("Should write a template file", async (): Promise<void> => {
-                const { read, subject, defaultConfig, templatePath } = _Helpers.Setup.Root.prepare(Subject);
+                const { read, subject, defaultConfig, entrypointTemplatePath, moduleTemplatePath } =
+                    _Helpers.Setup.Root.prepare(Subject);
                 const expectations = "template";
 
                 mockFS({
                     [read.configurationPath]: JSON.stringify(defaultConfig),
-                    [templatePath]: expectations,
+                    [entrypointTemplatePath]: expectations,
+                    [moduleTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -62,14 +66,13 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
 
         describe("When `projects` key is present", (): void => {
             it("Should write configuration to `nest-cli.json` ", async (): Promise<void> => {
-                const { read, subject, defaultConfig, templatePath } = _Helpers.Setup.Projects.prepare(
-                    Subject,
-                    "valid",
-                );
+                const { read, subject, defaultConfig, entrypointTemplatePath, moduleTemplatePath } =
+                    _Helpers.Setup.Projects.prepare(Subject, "valid");
 
                 mockFS({
                     [read.configurationPath]: JSON.stringify(defaultConfig),
-                    [templatePath]: "",
+                    [entrypointTemplatePath]: "",
+                    [moduleTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -81,15 +84,14 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
             });
 
             it("Should write a template file", async (): Promise<void> => {
-                const { read, subject, defaultConfig, templatePath } = _Helpers.Setup.Projects.prepare(
-                    Subject,
-                    "valid",
-                );
+                const { read, subject, defaultConfig, entrypointTemplatePath, moduleTemplatePath } =
+                    _Helpers.Setup.Projects.prepare(Subject, "valid");
                 const expectations = "template";
 
                 mockFS({
                     [read.configurationPath]: JSON.stringify(defaultConfig),
-                    [templatePath]: expectations,
+                    [entrypointTemplatePath]: expectations,
+                    [moduleTemplatePath]: "",
                 });
 
                 await subject.run();

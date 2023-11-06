@@ -1,4 +1,6 @@
 import { _Errors } from "./errors/index.js";
+import { _Types } from "./project-configuration.types.js";
+import { _Constants } from "./project-configuration.constants.js";
 import { _Read } from "./project-configuration.read.js";
 import { _Entrypoint } from "./project-configuration.entrypoint.js";
 
@@ -16,12 +18,17 @@ export class _Main {
             throw new _Errors.TaskIsMissing();
         }
 
-        const entrypoint = new _Entrypoint(task);
-
-        return entrypoint.path;
+        return this.compiledEntrypoint(task);
     }
 
     public async readAndLoad(): Promise<void> {
         await this.read.run();
+    }
+
+    private compiledEntrypoint(task: _Types.Task): string {
+        const sourceRoot = this.read.configuration.sourceRoot ?? "src";
+        const entrypoint = new _Entrypoint(task);
+
+        return entrypoint.path.replace(sourceRoot, _Constants.Main.compiledFolder).replace("ts", "js");
     }
 }

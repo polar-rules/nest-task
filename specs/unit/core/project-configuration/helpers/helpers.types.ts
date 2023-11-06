@@ -1,6 +1,11 @@
 import { Core } from "@core/index.js";
 
 export namespace _Types {
+    export interface Templates {
+        entrypointTemplatePath: string;
+        moduleTemplatePath: string;
+    }
+
     export namespace Main {
         export interface Prepare {
             subject: Core.ProjectConfiguration.Main;
@@ -10,11 +15,10 @@ export namespace _Types {
     }
 
     export namespace Setup {
-        export interface Prepare {
+        export interface Prepare extends Templates {
             read: Core.ProjectConfiguration.Read;
             subject: Core.ProjectConfiguration.Setup;
             defaultConfig: Core.ProjectConfiguration.Types.Configuration.Approximate;
-            templatePath: string;
         }
     }
 }

@@ -4,14 +4,10 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-import * as $_Create from "./create/index.js";
-import * as $_Help from "./help/index.js";
-import * as $_Info from "./info/index.js";
-import * as $_Run from "./run/index.js";
+import * as $_Commands from "./commands/index.js";
+import * as $_Jarvis from "./jarvis/index.js";
 
 export namespace Cli {
-    export import Create = $_Create._Create;
-    export import Help = $_Help._Help;
-    export import Info = $_Info._Info;
-    export import Run = $_Run._Run;
+    export import Commands = $_Commands._Commands;
+    export import Jarvis = $_Jarvis._Jarvis;
 }

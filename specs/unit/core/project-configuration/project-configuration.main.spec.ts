@@ -21,7 +21,7 @@ describe("Core::ProjectConfiguration::Main", (): void => {
         it("Should return path to entrypoint", async (): Promise<void> => {
             runSpy = jest.spyOn(Core.ProjectConfiguration.Read.prototype, "run");
 
-            const expectations = "test-project/test-path/test.ts";
+            const expectations = "test-project/test-path/test.js";
             const { subject, read, config } = _Helpers.Main.prepare(Subject);
 
             mockFS({

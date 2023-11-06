@@ -1,0 +1,6 @@
+import { Decorators } from "@bear-hugs/nest-task";
+
+@Decorators.Module({
+    tasks: [],
+})
+export class TasksModule {}
