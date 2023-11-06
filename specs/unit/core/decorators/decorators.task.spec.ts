@@ -3,6 +3,8 @@ import { faker } from "@faker-js/faker";
 import { Core } from "@core/index.js";
 
 describe("Core::Decorators::Task", (): void => {
+    let DummyTask: any;
+
     const Subject = Core.Decorators.Task;
 
     class DummyRunner extends Core.Runner.Base {
@@ -13,10 +15,6 @@ describe("Core::Decorators::Task", (): void => {
         }
     }
 
-    class DummyTask {
-        static testValue: Readonly<string> = "task";
-    }
-
     class DummyModule {
         static testValue: Readonly<string> = "module";
     }
@@ -24,6 +22,16 @@ describe("Core::Decorators::Task", (): void => {
     class DummyProvider {
         static testValue: Readonly<string> = "provider";
     }
+
+    beforeEach((): void => {
+        DummyTask = class {
+            static testValue: Readonly<string> = "task";
+        };
+    });
+
+    afterEach((): void => {
+        DummyTask = undefined;
+    });
 
     it("Should define `watermark` metadata", (): void => {
         Subject({
@@ -79,6 +87,19 @@ describe("Core::Decorators::Task", (): void => {
         const value = Reflect.getMetadata("providers", DummyTask);
 
         expect(value.at(0).testValue).toEqual(DummyProvider.testValue);
+    });
+
+    it("Metadata `providers` should be optional", (): void => {
+        Subject({
+            name: faker.person.fullName(),
+            description: faker.person.bio(),
+            module: DummyModule,
+            runner: DummyRunner,
+        })(DummyTask);
+
+        const value = Reflect.getMetadata("providers", DummyTask);
+
+        expect(value).toBeUndefined();
     });
 
     it("Should assign `name` metadata", (): void => {

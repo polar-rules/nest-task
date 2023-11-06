@@ -18,6 +18,10 @@ export namespace _Validators {
     export namespace Task {
         export function keys(keys: _Types.Task.MetadataKeys[]): void | never {
             _Constants.Task.metadataKeys.forEach((key: _Types.Task.MetadataKeys): void => {
+                if (_Constants.Task.optionalMetadataKeys.includes(key)) {
+                    return;
+                }
+
                 if (keys.includes(key)) {
                     return;
                 }
