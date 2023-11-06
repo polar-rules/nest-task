@@ -8,9 +8,9 @@ export async function _Runner(): Promise<void> {
     const task = process.argv.at(projectName ? 4 : 3);
 
     if (!command) {
-        console.error(chalk.default.red("Command is missing"));
-        console.info("Example of command:");
-        console.info(chalk.default.gray("npx bear-hugs:task run add-users"));
+        console.error(chalk.default.red("Command is missing!"));
+        console.info();
+        console.info(chalk.default.gray("Call `npx nest-task help` for additional information."));
 
         process.exit(1);
     }

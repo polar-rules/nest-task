@@ -3,6 +3,10 @@ import snakeCase from "lodash.snakecase";
 import kebabCase from "lodash.kebabcase";
 
 export class _String extends String {
+    public times(number: number): string {
+        return Array(number).join(this.toString());
+    }
+
     public namedInterpolation(replacements: Record<string, _String | string>): _String {
         const results = Object.keys(replacements).reduce((acc: string, key: string): string => {
             const regex = new RegExp(`\\$${key}`, "g");
