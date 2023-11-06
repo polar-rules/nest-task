@@ -2,12 +2,10 @@ import path from "path";
 
 import { Tools } from "@tools/index.js";
 
+import { _Abstractions } from "./abstractions/index.js";
 import { _Errors } from "./errors/index.js";
-import { _Types } from "./project-configuration.types.js";
 
-export class _Entrypoint {
-    public constructor(private readonly task: _Types.Task) {}
-
+export class _Entrypoint extends _Abstractions.FileResolver {
     public get path(): string {
         if (!this.task) {
             throw new _Errors.TaskIsMissing();

@@ -1,8 +1,7 @@
+import { _Abstractions } from "./abstractions/index.js";
+
 export namespace _Types {
-    export interface Task {
-        path: string;
-        entryPoint: string;
-    }
+    export type Task = _Abstractions.Types.FileResolver.ApproximateTask;
 
     export namespace Configuration {
         export interface ApproximateProject {
@@ -18,6 +17,7 @@ export namespace _Types {
         }
 
         export interface Approximate extends Partial<ApproximateWithProjects> {
+            sourceRoot?: string;
             task?: Task;
         }
     }

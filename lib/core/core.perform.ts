@@ -16,6 +16,7 @@ export class _Perform {
     public async run(): Promise<void | never> {
         const { Runner, Module, providers, dependencies } = this.prepareMetadata();
         const app = await NestFactory.create(Module);
+
         const resolvedDependencies = dependencies.map(this.resolveDependencies(app, providers));
 
         _Validators.Perform.validateDependencies(resolvedDependencies);

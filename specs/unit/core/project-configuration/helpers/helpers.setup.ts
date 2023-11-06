@@ -4,20 +4,31 @@ import { Tools } from "@tools/index.js";
 import { _Types } from "./helpers.types.js";
 
 export namespace _Setup {
+    function templates(): _Types.Templates {
+        const entrypointTemplatePath = Tools.PathManager.Main.instance.packageResolver(
+            Core.ProjectConfiguration.Constants.Templates.entrypointPath,
+        );
+        const moduleTemplatePath = Tools.PathManager.Main.instance.packageResolver(
+            Core.ProjectConfiguration.Constants.Templates.modulePath,
+        );
+
+        return {
+            entrypointTemplatePath,
+            moduleTemplatePath,
+        };
+    }
+
     export namespace Root {
         export function prepare(Subject: typeof Core.ProjectConfiguration.Setup): _Types.Setup.Prepare {
             const read = new Core.ProjectConfiguration.Read();
             const subject = new Subject();
             const defaultConfig: Core.ProjectConfiguration.Types.Configuration.Approximate = {};
-            const templatePath = Tools.PathManager.Main.instance.moduleTypePathResolver(
-                Core.ProjectConfiguration.Constants.Templates.entrypointPath,
-            );
 
             return {
                 read,
                 subject,
                 defaultConfig,
-                templatePath,
+                ...templates(),
             };
         }
     }
@@ -29,9 +40,6 @@ export namespace _Setup {
         ): _Types.Setup.Prepare {
             const read = new Core.ProjectConfiguration.Read(projectName);
             const subject = new Subject(projectName);
-            const templatePath = Tools.PathManager.Main.instance.moduleTypePathResolver(
-                Core.ProjectConfiguration.Constants.Templates.entrypointPath,
-            );
             const defaultConfig: Core.ProjectConfiguration.Types.Configuration.Approximate = {
                 projects: {
                     valid: {
@@ -46,8 +54,8 @@ export namespace _Setup {
             return {
                 read,
                 subject,
-                templatePath,
                 defaultConfig,
+                ...templates(),
             };
         }
     }

@@ -21,7 +21,7 @@ export class _Main {
     public get projectRoot(): string {
         const someFolderInRoot = process.cwd();
 
-        const finder = ((findPackageJson as any)?.default ?? findPackageJson)(someFolderInRoot);
+        const finder = <findPackageJson.FinderIterator>this.FindPackageJson(someFolderInRoot);
         const packageJson = finder.next().value;
 
         if (!packageJson) {
@@ -31,11 +31,21 @@ export class _Main {
         return path.dirname(packageJson.__path);
     }
 
+    private get FindPackageJson() {
+        return typeof findPackageJson === "function" ? findPackageJson : (<any>findPackageJson).default;
+    }
+
     public pathResolver(fileOrFolderPath: string): string {
         return path.join(this.projectRoot, fileOrFolderPath);
     }
 
     public moduleTypePathResolver(filePath: string): string {
         return path.join(this.projectRoot, "dist", _ToolsModules.isCJS ? "cjs" : "esm", filePath);
+    }
+
+    public packageResolver(fileOrFolderPath: string): string {
+        const libPath = path.join(_ToolsModules.dirname, "..");
+
+        return path.join(libPath, fileOrFolderPath);
     }
 }

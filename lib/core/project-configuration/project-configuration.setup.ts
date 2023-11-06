@@ -10,6 +10,7 @@ import { _Types } from "./project-configuration.types.js";
 import { _Constants } from "./project-configuration.constants.js";
 import { _Read } from "./project-configuration.read.js";
 import { _Entrypoint } from "./project-configuration.entrypoint.js";
+import { _Module } from "./project-configuration.module.js";
 
 export class _Setup {
     public constructor(private readonly projectName?: string) {}
@@ -23,28 +24,8 @@ export class _Setup {
         const clonedConfiguration = cloneDeep(configuration);
 
         await this.createConfiguration(read, clonedConfiguration);
-        await this.createMain(clonedConfiguration);
-    }
-
-    private async createConfiguration(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
-        this.processProjectAndTryToConfigure(configuration);
-
-        await this.save(read, configuration);
-    }
-
-    private async createMain(configuration: _Types.Configuration.Approximate): Promise<void> {
-        if (!configuration.task) {
-            throw new _Errors.TaskIsMissing();
-        }
-
-        const main = new _Entrypoint(configuration.task);
-        const templatePath = Tools.PathManager.Main.instance.moduleTypePathResolver(
-            _Constants.Templates.entrypointPath,
-        );
-        const file = await fs.readFile(templatePath);
-
-        await fs.mkdir(main.directory, { recursive: true });
-        await fs.writeFile(main.path, file.toString("utf-8"));
+        await this.createEntrypoint(clonedConfiguration);
+        await this.createModule(clonedConfiguration);
     }
 
     private processProjectAndTryToConfigure(configuration: _Types.Configuration.Approximate): void {
@@ -85,7 +66,46 @@ export class _Setup {
         };
     }
 
+    private async createConfiguration(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
+        this.processProjectAndTryToConfigure(configuration);
+
+        await this.save(read, configuration);
+    }
+
+    private async createEntrypoint(configuration: _Types.Configuration.Approximate): Promise<void> {
+        if (!configuration.task) {
+            throw new _Errors.TaskIsMissing();
+        }
+
+        const entrypoint = new _Entrypoint(configuration.task);
+        const file = await this.readTemplate(_Constants.Templates.entrypointPath);
+
+        await this.createFile(file, entrypoint);
+    }
+
+    private async createModule(configuration: _Types.Configuration.Approximate): Promise<void> {
+        if (!configuration.task) {
+            throw new _Errors.TaskIsMissing();
+        }
+
+        const module = new _Module(configuration.task);
+        const file = await this.readTemplate(_Constants.Templates.modulePath);
+
+        await this.createFile(file, module);
+    }
+
+    private async readTemplate(templatePath: string): Promise<Buffer> {
+        const resolvedPath = Tools.PathManager.Main.instance.packageResolver(templatePath);
+
+        return await fs.readFile(resolvedPath);
+    }
+
+    private async createFile(file: Buffer, resolver: _Entrypoint | _Module): Promise<void> {
+        await fs.mkdir(resolver.directory, { recursive: true });
+        await fs.writeFile(resolver.path, file.toString("utf-8"));
+    }
+
     private async save(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
-        await fs.writeFile(read.configurationPath, JSON.stringify(configuration));
+        await fs.writeFile(read.configurationPath, JSON.stringify(configuration, null, 2));
     }
 }

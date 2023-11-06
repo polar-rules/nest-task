@@ -36,12 +36,15 @@
             "@factory/*": ["lib/factory/*"],
             "@logger/*": ["lib/logger/*"],
             "@patches/*": ["lib/patches/*"],
+            "@prompts/*": ["lib/prompts/*"],
             "@tools/*": ["lib/tools/*"],
             "@interfaces/*": ["lib/interfaces/*"],
             "@transformers/*": ["lib/transformers/*"],
             "@testing/*": ["lib/testing/*"],
 
-            "@specs/*": ["specs/*"]
+            "@specs/*": ["specs/*"],
+
+            "@structure/*": ["structure/*"]
         }
     },
     "exclude": [

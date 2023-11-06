@@ -2,5 +2,12 @@
     "extends": "./tsconfig.json",
     "compilerOptions": {
         "outDir": "dist:check"
-    }
+    },
+    "include": [
+        "lib/**/*",
+        "lib/**/*.json",
+        "lib/**/*.template",
+        "platform/**/*",
+        "specs/**/*"
+    ]
 }

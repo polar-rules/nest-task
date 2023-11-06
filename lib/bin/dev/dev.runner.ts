@@ -1,3 +1,6 @@
+import { _Generate } from "./generate/index.js";
+import { _Enums } from "./dev.enums.js";
+
 export async function _Runner(): Promise<void> {
     const command = process.argv.at(2);
 
@@ -6,19 +9,9 @@ export async function _Runner(): Promise<void> {
         process.exit(1);
     }
 
-    const namespaces = command.split("::");
-    const namespace = namespaces.join("/");
-    const moduleName = namespaces.at(-1);
-
-    if (!moduleName) {
-        console.error("Module name is missing");
-        process.exit(1);
+    switch (command) {
+        case _Enums.Commands.Generate:
+            await _Generate.Runner();
+            break;
     }
-
-    if (!namespace) {
-        console.error("Namespace is missing");
-        process.exit(1);
-    }
-
-    await import(`./${namespace}/${moduleName}.exec.js`);
 }
