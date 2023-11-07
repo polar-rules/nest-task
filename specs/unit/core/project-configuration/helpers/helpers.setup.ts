@@ -11,10 +11,18 @@ export namespace _Setup {
         const moduleTemplatePath = Tools.PathManager.Main.instance.packageResolver(
             Core.ProjectConfiguration.Constants.Templates.modulePath,
         );
+        const taskTemplatePath = Tools.PathManager.Main.instance.packageResolver(
+            Core.ProjectConfiguration.Constants.Templates.taskPath,
+        );
+        const runnerTemplatePath = Tools.PathManager.Main.instance.packageResolver(
+            Core.ProjectConfiguration.Constants.Templates.runnerPath,
+        );
 
         return {
             entrypointTemplatePath,
             moduleTemplatePath,
+            taskTemplatePath,
+            runnerTemplatePath,
         };
     }
 
