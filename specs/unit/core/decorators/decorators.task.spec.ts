@@ -42,7 +42,7 @@ describe("Core::Decorators::Task", (): void => {
             providers: [],
         })(DummyTask);
 
-        const value = Reflect.getMetadata(Core.Decorators.Constants.Task.watermark, DummyTask);
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.Watermarks.Task, DummyTask);
 
         expect(value).toBeTruthy();
     });

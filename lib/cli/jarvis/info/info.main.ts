@@ -28,8 +28,14 @@ export class _Main {
         console.info("We found the followings tasks:");
 
         for (const task of Core.State.tasksList) {
-            const taskName = Patches.Reflect.getMetadata<string>("name", task);
-            const taskDescription = Patches.Reflect.getMetadata<string>("description", task);
+            const taskName = Patches.Reflect.getMetadata<string>(
+                Core.Decorators.Enums.Metadata.Descriptable.Name,
+                task,
+            );
+            const taskDescription = Patches.Reflect.getMetadata<string>(
+                Core.Decorators.Enums.Metadata.Descriptable.Description,
+                task,
+            );
 
             console.info(chalk.default.grey("-"), chalk.default.white(taskName));
             console.info(chalk.default.grey(`  ${taskDescription}`));

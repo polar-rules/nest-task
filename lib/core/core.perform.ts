@@ -6,6 +6,7 @@ import { INestApplication } from "@nestjs/common";
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
+import { _Decorators } from "./decorators/index.js";
 import { _Runner } from "./runner/index.js";
 import { _Types } from "./core.types.js";
 import { _Validators } from "./core.validators.js";
@@ -27,12 +28,24 @@ export class _Perform {
     }
 
     private prepareMetadata(): _Types.Perform.PrepareMetadata {
-        const Runner = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<_Runner.Base, any>>("runner", this.task);
-        const Module = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>>("module", this.task);
+        const Runner = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<_Runner.Base, any>>(
+            _Decorators.Enums.Metadata.Task.Runner,
+            this.task,
+        );
+        const Module = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>>(
+            _Decorators.Enums.Metadata.Task.Module,
+            this.task,
+        );
         const providers =
-            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>("providers", this.task) ?? [];
+            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
+                _Decorators.Enums.Metadata.Task.Providers,
+                this.task,
+            ) ?? [];
         const dependencies =
-            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>("design:paramtypes", Runner) ?? [];
+            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
+                _Decorators.Enums.Metadata.BuildIn.ParamTypes,
+                Runner,
+            ) ?? [];
 
         return {
             Runner,

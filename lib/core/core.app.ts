@@ -2,6 +2,7 @@ import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
 import { _Errors } from "./errors/index.js";
+import { _Decorators } from "./decorators/index.js";
 import { _Enums } from "./core.enums.js";
 import { _ArgumentsManager } from "./core.arguments-manager.js";
 import { _Perform } from "./core.perform.js";
@@ -30,12 +31,16 @@ export class _App {
     }
 
     private getTasks(module: Interfaces.General.AnyClass<any, any>): void {
-        this.tasks = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>("tasks", module) ?? [];
+        this.tasks =
+            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
+                _Decorators.Enums.Metadata.Module.Tasks,
+                module,
+            ) ?? [];
     }
 
     private locateTaskClass(): Interfaces.General.AnyClass<any, any> | undefined {
         return this.tasks.find((value: Interfaces.General.AnyClass<any, any>): boolean => {
-            const name = Patches.Reflect.getMetadata<string>("name", value);
+            const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, value);
 
             return name === _ArgumentsManager.taskName;
         });

@@ -1,10 +1,10 @@
 import "reflect-metadata";
 
-import { _Constants } from "./decorators.constants.js";
+import { _Enums } from "./decorators.enums.js";
 
 export function _Runner(): ClassDecorator {
     return (target: any): void => {
-        Reflect.getMetadata("design:paramtypes", target);
-        Reflect.defineMetadata(_Constants.Runner.watermark, true, target);
+        Reflect.getMetadata(_Enums.Metadata.BuildIn.ParamTypes, target);
+        Reflect.defineMetadata(_Enums.Metadata.Watermarks.Runner, true, target);
     };
 }

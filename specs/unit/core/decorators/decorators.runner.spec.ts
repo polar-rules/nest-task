@@ -11,12 +11,12 @@ describe("Core::Decorators::Runner", (): void => {
     }
 
     it("Should define `watermark` metadata", (): void => {
-        const value = Reflect.getMetadata(Core.Decorators.Constants.Runner.watermark, Dummy);
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.Watermarks.Runner, Dummy);
         expect(value).toBeTruthy();
     });
 
     it("Should properly assign metadata", (): void => {
-        const value = Reflect.getMetadata("design:paramtypes", Dummy);
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.BuildIn.ParamTypes, Dummy);
         expect(value).not.toBeUndefined();
     });
 });

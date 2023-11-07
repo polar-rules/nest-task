@@ -1,25 +1,27 @@
 import { _Types } from "./decorators.types.js";
+import { _Enums } from "./decorators.enums.js";
 
 export namespace _Constants {
     export namespace Descriptable {
-        export const metadataKeys: Readonly<_Types.DescriptableKeys[]> = ["name", "description"];
+        export const metadataKeys: Readonly<_Types.DescriptableKeys[]> = [
+            _Enums.Metadata.Descriptable.Name,
+            _Enums.Metadata.Descriptable.Description,
+        ];
     }
 
     export namespace Task {
-        export const watermark: Readonly<string> = "__task__";
+        export const metadataKeys: Readonly<_Types.Task.MetadataKeys[]> = [
+            _Enums.Metadata.Task.Module,
+            _Enums.Metadata.Task.Runner,
+            _Enums.Metadata.Task.Providers,
+        ];
 
-        export const metadataKeys: Readonly<_Types.Task.MetadataKeys[]> = ["module", "runner", "providers"];
-
-        export const optionalMetadataKeys: Readonly<Partial<_Types.Task.MetadataKeys[]>> = ["providers"];
+        export const optionalMetadataKeys: Readonly<Partial<_Types.Task.MetadataKeys[]>> = [
+            _Enums.Metadata.Task.Providers,
+        ];
     }
 
     export namespace Module {
-        export const watermark: Readonly<string> = "__module__";
-
-        export const metadataKeys: Readonly<_Types.Module.MetadataKeys[]> = ["tasks"];
-    }
-
-    export namespace Runner {
-        export const watermark: Readonly<string> = "__runner__";
+        export const metadataKeys: Readonly<_Types.Module.MetadataKeys[]> = [_Enums.Metadata.Module.Tasks];
     }
 }
