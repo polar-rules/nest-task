@@ -27,12 +27,12 @@ describe("Core::Perform", (): void => {
         metadataSpy = <jest.SpiedFunction<any>>(
             jest.spyOn(Reflect, "getMetadata").mockImplementation((metadataKey: string): any => {
                 switch (metadataKey) {
-                    case "runner":
+                    case Core.Decorators.Enums.Metadata.Task.Runner:
                         return DummyRunner;
-                    case "providers":
-                    case "design:paramtypes":
+                    case Core.Decorators.Enums.Metadata.Task.Providers:
+                    case Core.Decorators.Enums.Metadata.BuildIn.ParamTypes:
                         return [DummyProvider];
-                    case "module":
+                    case Core.Decorators.Enums.Metadata.Task.Module:
                         return DummyModule;
                 }
             })

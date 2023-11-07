@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { Patches } from "@patches/index.js";
 
 import { _Types } from "./decorators.types.js";
-import { _Constants } from "./decorators.constants.js";
+import { _Enums } from "./decorators.enums.js";
 import { _Validators } from "./decorators.validators.js";
 
 export function _Module(metadata: _Types.Module.Metadata): ClassDecorator {
@@ -12,7 +12,7 @@ export function _Module(metadata: _Types.Module.Metadata): ClassDecorator {
 
         _Validators.Module.keys(propsKeys);
 
-        Reflect.defineMetadata(_Constants.Module.watermark, true, target);
+        Reflect.defineMetadata(_Enums.Metadata.Watermarks.Module, true, target);
 
         for (const property in metadata) {
             if (metadata.hasOwnProperty(property)) {

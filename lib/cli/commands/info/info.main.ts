@@ -21,7 +21,10 @@ export class _Main {
         console.info("We found the followings tasks:");
 
         for (const task of Core.State.tasksList) {
-            const taskName = Patches.Reflect.getMetadata<string>("name", task);
+            const taskName = Patches.Reflect.getMetadata<string>(
+                Core.Decorators.Enums.Metadata.Descriptable.Name,
+                task,
+            );
             console.info(chalk.default.grey(taskName));
         }
     }

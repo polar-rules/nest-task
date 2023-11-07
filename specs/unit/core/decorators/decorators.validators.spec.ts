@@ -7,7 +7,10 @@ describe("Core::Decorators::Validators", (): void => {
 
             it("Should successfully pass when provided `name` and `description` as a key", (): void => {
                 expect(() => {
-                    subject(["name", "description"]);
+                    subject([
+                        Core.Decorators.Enums.Metadata.Descriptable.Name,
+                        Core.Decorators.Enums.Metadata.Descriptable.Description,
+                    ]);
                 }).not.toThrow();
             });
 
@@ -25,7 +28,11 @@ describe("Core::Decorators::Validators", (): void => {
 
             it("Should successfully pass when provided `module`, `runner` and `providers` as a key", (): void => {
                 expect(() => {
-                    subject(["module", "runner", "providers"]);
+                    subject([
+                        Core.Decorators.Enums.Metadata.Task.Module,
+                        Core.Decorators.Enums.Metadata.Task.Runner,
+                        Core.Decorators.Enums.Metadata.Task.Providers,
+                    ]);
                 }).not.toThrow();
             });
 
@@ -43,7 +50,7 @@ describe("Core::Decorators::Validators", (): void => {
 
             it("Should successfully pass when provided `tasks` as a key", (): void => {
                 expect(() => {
-                    subject(["tasks"]);
+                    subject([Core.Decorators.Enums.Metadata.Module.Tasks]);
                 }).not.toThrow();
             });
 

@@ -11,7 +11,7 @@ describe("Core::Decorators::Module", (): void => {
     class Dummy {}
 
     it("Should define `watermark` metadata", (): void => {
-        const value = Reflect.getMetadata(Core.Decorators.Constants.Module.watermark, Dummy);
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.Watermarks.Module, Dummy);
         expect(value).toBeTruthy();
     });
 
