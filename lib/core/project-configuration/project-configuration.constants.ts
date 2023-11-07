@@ -18,6 +18,12 @@ export namespace _Constants {
         };
 
         export const modulePath: Readonly<string> = "tasks.module.ts";
+
+        export const exampleDirectory: Readonly<string> = "example";
+
+        export const runnerPath: Readonly<string> = "example.runner.ts";
+
+        export const taskPath: Readonly<string> = "example.task.ts";
     }
 
     export namespace Templates {
@@ -26,5 +32,9 @@ export namespace _Constants {
         export const entrypointPath: Readonly<string> = path.join(templatesFolder, "templates.entrypoint.template");
 
         export const modulePath: Readonly<string> = path.join(templatesFolder, "templates.module.template");
+
+        export const runnerPath: Readonly<string> = path.join(templatesFolder, "templates.runner.template");
+
+        export const taskPath: Readonly<string> = path.join(templatesFolder, "templates.task.template");
     }
 }

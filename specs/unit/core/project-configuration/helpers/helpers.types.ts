@@ -4,6 +4,8 @@ export namespace _Types {
     export interface Templates {
         entrypointTemplatePath: string;
         moduleTemplatePath: string;
+        taskTemplatePath: string;
+        runnerTemplatePath: string;
     }
 
     export namespace Main {

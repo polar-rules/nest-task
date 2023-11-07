@@ -13,7 +13,9 @@ import * as $_Entrypoint from "./project-configuration.entrypoint.js";
 import * as $_Main from "./project-configuration.main.js";
 import * as $_Module from "./project-configuration.module.js";
 import * as $_Read from "./project-configuration.read.js";
+import * as $_Runner from "./project-configuration.runner.js";
 import * as $_Setup from "./project-configuration.setup.js";
+import * as $_Task from "./project-configuration.task.js";
 
 export namespace _ProjectConfiguration {
     export import Types = $_Types._Types;
@@ -25,5 +27,7 @@ export namespace _ProjectConfiguration {
     export import Main = $_Main._Main;
     export import Module = $_Module._Module;
     export import Read = $_Read._Read;
+    export import Runner = $_Runner._Runner;
     export import Setup = $_Setup._Setup;
+    export import Task = $_Task._Task;
 }

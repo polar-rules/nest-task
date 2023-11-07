@@ -11,6 +11,8 @@ import { _Constants } from "./project-configuration.constants.js";
 import { _Read } from "./project-configuration.read.js";
 import { _Entrypoint } from "./project-configuration.entrypoint.js";
 import { _Module } from "./project-configuration.module.js";
+import { _Task } from "./project-configuration.task.js";
+import { _Runner } from "./project-configuration.runner.js";
 
 export class _Setup {
     public constructor(private readonly projectName?: string) {}
@@ -26,6 +28,8 @@ export class _Setup {
         await this.createConfiguration(read, clonedConfiguration);
         await this.createEntrypoint(clonedConfiguration);
         await this.createModule(clonedConfiguration);
+        await this.createTask(clonedConfiguration);
+        await this.createRunner(clonedConfiguration);
     }
 
     private processProjectAndTryToConfigure(configuration: _Types.Configuration.Approximate): void {
@@ -90,6 +94,28 @@ export class _Setup {
 
         const module = new _Module(configuration.task);
         const file = await this.readTemplate(_Constants.Templates.modulePath);
+
+        await this.createFile(file, module);
+    }
+
+    private async createTask(configuration: _Types.Configuration.Approximate): Promise<void> {
+        if (!configuration.task) {
+            throw new _Errors.TaskIsMissing();
+        }
+
+        const module = new _Task(configuration.task);
+        const file = await this.readTemplate(_Constants.Templates.taskPath);
+
+        await this.createFile(file, module);
+    }
+
+    private async createRunner(configuration: _Types.Configuration.Approximate): Promise<void> {
+        if (!configuration.task) {
+            throw new _Errors.TaskIsMissing();
+        }
+
+        const module = new _Runner(configuration.task);
+        const file = await this.readTemplate(_Constants.Templates.runnerPath);
 
         await this.createFile(file, module);
     }
