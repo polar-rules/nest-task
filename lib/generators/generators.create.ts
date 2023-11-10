@@ -12,8 +12,8 @@ export class _Create {
 
     public constructor(
         name: string,
+        private readonly description: string,
         private readonly taskPath: string,
-        private readonly description?: string,
     ) {
         this.name = new Patches.String(name);
     }
@@ -40,7 +40,7 @@ export class _Create {
         const fileAsString = new Patches.String(file.toString());
         const preparedFile = fileAsString.namedInterpolation({
             name: this.name.toPascalCase(),
-            description: this.description ?? _Constants.Create.noDescriptionProvided,
+            description: this.description,
         });
 
         await this.createFile(preparedFile.toString(), task);

@@ -1,10 +1,6 @@
 import path from "path";
 
 export namespace _Constants {
-    export namespace Create {
-        export const noDescriptionProvided: Readonly<string> = "No description!";
-    }
-
     export namespace Templates {
         const templatesFolder: Readonly<string> = path.join("generators", "templates");
 

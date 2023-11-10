@@ -1,8 +1,7 @@
-import * as chalk from "chalk";
-
 import { Core } from "@core/index.js";
 import { Prompts } from "@prompts/index.js";
-import { Patches } from "@patches/index.js";
+
+import { _Core } from "@cli/core/index.js";
 
 export class _Main {
     private readonly projectName: Prompts.ProjectName;
@@ -16,29 +15,6 @@ export class _Main {
     public async run(): Promise<void> {
         await this.projectName.run();
 
-        const loader = new Core.Loader(this.projectName.results);
-
-        await loader.run();
-
-        if (!Core.State.tasksList.length) {
-            console.error(chalk.default.red("No tasks found"));
-            return;
-        }
-
-        console.info("We found the followings tasks:");
-
-        for (const task of Core.State.tasksList) {
-            const taskName = Patches.Reflect.getMetadata<string>(
-                Core.Decorators.Enums.Metadata.Descriptable.Name,
-                task,
-            );
-            const taskDescription = Patches.Reflect.getMetadata<string>(
-                Core.Decorators.Enums.Metadata.Descriptable.Description,
-                task,
-            );
-
-            console.info(chalk.default.grey("-"), chalk.default.white(taskName));
-            console.info(chalk.default.grey(`  ${taskDescription}`));
-        }
+        await new _Core.Info(this.projectName.results).run();
     }
 }

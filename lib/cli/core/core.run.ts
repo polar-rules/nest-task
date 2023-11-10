@@ -1,16 +1,14 @@
 import { Core } from "@core/index.js";
 
-import { _Core } from "@cli/core/index.js";
-
-export class _Main {
+export class _Run {
     public constructor(
         private readonly taskName: string,
         private readonly projectName: string | undefined,
-    ) {
-        Core.ArgumentsManager.runType = Core.Enums.RunTypes.Run;
-    }
+    ) {}
 
     public async run(): Promise<void> {
-        await new _Core.Run(this.taskName, this.projectName).run();
+        Core.ArgumentsManager.taskName = this.taskName;
+
+        await new Core.Loader(this.projectName).run();
     }
 }
