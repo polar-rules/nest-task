@@ -6,6 +6,7 @@
 
 import * as $_Types from "./jarvis.types.js";
 
+import * as $_Create from "./create/index.js";
 import * as $_Info from "./info/index.js";
 import * as $_Run from "./run/index.js";
 import * as $_Setup from "./setup/index.js";
@@ -15,6 +16,7 @@ import * as $_Main from "./jarvis.main.js";
 export namespace _Jarvis {
     export import Types = $_Types._Types;
 
+    export import Create = $_Create._Create;
     export import Info = $_Info._Info;
     export import Run = $_Run._Run;
     export import Setup = $_Setup._Setup;
