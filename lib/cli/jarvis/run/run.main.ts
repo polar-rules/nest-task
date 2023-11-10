@@ -1,6 +1,8 @@
 import { Core } from "@core/index.js";
 import { Prompts } from "@prompts/index.js";
 
+import { _Core } from "@cli/core/index.js";
+
 export class _Main {
     private readonly projectName: Prompts.ProjectName;
 
@@ -17,8 +19,6 @@ export class _Main {
         await this.projectName.run();
         await this.taskName.run();
 
-        Core.ArgumentsManager.taskName = this.taskName.results;
-
-        await new Core.Loader(this.projectName.results).run();
+        await new _Core.Run(this.taskName.results, this.projectName.results).run();
     }
 }
