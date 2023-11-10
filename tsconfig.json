@@ -34,6 +34,7 @@
             "@core/*": ["lib/core/*"],
             "@decorators/*": ["lib/decorators/*"],
             "@factory/*": ["lib/factory/*"],
+            "@generators/*": ["lib/generators/*"],
             "@logger/*": ["lib/logger/*"],
             "@patches/*": ["lib/patches/*"],
             "@prompts/*": ["lib/prompts/*"],

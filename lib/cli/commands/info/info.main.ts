@@ -12,8 +12,7 @@ export class _Main {
         const loader = new Core.Loader(this.projectName);
 
         await loader.run();
-
-        if (Core.State.tasksList.length) {
+        if (!Core.State.tasksList.length) {
             console.error(chalk.default.red("No tasks found"));
             return;
         }
@@ -25,7 +24,13 @@ export class _Main {
                 Core.Decorators.Enums.Metadata.Descriptable.Name,
                 task,
             );
-            console.info(chalk.default.grey(taskName));
+            const taskDescription = Patches.Reflect.getMetadata<string>(
+                Core.Decorators.Enums.Metadata.Descriptable.Description,
+                task,
+            );
+
+            console.info(chalk.default.grey("-"), chalk.default.white(taskName));
+            console.info(chalk.default.grey(`  ${taskDescription}`));
         }
     }
 }

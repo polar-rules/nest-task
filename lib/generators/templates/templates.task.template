@@ -1,0 +1,13 @@
+import { Decorators } from "@bear-hugs/nest-task";
+
+import { AppModule } from "../../app.module";
+import { $nameRunner } from "./$name.runner";
+
+@Decorators.Task({
+    name: "$name",
+    description: "$description",
+    runner: $nameRunner,
+    module: AppModule,
+    providers: [],
+})
+export class $nameTask {}

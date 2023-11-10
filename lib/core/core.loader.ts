@@ -1,10 +1,6 @@
-import { Interfaces } from "@interfaces/index.js";
-
 import { _ProjectConfiguration } from "./project-configuration/index.js";
 
 export class _Loader {
-    public availableTasks?: Interfaces.General.AnyClass<any, any>[];
-
     private readonly projectConfiguration: _ProjectConfiguration.Main;
 
     public constructor(private readonly projectName?: string) {

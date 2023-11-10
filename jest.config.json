@@ -20,6 +20,9 @@
         "^@factory/(.*).js": [
             "<rootDir>/lib/factory/$1"
         ],
+        "^@generators/(.*).js": [
+            "<rootDir>/lib/generators/$1"
+        ],
         "^@logger/(.*).js": [
             "<rootDir>/lib/logger/$1"
         ],
@@ -43,6 +46,9 @@
         ],
         "^@specs/(.*).js": [
             "<rootDir>/specs/$1"
+        ],
+        "^@structure/(.*).js": [
+            "<rootDir>/structure/$1"
         ],
         "(.*)\\.js$": [
             "$1"

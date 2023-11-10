@@ -1,11 +1,10 @@
 import * as chalk from "chalk";
 
 import { Cli } from "@cli/index.js";
+import { Patches } from "@patches/index.js";
 
 export async function _Runner(): Promise<void> {
     const command = process.argv.at(2);
-    const projectName = process.argv.at(3);
-    const task = process.argv.at(projectName ? 4 : 3);
 
     if (!command) {
         console.error(chalk.default.red("Command is missing!"));
@@ -15,5 +14,24 @@ export async function _Runner(): Promise<void> {
         process.exit(1);
     }
 
-    await new Cli.Commands.Main(<Cli.Commands.Enums.Commands>command, projectName, task).run();
+    const otherArguments = process.argv.slice(3);
+    const argumentKeys = otherArguments.filter((item: string): boolean => item.includes("--"));
+    const keyValuePair = argumentKeys.map((key: string): [string, string] => {
+        const indexOfArgument = otherArguments.indexOf(key);
+        const value = otherArguments[indexOfArgument + 1];
+
+        if (!value) {
+            console.error(`Cannot find value for argument \`${key}\`.`);
+            process.exit(1);
+        }
+
+        const patchedKey = new Patches.String(key.replace("--", ""));
+
+        return [patchedKey.toCamelCase().toString(), value];
+    });
+
+    const mappedArray = new Map<string, string>(keyValuePair);
+    const mappedArguments = Object.fromEntries(mappedArray);
+
+    await new Cli.Commands.Main(<Cli.Commands.Enums.Commands>command, mappedArguments).run();
 }

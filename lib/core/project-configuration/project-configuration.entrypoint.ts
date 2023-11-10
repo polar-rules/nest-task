@@ -2,8 +2,8 @@ import path from "path";
 
 import { Tools } from "@tools/index.js";
 
-import { _Abstractions } from "./abstractions/index.js";
 import { _Errors } from "./errors/index.js";
+import { _Abstractions } from "./abstractions/index.js";
 
 export class _Entrypoint extends _Abstractions.FileResolver {
     public get path(): string {
