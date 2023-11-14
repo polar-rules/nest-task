@@ -48,8 +48,6 @@
         "test:clean": "npm run test:run -- --clearCache && npm run build:clean"
     },
     "bin": {
-        "test/nest-task": "./dist/cjs/bin/bin.exec.js",
-        "nest-task/cjs": "./dist/cjs/bin/bin.exec.js",
         "nest-task": "./dist/esm/bin/bin.exec.js"
     },
     "author": "Andrii Drozdov",
