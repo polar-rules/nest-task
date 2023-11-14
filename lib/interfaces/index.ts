@@ -5,7 +5,9 @@
  */
 
 import * as $_General from "./interfaces.general.js";
+import * as $_InstanceOf from "./interfaces.instance-of.js";
 
 export namespace Interfaces {
     export import General = $_General._General;
+    export import InstanceOf = $_InstanceOf._InstanceOf;
 }

@@ -8,6 +8,6 @@
   "task": {
     "path": "src/tasks",
     "entryPoint": "main.ts",
-    "convention": "snake-case"
+    "convention": "bear-hugs"
   }
 }
