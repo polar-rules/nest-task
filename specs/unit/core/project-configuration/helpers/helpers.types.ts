@@ -6,6 +6,7 @@ export namespace _Types {
         moduleTemplatePath: string;
         taskTemplatePath: string;
         runnerTemplatePath: string;
+        indexTemplatePath: string;
     }
 
     export namespace Main {

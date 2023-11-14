@@ -1,0 +1,5 @@
+import * as $_Task from "./$taskName.task";
+
+export namespace _$taskName {
+    export import Task = $_Task._Task;
+}

@@ -30,6 +30,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     moduleTemplatePath,
                     taskTemplatePath,
                     runnerTemplatePath,
+                    indexTemplatePath,
                 } = _Helpers.Setup.Root.prepare(Subject);
 
                 mockFS({
@@ -38,6 +39,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     [moduleTemplatePath]: "",
                     [taskTemplatePath]: "",
                     [runnerTemplatePath]: "",
+                    [indexTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -57,6 +59,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     moduleTemplatePath,
                     taskTemplatePath,
                     runnerTemplatePath,
+                    indexTemplatePath,
                 } = _Helpers.Setup.Root.prepare(Subject);
                 const expectations = "template";
 
@@ -66,6 +69,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     [moduleTemplatePath]: "",
                     [taskTemplatePath]: "",
                     [runnerTemplatePath]: "",
+                    [indexTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -92,6 +96,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     moduleTemplatePath,
                     taskTemplatePath,
                     runnerTemplatePath,
+                    indexTemplatePath,
                 } = _Helpers.Setup.Projects.prepare(Subject, "valid");
 
                 mockFS({
@@ -100,6 +105,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     [moduleTemplatePath]: "",
                     [taskTemplatePath]: "",
                     [runnerTemplatePath]: "",
+                    [indexTemplatePath]: "",
                 });
 
                 await subject.run();
@@ -119,6 +125,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     moduleTemplatePath,
                     taskTemplatePath,
                     runnerTemplatePath,
+                    indexTemplatePath,
                 } = _Helpers.Setup.Projects.prepare(Subject, "valid");
                 const expectations = "template";
 
@@ -128,6 +135,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                     [moduleTemplatePath]: "",
                     [taskTemplatePath]: "",
                     [runnerTemplatePath]: "",
+                    [indexTemplatePath]: "",
                 });
 
                 await subject.run();

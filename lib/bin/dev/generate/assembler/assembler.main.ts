@@ -112,7 +112,9 @@ export class _Main extends _BinAbstractions.Loader {
             const shouldIgnoreExtension = _Constants.Extensions.ignore.some((item: string): boolean =>
                 file.endsWith(item),
             );
-            const shouldIgnoreFile = _Constants.Files.ignore.some((item: string): boolean => file.endsWith(item));
+            const shouldIgnoreFile = _Constants.Files.ignore.some(
+                (item: string): boolean => file.split("/").at(-1) === item,
+            );
 
             if (shouldIgnoreExtension || shouldIgnoreFile) {
                 return;

@@ -14,16 +14,24 @@ export class _Create {
 
     public async run(): Promise<void> {
         const read = new Core.ProjectConfiguration.Read(this.projectName);
+
         await read.run();
 
         if (!read.resolveConfiguration.task) {
             return;
         }
 
+        console.info(
+            chalk.default.gray(
+                "Note: we will create files according to naming `convention` configuration in `nest-cli.json`",
+            ),
+        );
+
         const generator = new Generators.Create(
             this.moduleName,
-            read.resolveConfiguration.task.path,
+            read.resolveConfiguration.task.convention,
             this.moduleDescription,
+            read.resolveConfiguration.task.path,
         );
 
         await generator.run();

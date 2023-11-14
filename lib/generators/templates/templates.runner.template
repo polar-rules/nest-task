@@ -1,7 +1,7 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
 @Decorators.Runner()
-export class $nameRunner {
+export class $name {
     public async perform(): Promise<void> {
         // Write your code here
     }

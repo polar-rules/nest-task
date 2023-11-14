@@ -1,8 +1,8 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
-import { ExampleTask } from "./example/example.task";
+import { $importEntity } from "./example/$importFrom";
 
 @Decorators.Module({
-    tasks: [ExampleTask],
+    tasks: [$usageEntity],
 })
-export class TasksModule {}
+export class $moduleName {}
