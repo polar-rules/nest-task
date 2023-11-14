@@ -1,4 +1,3 @@
-import * as chalk from "chalk";
 import * as inquirer from "inquirer";
 
 import { Prompts } from "@prompts/index.js";
@@ -23,12 +22,6 @@ export class _Main {
     }
 
     private async promptModuleNameAndDescription(): Promise<_Types.Prompt> {
-        console.info(
-            chalk.default.gray(
-                "Note: we will create files according to your name, eg. `exampleTask` will generate folder with same name",
-            ),
-        );
-
         return inquirer.default.prompt<_Types.Prompt>([
             {
                 name: "moduleName",

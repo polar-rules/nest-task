@@ -10,6 +10,7 @@ export namespace _Main {
             task: {
                 entryPoint: "test.ts",
                 path: "test-path",
+                convention: Core.ProjectConfiguration.Abstractions.Enums.Conventions.BearHugs,
             },
         };
 

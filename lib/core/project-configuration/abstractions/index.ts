@@ -6,10 +6,12 @@
 
 import * as $_Types from "./abstractions.types.js";
 
+import * as $_Enums from "./abstractions.enums.js";
 import * as $_FileResolver from "./abstractions.file-resolver.js";
 
 export namespace _Abstractions {
     export import Types = $_Types._Types;
 
+    export import Enums = $_Enums._Enums;
     export import FileResolver = $_FileResolver._FileResolver;
 }

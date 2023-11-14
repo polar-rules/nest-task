@@ -17,19 +17,23 @@ export namespace _Setup {
         const runnerTemplatePath = Tools.PathManager.Main.instance.packageResolver(
             Core.ProjectConfiguration.Constants.Templates.runnerPath,
         );
+        const indexTemplatePath = Tools.PathManager.Main.instance.packageResolver(
+            Core.ProjectConfiguration.Constants.Templates.indexPath,
+        );
 
         return {
             entrypointTemplatePath,
             moduleTemplatePath,
             taskTemplatePath,
             runnerTemplatePath,
+            indexTemplatePath,
         };
     }
 
     export namespace Root {
         export function prepare(Subject: typeof Core.ProjectConfiguration.Setup): _Types.Setup.Prepare {
             const read = new Core.ProjectConfiguration.Read();
-            const subject = new Subject();
+            const subject = new Subject(Core.ProjectConfiguration.Abstractions.Enums.Conventions.BearHugs);
             const defaultConfig: Core.ProjectConfiguration.Types.Configuration.Approximate = {};
 
             return {
@@ -47,7 +51,7 @@ export namespace _Setup {
             projectName: string,
         ): _Types.Setup.Prepare {
             const read = new Core.ProjectConfiguration.Read(projectName);
-            const subject = new Subject(projectName);
+            const subject = new Subject(Core.ProjectConfiguration.Abstractions.Enums.Conventions.BearHugs, projectName);
             const defaultConfig: Core.ProjectConfiguration.Types.Configuration.Approximate = {
                 projects: {
                     valid: {

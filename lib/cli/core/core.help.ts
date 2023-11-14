@@ -1,5 +1,6 @@
 import * as chalk from "chalk";
 
+import { Core } from "@core/index.js";
 import { Patches } from "@patches/index.js";
 
 export class _Help {
@@ -73,7 +74,7 @@ export class _Help {
         console.info(emptyString.times(28), "Short description of task");
         console.info();
 
-        console.info(chalk.default.cyan("nest-task setup --projectName <project-name>"));
+        console.info(chalk.default.cyan("nest-task setup --projectName <project-name> --convention <convention>"));
         console.info("Used in purpose to run first initial setup of the @bear-hugs/nest-task.");
         console.info(
             "Performs 3 basic actions: modify `nest-cli.json`, creates an entrypoint for tasks to run and creates an example of task.",
@@ -81,5 +82,11 @@ export class _Help {
         console.info();
         console.info(emptyString.times(3), chalk.default.cyan("<project-name>"), emptyString.times(10), "Optional.");
         console.info(emptyString.times(28), "In case your `nest-cli.json` have `projects` key defined.");
+        console.info(emptyString.times(3), chalk.default.cyan("<convention>"), emptyString.times(12), "Required.");
+        console.info(
+            emptyString.times(28),
+            "Specify naming convention for files and classes. Options are",
+            Object.values(Core.ProjectConfiguration.Constants.convention).join(", "),
+        );
     }
 }

@@ -20,7 +20,19 @@ export class _Main {
                 await new _Help.Main().run();
                 break;
             case _Enums.Commands.Setup:
-                await new _Setup.Main(this.otherArguments?.projectName).run();
+                if (!this.otherArguments) {
+                    console.error(
+                        chalk.default.red("Missing arguments. Please use `nest-task help` for more information"),
+                    );
+                    process.exit(1);
+                }
+
+                if (!("convention" in this.otherArguments)) {
+                    console.error(chalk.default.red("You need to pass `--convention` name as an argument."));
+                    process.exit(1);
+                }
+
+                await new _Setup.Main(this.otherArguments.projectName, this.otherArguments.convention).run();
                 break;
             case _Enums.Commands.Create:
                 if (!this.otherArguments) {

@@ -42,6 +42,7 @@ describe("Core::ProjectConfiguration::Read", (): void => {
                 task: {
                     path: "test-path",
                     entryPoint: "test-entrypoint.ts",
+                    convention: Core.ProjectConfiguration.Abstractions.Enums.Conventions.BearHugs,
                 },
             };
             const subject = new Subject("valid");
