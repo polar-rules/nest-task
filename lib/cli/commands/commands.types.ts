@@ -4,7 +4,7 @@ import { _Run } from "./run/index.js";
 import { _Setup } from "./setup/index.js";
 
 export namespace _Types {
-    export type OtherArguments =
+    export type Args =
         | _Create.Types.ExpectedArguments
         | _Info.Types.ExpectedArguments
         | _Run.Types.ExpectedArguments

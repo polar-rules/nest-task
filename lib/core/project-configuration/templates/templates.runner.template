@@ -1,7 +1,7 @@
-import { Decorators } from "@bear-hugs/nest-task";
+import { Abstractions, Decorators } from "@bear-hugs/nest-task";
 
 @Decorators.Runner()
-export class $runnerName {
+export class $runnerName extends Abstractions.Runner {
     public async perform(): Promise<void> {
         console.log("Example run!");
     }

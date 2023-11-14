@@ -7,7 +7,7 @@ describe("Core::Decorators::Task", (): void => {
 
     const Subject = Core.Decorators.Task;
 
-    class DummyRunner extends Core.Runner.Base {
+    class DummyRunner extends Core.Abstractions.Runner {
         static testValue: Readonly<string> = "exec";
 
         public perform(): Promise<void> {

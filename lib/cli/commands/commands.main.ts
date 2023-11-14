@@ -7,11 +7,12 @@ import { _Run } from "./run/index.js";
 import { _Setup } from "./setup/index.js";
 import { _Types } from "./commands.types.js";
 import { _Enums } from "./commands.enums.js";
+import { Interfaces } from "@interfaces/index.js";
 
 export class _Main {
     public constructor(
         private readonly command: _Enums.Commands,
-        private readonly otherArguments?: _Types.OtherArguments,
+        private readonly args?: _Types.Args,
     ) {}
 
     public async run(): Promise<void> {
@@ -20,61 +21,56 @@ export class _Main {
                 await new _Help.Main().run();
                 break;
             case _Enums.Commands.Setup:
-                if (!this.otherArguments) {
+                if (!this.args) {
                     console.error(
                         chalk.default.red("Missing arguments. Please use `nest-task help` for more information"),
                     );
                     process.exit(1);
                 }
 
-                if (!("convention" in this.otherArguments)) {
+                if (!Interfaces.InstanceOf<_Setup.Types.ExpectedArguments>(this.args, "convention")) {
                     console.error(chalk.default.red("You need to pass `--convention` name as an argument."));
                     process.exit(1);
                 }
 
-                await new _Setup.Main(this.otherArguments.projectName, this.otherArguments.convention).run();
+                await new _Setup.Main(this.args.projectName, this.args.convention).run();
                 break;
             case _Enums.Commands.Create:
-                if (!this.otherArguments) {
+                if (!this.args) {
                     console.error(
                         chalk.default.red("Missing arguments. Please use `nest-task help` for more information"),
                     );
                     process.exit(1);
                 }
 
-                if (!("name" in this.otherArguments)) {
-                    console.error(chalk.default.red("You need to pass `--name` name as an argument."));
+                if (!Interfaces.InstanceOf<_Create.Types.ExpectedArguments>(this.args, "description")) {
+                    console.error(
+                        chalk.default.red("You need to pass `--name` and `--description` names as an argument."),
+                    );
                     process.exit(1);
                 }
 
-                if (!("description" in this.otherArguments)) {
-                    console.error(chalk.default.red("You need to pass `--description` name as an argument."));
-                    process.exit(1);
-                }
-
-                await new _Create.Main(
-                    this.otherArguments?.name,
-                    this.otherArguments?.description,
-                    this.otherArguments?.projectName,
-                ).run();
+                await new _Create.Main(this.args?.name, this.args?.description, this.args?.projectName).run();
                 break;
             case _Enums.Commands.Run:
-                if (!this.otherArguments) {
+                if (!this.args) {
                     console.error(
                         chalk.default.red("Missing arguments. Please use `nest-task help` for more information"),
                     );
                     process.exit(1);
                 }
 
-                if (!("name" in this.otherArguments)) {
+                if (!Interfaces.InstanceOf<_Run.Types.ExpectedArguments>(this.args, "name")) {
                     console.error(chalk.default.red("You need to pass `--name` name as an argument."));
                     process.exit(1);
                 }
 
-                await new _Run.Main(this.otherArguments?.name, this.otherArguments?.projectName).run();
+                const { name: taskName, projectName, ...otherArguments } = this.args;
+
+                await new _Run.Main(taskName, projectName, otherArguments).run();
                 break;
             case _Enums.Commands.Info:
-                await new _Info.Main(this.otherArguments?.projectName).run();
+                await new _Info.Main(this.args?.projectName).run();
                 break;
         }
     }

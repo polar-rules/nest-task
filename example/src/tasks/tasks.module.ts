@@ -1,8 +1,8 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
-import { ExampleTask } from "./example/example.task";
+import { _Example } from "./example/";
 
 @Decorators.Module({
-    tasks: [ExampleTask],
+    tasks: [_Example.Task],
 })
-export class TasksModule {}
+export class _Module {}

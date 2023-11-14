@@ -13,6 +13,17 @@ export class _ArgumentsManager {
         Reflect.defineMetadata(_Enums.MetadataKeys.TaskName, value, global);
     }
 
+    public static get taskArguments(): Record<string, string | number> | undefined {
+        return Patches.Reflect.getMetadata<Record<string, string | number> | undefined>(
+            _Enums.MetadataKeys.TaskArguments,
+            global,
+        );
+    }
+
+    public static set taskArguments(value: Record<string, string | number> | undefined) {
+        Reflect.defineMetadata(_Enums.MetadataKeys.TaskArguments, value, global);
+    }
+
     public static get runType(): _Enums.RunTypes {
         return Patches.Reflect.getMetadata<_Enums.RunTypes>(_Enums.MetadataKeys.RunType, global);
     }
