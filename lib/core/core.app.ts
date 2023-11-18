@@ -1,3 +1,5 @@
+import { Logger } from "@nestjs/common";
+
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 import { Errors } from "@errors/index.js";
@@ -12,6 +14,12 @@ import { _State } from "./core.state.js";
 
 export class _App {
     private tasks: Interfaces.General.AnyClass<any, any>[] = [];
+
+    private readonly logger: Logger = new Logger("NestTask::Core::App");
+
+    public constructor() {
+        this.logger.log("Starting NestTask application...");
+    }
 
     public async run(): Promise<void> {
         try {
@@ -38,6 +46,14 @@ export class _App {
 
     public async load(module: Interfaces.General.AnyClass<any, any>): Promise<void> {
         this.getTasks(module);
+
+        for (const task of this.tasks) {
+            const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, task);
+
+            this.logger.log(`Tasks::Module is loading ${name}`);
+        }
+
+        this.logger.log("Tasks::Module tasks have been loaded");
     }
 
     private getTasks(module: Interfaces.General.AnyClass<any, any>): void {
