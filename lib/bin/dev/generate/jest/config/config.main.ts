@@ -3,12 +3,12 @@ import * as path from "path";
 
 import { Tools } from "@tools/index.js";
 
-import { _Abstractions as _BinAbstractions } from "@bin/abstractions/index.js";
+import { _Abstractions } from "@bin/abstractions/index.js";
 
 import { _Types } from "./config.types.js";
 import { _Constants } from "./config.constants.js";
 
-export class _Main extends _BinAbstractions.Loader {
+export class _Main extends _Abstractions.Loader {
     private get jestConfigPath(): string {
         const projectRoot = Tools.PathManager.Main.instance.projectRoot;
 

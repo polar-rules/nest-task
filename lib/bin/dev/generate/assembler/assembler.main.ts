@@ -4,7 +4,7 @@ import cloneDeep from "lodash.clonedeep";
 
 import { Patches } from "@patches/index.js";
 
-import { _Abstractions as _BinAbstractions } from "@bin/abstractions/index.js";
+import { _Abstractions } from "@bin/abstractions/index.js";
 
 import { _Errors } from "./errors/index.js";
 
@@ -13,7 +13,7 @@ import { _Constants } from "./assembler.constants.js";
 import { _Builder } from "./assembler.builder.js";
 import { _Linter } from "./assembler.linter.js";
 
-export class _Main extends _BinAbstractions.Loader {
+export class _Main extends _Abstractions.Loader {
     private readonly builder: _Builder = new _Builder();
 
     private readonly linter: _Linter = new _Linter();

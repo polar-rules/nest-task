@@ -17,11 +17,17 @@
         "^@decorators/(.*).js": [
             "<rootDir>/lib/decorators/$1"
         ],
+        "^@errors/(.*).js": [
+            "<rootDir>/lib/errors/$1"
+        ],
         "^@factory/(.*).js": [
             "<rootDir>/lib/factory/$1"
         ],
         "^@generators/(.*).js": [
             "<rootDir>/lib/generators/$1"
+        ],
+        "^@messages/(.*).js": [
+            "<rootDir>/lib/messages/$1"
         ],
         "^@logger/(.*).js": [
             "<rootDir>/lib/logger/$1"

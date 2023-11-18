@@ -1,5 +1,7 @@
-export class _NoPackageJson extends Error {
+import { Errors } from "@errors/index.js";
+
+export class _NoPackageJson extends Errors.Base {
     constructor() {
-        super("PathManager | No `package.json` was found!");
+        super("No `package.json` was found!");
     }
 }
