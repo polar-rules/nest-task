@@ -42,8 +42,12 @@ export class _Read {
     }
 
     public async run(): Promise<void> {
-        const file = await fs.readFile(this.configurationPath);
+        try {
+            const file = await fs.readFile(this.configurationPath);
 
-        this.configuration = Patches.Json.parse<_Types.Configuration.Approximate>(file.toString("utf-8"));
+            this.configuration = Patches.Json.parse<_Types.Configuration.Approximate>(file.toString("utf-8"));
+        } catch {
+            throw new _Errors.MissingNestCli();
+        }
     }
 }

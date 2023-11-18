@@ -1,3 +1,5 @@
+import { Messages } from "@messages/index.js";
+
 import { _Command } from "./command/index.js";
 import { _Jarvis } from "./jarvis/index.js";
 import { _Enums } from "./bin.enums.js";
@@ -6,8 +8,7 @@ export async function _Runner(): Promise<void> {
     const command = process.argv.at(2);
 
     if (!command) {
-        console.error("Command is missing");
-        process.exit(1);
+        Messages.Errors.Missing.Command();
     }
 
     switch (command) {

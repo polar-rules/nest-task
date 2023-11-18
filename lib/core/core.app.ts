@@ -1,5 +1,7 @@
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
+import { Errors } from "@errors/index.js";
+import { Messages } from "@messages/index.js";
 
 import { _Errors } from "./errors/index.js";
 import { _Decorators } from "./decorators/index.js";
@@ -12,17 +14,25 @@ export class _App {
     private tasks: Interfaces.General.AnyClass<any, any>[] = [];
 
     public async run(): Promise<void> {
-        if (!this.tasks?.length) {
-            throw new _Errors.NoTasksFound();
-        }
+        try {
+            if (!this.tasks?.length) {
+                throw new _Errors.NoTasksFound();
+            }
 
-        switch (_ArgumentsManager.runType) {
-            case _Enums.RunTypes.Run:
-                await this.handleRun();
-                break;
-            case _Enums.RunTypes.Info:
-                this.handleInfo();
-                break;
+            switch (_ArgumentsManager.runType) {
+                case _Enums.RunTypes.Run:
+                    await this.handleRun();
+                    break;
+                case _Enums.RunTypes.Info:
+                    this.handleInfo();
+                    break;
+            }
+        } catch (e: unknown) {
+            if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
+                Messages.Errors.Prettify(e);
+            }
+
+            Messages.Errors.Unhandled(e);
         }
     }
 

@@ -1,9 +1,10 @@
 import path from "path";
 
-import * as chalk from "chalk";
-
 import { Core } from "@core/index.js";
 import { Generators } from "@generators/index.js";
+import { Messages } from "@messages/index.js";
+import { Interfaces } from "@interfaces/index.js";
+import { Errors } from "@errors/index.js";
 
 export class _Create {
     public constructor(
@@ -13,32 +14,34 @@ export class _Create {
     ) {}
 
     public async run(): Promise<void> {
-        const read = new Core.ProjectConfiguration.Read(this.projectName);
+        try {
+            const read = new Core.ProjectConfiguration.Read(this.projectName);
 
-        await read.run();
+            await read.run();
 
-        if (!read.resolveConfiguration.task) {
-            return;
+            if (!read.resolveConfiguration.task) {
+                return;
+            }
+
+            Messages.Notes.NamingConvention({ space: true });
+
+            const generator = new Generators.Create(
+                this.moduleName,
+                read.resolveConfiguration.task.convention,
+                this.moduleDescription,
+                read.resolveConfiguration.task.path,
+            );
+
+            await generator.run();
+
+            Messages.Directories.Created([path.join(read.resolveConfiguration.task.path, this.moduleName)]);
+            Messages.Notes.UpdateTaskModule({ space: true });
+        } catch (e: unknown) {
+            if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
+                Messages.Errors.Prettify(e);
+            }
+
+            Messages.Errors.Unhandled(e);
         }
-
-        console.info(
-            chalk.default.gray(
-                "Note: we will create files according to naming `convention` configuration in `nest-cli.json`",
-            ),
-        );
-
-        const generator = new Generators.Create(
-            this.moduleName,
-            read.resolveConfiguration.task.convention,
-            this.moduleDescription,
-            read.resolveConfiguration.task.path,
-        );
-
-        await generator.run();
-
-        console.info("We created the following directory:");
-        console.info(chalk.default.gray(`- ${path.join(read.resolveConfiguration.task.path, this.moduleName)}`));
-        console.info();
-        console.info("Don't forget to update `task.module.ts` file to include new runner!");
     }
 }
