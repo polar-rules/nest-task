@@ -1,15 +1,13 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
 import { AppModule } from "../../app.module";
-import { AppService } from "../../app.service";
-
-import { _Runner } from "./test-add.runner";
+import { _Runner } from "./example.runner";
 
 @Decorators.Task({
-    name: "TestAdd",
-    description: "Some descriptiobn",
+    name: "ExampleTask",
+    description: "Task create for example purposes only",
     runner: _Runner,
     module: AppModule,
-    providers: [AppService],
+    providers: [],
 })
 export class _Task {}

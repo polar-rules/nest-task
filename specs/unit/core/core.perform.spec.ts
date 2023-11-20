@@ -52,21 +52,21 @@ describe("Core::Perform", (): void => {
 
     describe("#run", (): void => {
         it("Should initialise Nest.js application", async (): Promise<void> => {
-            const subject = new Subject(DummyTask);
+            const subject = new Subject(new Core.Task(DummyTask));
 
             await subject.run();
             expect(createSpy).toBeCalledTimes(1);
         });
 
         it("Should call DummyRunner#perform method", async (): Promise<void> => {
-            const subject = new Subject(DummyTask);
+            const subject = new Subject(new Core.Task(DummyTask));
 
             await subject.run();
             expect(performMock).toBeCalledTimes(1);
         });
 
         it("Should run Core.Validators.Perform.validateDependencies", async (): Promise<void> => {
-            const subject = new Subject(DummyTask);
+            const subject = new Subject(new Core.Task(DummyTask));
 
             await subject.run();
             expect(validateDependenciesSpy).toBeCalledTimes(1);

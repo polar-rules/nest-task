@@ -1,8 +1,9 @@
 import { Core } from "@core/index.js";
 import { Messages } from "@messages/index.js";
-import { Patches } from "@patches/index.js";
 import { Interfaces } from "@interfaces/index.js";
 import { Errors } from "@errors/index.js";
+
+import { _Types } from "./core.types.js";
 
 export class _Info {
     public constructor(private readonly projectName: string | undefined) {}
@@ -17,18 +18,7 @@ export class _Info {
                 Messages.Errors.NoTasksIsFound();
             }
 
-            const tasks = Core.State.tasksList.map(
-                (task: Interfaces.General.AnyClass<any, any>): Messages.Types.FoundTasks.Options => ({
-                    [Core.Decorators.Enums.Metadata.Descriptable.Name]: Patches.Reflect.getMetadata<string>(
-                        Core.Decorators.Enums.Metadata.Descriptable.Name,
-                        task,
-                    ),
-                    [Core.Decorators.Enums.Metadata.Descriptable.Description]: Patches.Reflect.getMetadata<string>(
-                        Core.Decorators.Enums.Metadata.Descriptable.Description,
-                        task,
-                    ),
-                }),
-            );
+            const tasks = Core.State.tasksList.map<Messages.Types.FoundTasks.Options>(this.processTasks());
 
             Messages.FoundTasks(tasks);
         } catch (e: unknown) {
@@ -38,5 +28,15 @@ export class _Info {
 
             Messages.Errors.Unhandled(e);
         }
+    }
+
+    private processTasks(): _Types.Info.ProcessTasks {
+        return function (task: Core.Task): Messages.Types.FoundTasks.Options {
+            return {
+                [Core.Decorators.Enums.Metadata.Descriptable.Name]: task.name,
+                [Core.Decorators.Enums.Metadata.Descriptable.Description]: task.description,
+                args: task.args,
+            };
+        };
     }
 }

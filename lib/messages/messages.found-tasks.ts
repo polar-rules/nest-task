@@ -7,5 +7,15 @@ export function _FoundTasks(tasks: _Types.FoundTasks.Options[]): void {
     for (const task of tasks) {
         console.info(_Chalk.grey("-"), _Chalk.white(task.name));
         console.info(_Chalk.grey(`  ${task.description}`));
+
+        if (!task.args?.length) {
+            continue;
+        }
+
+        console.info("  Expected the following arguments:");
+
+        for (const arg of task.args) {
+            console.info(_Chalk.grey(`    - ${arg.name} : ${arg.type}`));
+        }
     }
 }

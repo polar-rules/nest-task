@@ -2,6 +2,7 @@ export namespace _Enums {
     export namespace Metadata {
         export enum BuildIn {
             ParamTypes = "design:paramtypes",
+            DesignType = "design:type",
         }
 
         export enum Watermarks {
@@ -23,6 +24,16 @@ export namespace _Enums {
 
         export enum Module {
             Tasks = "tasks",
+        }
+
+        export enum Runner {
+            AppIndex = "app-index",
+            DtoIndex = "dto-index",
+            Dto = "dto",
+        }
+
+        export enum Dto {
+            Property = "property",
         }
     }
 }
