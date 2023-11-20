@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { Patches } from "@patches/index.js";
 
 import { _Enums } from "./core.enums.js";

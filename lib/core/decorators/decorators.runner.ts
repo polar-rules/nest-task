@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { _Enums } from "./decorators.enums.js";
 
 export function _Runner(): ClassDecorator {

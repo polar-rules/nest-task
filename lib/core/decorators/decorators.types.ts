@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { Interfaces } from "@interfaces/index.js";
 
 import { _Enums } from "./decorators.enums.js";

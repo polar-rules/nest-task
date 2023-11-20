@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { NestFactory } from "@nestjs/core";
 import { INestApplication, Logger } from "@nestjs/common";
 
