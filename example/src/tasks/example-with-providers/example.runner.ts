@@ -1,4 +1,4 @@
-import { Abstractions, Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@bear-hugs/nest-task";
 
 @Decorators.Runner()
 export class _Runner {

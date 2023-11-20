@@ -1,8 +1,7 @@
-import { Core } from "@core/index.js";
 import { INestApplication } from "@nestjs/common";
 
 describe("Core::Runner::Base", (): void => {
-    class Subject extends Core.Abstractions.Runner {
+    class Subject {
         public async perform(app: INestApplication): Promise<void> {
             app;
         }

@@ -3,7 +3,6 @@ import { defaultMetadataStorage } from "class-transformer/cjs/storage.js";
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
-import { _Abstractions } from "./abstractions/index.js";
 import { _Decorators } from "./decorators/index.js";
 
 import { _Types } from "./core.types.js";
@@ -13,7 +12,7 @@ export class _Task {
 
     private descriptionMemo: string | undefined;
 
-    private runnerMemo: Interfaces.General.AnyClass<_Abstractions.Runner> | undefined;
+    private runnerMemo: Interfaces.General.AnyClass | undefined;
 
     private dtoMemo: Interfaces.General.AnyClass | undefined;
 
@@ -73,7 +72,7 @@ export class _Task {
     public get dto(): Interfaces.General.AnyClass | undefined {
         if (!this.dtoInitialised) {
             this.dtoInitialised = true;
-            this.dtoMemo = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<_Abstractions.Runner> | undefined>(
+            this.dtoMemo = Patches.Reflect.getMetadata<Interfaces.General.AnyClass | undefined>(
                 _Decorators.Enums.Metadata.Runner.Dto,
                 this.runner,
             );
