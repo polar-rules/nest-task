@@ -43,11 +43,11 @@ export class _Naming {
         switch (this.convention) {
             case _Constants.convention.BearHugs:
             case _Constants.convention.KebabCase:
-                return entityNamePatch.toKebabCase().toString();
+                return entityNamePatch.lowerlize().toKebabCase().toString();
             case _Constants.convention.CamelCase:
-                return entityNamePatch.toCamelCase().toString();
+                return entityNamePatch.lowerlize().toCamelCase().toString();
             default:
-                return entityNamePatch.toSnakeCase().toString();
+                return entityNamePatch.lowerlize().toSnakeCase().toString();
         }
     }
 
