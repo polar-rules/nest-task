@@ -42,7 +42,7 @@ export class _Perform {
 
         this.logger.log(`${this.task.name} starting execution...`);
 
-        const args = await this.resolveArguments();
+        const args = await this.resolveArguments(app);
 
         await runner.perform(...args);
 
@@ -72,15 +72,24 @@ export class _Perform {
         };
     }
 
-    private async resolveArguments(): Promise<any> {
-        const args: any[] = [];
+    private async resolveArguments(app: INestApplication): Promise<_Types.Perform.Argument[]> {
+        const args: _Types.Perform.Argument[] = [];
 
         await this.handleDtoArgument(args);
+        await this.handleAppArgument(app, args);
 
         return args;
     }
 
-    private async handleDtoArgument(args: any): Promise<void> {
+    private async handleAppArgument(app: INestApplication, args: _Types.Perform.Argument[]): Promise<void> {
+        if (this.task.appIndex === undefined) {
+            return;
+        }
+
+        args[this.task.appIndex] = app;
+    }
+
+    private async handleDtoArgument(args: _Types.Perform.Argument[]): Promise<void> {
         if (!this.task.dto) {
             return;
         }

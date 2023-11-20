@@ -19,6 +19,8 @@ export class _Task {
 
     private dtoIndexMemo: number | undefined;
 
+    private appIndexMemo: number | undefined;
+
     private moduleMemo: Interfaces.General.AnyClass | undefined;
 
     private providersMemo: Interfaces.General.AnyClass[] | undefined;
@@ -28,6 +30,8 @@ export class _Task {
     private dtoInitialised: boolean = false;
 
     private dtoIndexInitialised: boolean = false;
+
+    private appIndexInitialised: boolean = false;
 
     private argsInitialised: boolean = false;
 
@@ -55,9 +59,9 @@ export class _Task {
         return this.descriptionMemo;
     }
 
-    public get runner(): Interfaces.General.AnyClass<_Abstractions.Runner> {
+    public get runner(): Interfaces.General.AnyClass {
         if (!this.runnerMemo) {
-            this.runnerMemo = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<_Abstractions.Runner>>(
+            this.runnerMemo = Patches.Reflect.getMetadata<Interfaces.General.AnyClass>(
                 _Decorators.Enums.Metadata.Task.Runner,
                 this.task,
             );
@@ -90,6 +94,18 @@ export class _Task {
         return this.dtoIndexMemo;
     }
 
+    public get appIndex(): number | undefined {
+        if (!this.appIndexInitialised) {
+            this.appIndexInitialised = true;
+            this.appIndexMemo = Patches.Reflect.getMetadata<number | undefined>(
+                _Decorators.Enums.Metadata.Runner.AppIndex,
+                this.runner,
+            );
+        }
+
+        return this.appIndexMemo;
+    }
+
     public get module(): Interfaces.General.AnyClass {
         if (!this.moduleMemo) {
             this.moduleMemo = Patches.Reflect.getMetadata<Interfaces.General.AnyClass>(
@@ -114,6 +130,10 @@ export class _Task {
     }
 
     public get args(): _Types.Task.Argument[] {
+        if (!this.dto) {
+            return this.argsMemo;
+        }
+
         if (!this.argsInitialised) {
             this.argsInitialised = true;
 
