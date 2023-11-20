@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { Interfaces } from "@interfaces/index.js";
 import { Core } from "@core/index.js";
 

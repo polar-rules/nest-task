@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import { Messages } from "@messages/index.js";
 
 import { _Command } from "./command/index.js";
