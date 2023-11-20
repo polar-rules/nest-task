@@ -8,12 +8,13 @@ import { Messages } from "@messages/index.js";
 import { _Errors } from "./errors/index.js";
 import { _Decorators } from "./decorators/index.js";
 import { _Enums } from "./core.enums.js";
+import { _Task } from "./core.task.js";
 import { _ArgumentsManager } from "./core.arguments-manager.js";
 import { _Perform } from "./core.perform.js";
 import { _State } from "./core.state.js";
 
 export class _App {
-    private tasks: Interfaces.General.AnyClass<any, any>[] = [];
+    private tasks: _Task[] = [];
 
     private readonly logger: Logger = new Logger("NestTask::Core::App");
 
@@ -44,7 +45,7 @@ export class _App {
         }
     }
 
-    public async load(module: Interfaces.General.AnyClass<any, any>): Promise<void> {
+    public async load(module: Interfaces.General.AnyClass): Promise<void> {
         this.getTasks(module);
 
         for (const task of this.tasks) {
@@ -53,20 +54,22 @@ export class _App {
             this.logger.log(`Tasks::Module is loading ${name}`);
         }
 
-        this.logger.log("Tasks::Module tasks have been loaded");
+        this.logger.log("Tasks::Module tasks has been loaded");
     }
 
-    private getTasks(module: Interfaces.General.AnyClass<any, any>): void {
-        this.tasks =
-            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
+    private getTasks(module: Interfaces.General.AnyClass): void {
+        const tasks =
+            Patches.Reflect.getMetadata<Interfaces.General.AnyClass[]>(
                 _Decorators.Enums.Metadata.Module.Tasks,
                 module,
             ) ?? [];
+
+        this.tasks = tasks.map((task: Interfaces.General.AnyClass): _Task => new _Task(task));
     }
 
-    private locateTaskClass(): Interfaces.General.AnyClass<any, any> | undefined {
-        return this.tasks.find((value: Interfaces.General.AnyClass<any, any>): boolean => {
-            const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, value);
+    private locateTaskClass(): _Task | undefined {
+        return this.tasks.find((value: _Task): boolean => {
+            const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, value.task);
 
             return name === _ArgumentsManager.taskName;
         });

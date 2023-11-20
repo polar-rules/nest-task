@@ -13,7 +13,7 @@ export class _ArgumentsManager {
         Reflect.defineMetadata(_Enums.MetadataKeys.TaskName, value, global);
     }
 
-    public static get taskArguments(): Record<string, string | number> | undefined {
+    public static get taskArguments(): Record<string, string | number | boolean> | undefined {
         return Patches.Reflect.getMetadata<Record<string, string | number> | undefined>(
             _Enums.MetadataKeys.TaskArguments,
             global,

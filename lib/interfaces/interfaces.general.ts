@@ -1,5 +1,5 @@
 export namespace _General {
-    export interface AnyClass<Instance, Arguments extends any[]> {
+    export interface AnyClass<Instance = any, Arguments extends any[] = any> {
         new (...args: Arguments): Instance;
     }
 }

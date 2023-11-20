@@ -3,90 +3,64 @@ import "reflect-metadata";
 import { NestFactory } from "@nestjs/core";
 import { INestApplication, Logger } from "@nestjs/common";
 
+import { validateOrReject, ValidationError } from "class-validator";
+
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
-import { _Abstractions } from "./abstractions/index.js";
+import { _Errors } from "./errors/index.js";
 import { _Decorators } from "./decorators/index.js";
 import { _Types } from "./core.types.js";
+import { _Task } from "./core.task.js";
 import { _Validators } from "./core.validators.js";
 import { _ArgumentsManager } from "./core.arguments-manager.js";
 
 export class _Perform {
-    private readonly name: string;
-
     private readonly logger: Logger = new Logger("NestTask::Core::Perform");
 
-    public constructor(private readonly task: Interfaces.General.AnyClass<any, any>) {
-        this.name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, task);
-    }
+    public constructor(private readonly task: _Task) {}
 
     public async run(): Promise<void | never> {
-        const { Runner, Module, providers, dependencies } = this.prepareMetadata();
-        const app = await NestFactory.create(Module);
+        const dependencies =
+            Patches.Reflect.getMetadata<Interfaces.General.AnyClass[]>(
+                _Decorators.Enums.Metadata.BuildIn.ParamTypes,
+                this.task.runner,
+            ) ?? [];
+        const app = await NestFactory.create(this.task.module);
 
-        const resolvedDependencies = dependencies.map(this.resolveDependencies(app, providers));
+        for (const provider of this.task.providers) {
+            this.logger.log(`${this.task.name} provider ${provider.name} has been loaded`);
+        }
+
+        const resolvedDependencies = dependencies.map(this.resolveDependencies(app, this.task.providers));
 
         _Validators.Perform.validateDependencies(resolvedDependencies);
 
-        const runner = new Runner(...resolvedDependencies);
+        this.logger.log(`${this.task.name} dependencies initialized`);
 
-        this.logger.log(`${this.name} starting execution...`);
+        const runner = new this.task.runner(...resolvedDependencies);
 
-        await runner.perform(app, _ArgumentsManager.taskArguments);
+        this.logger.log(`${this.task.name} starting execution...`);
 
-        this.logger.log(`${this.name} execution is done`);
-    }
+        const args = await this.resolveArguments();
 
-    private prepareMetadata(): _Types.Perform.PrepareMetadata {
-        const Runner = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<_Abstractions.Runner, any>>(
-            _Decorators.Enums.Metadata.Task.Runner,
-            this.task,
-        );
-        this.logger.log(`${this.name} runner has been loaded`);
-        const Module = Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>>(
-            _Decorators.Enums.Metadata.Task.Module,
-            this.task,
-        );
-        this.logger.log(`${this.name} module has been loaded`);
-        const providers =
-            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
-                _Decorators.Enums.Metadata.Task.Providers,
-                this.task,
-            ) ?? [];
+        await runner.perform(...args);
 
-        for (const provider of providers) {
-            this.logger.log(`${this.name} provider ${provider.name} has been loaded`);
-        }
-
-        const dependencies =
-            Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
-                _Decorators.Enums.Metadata.BuildIn.ParamTypes,
-                Runner,
-            ) ?? [];
-
-        this.logger.log(`${this.name} dependencies initialized`);
-
-        return {
-            Runner,
-            Module,
-            providers,
-            dependencies,
-        };
+        this.logger.log(`${this.task.name} execution is done`);
     }
 
     private resolveDependencies(
         app: INestApplication,
-        providers: Interfaces.General.AnyClass<any, any>[],
+        providers: Interfaces.General.AnyClass[],
     ): _Types.Perform.ResolveDependencies {
         const logger = this.logger;
-        const name = this.name;
+        const name = this.task.name;
 
-        return function (dependency: Interfaces.General.AnyClass<any, any>, index: number): any | undefined {
+        return function (dependency: Interfaces.General.AnyClass, index: number): any | undefined {
             logger.log(`${name} initialising dependency ${dependency.name}`);
 
             const found = providers.find(
-                (provider: Interfaces.General.AnyClass<any, any>): boolean => provider.name === dependency.name,
+                (provider: Interfaces.General.AnyClass): boolean => provider.name === dependency.name,
             );
 
             if (!found) {
@@ -96,5 +70,82 @@ export class _Perform {
 
             return app.get(found);
         };
+    }
+
+    private async resolveArguments(): Promise<any> {
+        const args: any[] = [];
+
+        await this.handleDtoArgument(args);
+
+        return args;
+    }
+
+    private async handleDtoArgument(args: any): Promise<void> {
+        if (!this.task.dto) {
+            return;
+        }
+
+        if (this.task.dtoIndex === undefined) {
+            return;
+        }
+
+        const dto = new this.task.dto();
+
+        for (const arg of this.task.args) {
+            if (!_ArgumentsManager.taskArguments) {
+                continue;
+            }
+
+            const argument = _ArgumentsManager.taskArguments[arg.name];
+
+            if (argument === undefined) {
+                dto[arg.name] = argument;
+                continue;
+            }
+
+            if (argument === null) {
+                dto[arg.name] = argument;
+                continue;
+            }
+
+            if (!arg.metadata.reflectedType) {
+                dto[arg.name] = argument;
+                continue;
+            }
+
+            dto[arg.name] = arg.metadata.reflectedType(argument);
+        }
+
+        try {
+            await validateOrReject(dto);
+            args[this.task.dtoIndex] = dto;
+        } catch (e: unknown) {
+            if (Array.isArray(e)) {
+                const isNotValidationError = e
+                    .map((error: unknown): boolean => error instanceof ValidationError)
+                    .some((error: boolean): boolean => !error);
+
+                if (isNotValidationError) {
+                    throw e;
+                }
+
+                const errors = e.reduce(
+                    (acc: Record<string, string[]>, error: ValidationError): Record<string, string[]> => {
+                        if (!error.constraints) {
+                            return acc;
+                        }
+
+                        acc[error.property] = Object.values(error.constraints);
+
+                        return acc;
+                    },
+                    {},
+                );
+
+                throw new _Errors.Validation(errors);
+            }
+
+            throw e;
+        }
     }
 }

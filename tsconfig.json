@@ -47,7 +47,9 @@
 
             "@specs/*": ["specs/*"],
 
-            "@structure/*": ["structure/*"]
+            "@structure/*": ["structure/*"],
+
+            "class-transformer/cjs/storage.js": ["lib/interfaces/interfaces.packages.d.ts"]
         }
     },
     "exclude": [

@@ -16,6 +16,7 @@ import * as $_Enums from "./core.enums.js";
 import * as $_Loader from "./core.loader.js";
 import * as $_Perform from "./core.perform.js";
 import * as $_State from "./core.state.js";
+import * as $_Task from "./core.task.js";
 import * as $_Validators from "./core.validators.js";
 
 export namespace Core {
@@ -31,5 +32,6 @@ export namespace Core {
     export import Loader = $_Loader._Loader;
     export import Perform = $_Perform._Perform;
     export import State = $_State._State;
+    export import Task = $_Task._Task;
     export import Validators = $_Validators._Validators;
 }

@@ -1,10 +1,9 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
 import { _Example } from "./example";
-import { _AddUsers } from "./add-users";
-import { _TestAdd } from "./test-add";
+import { _ExampleWithArguments } from "./example-with-arguments";
 
 @Decorators.Module({
-    tasks: [_Example.Task, _AddUsers.Task, _TestAdd.Task],
+    tasks: [_ExampleWithArguments.Task],
 })
 export class _Module {}

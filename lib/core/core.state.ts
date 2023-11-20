@@ -1,17 +1,14 @@
-import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
 import { _Enums } from "./core.enums.js";
+import { _Task } from "./core.task.js";
 
 export class _State {
-    public static get tasksList(): Interfaces.General.AnyClass<any, any>[] {
-        return Patches.Reflect.getMetadata<Interfaces.General.AnyClass<any, any>[]>(
-            _Enums.MetadataKeys.TasksList,
-            global,
-        );
+    public static get tasksList(): _Task[] {
+        return Patches.Reflect.getMetadata<_Task[]>(_Enums.MetadataKeys.TasksList, global);
     }
 
-    public static set tasksList(value: Interfaces.General.AnyClass<any, any>[]) {
+    public static set tasksList(value: _Task[]) {
         Reflect.defineMetadata(_Enums.MetadataKeys.TasksList, value, global);
     }
 }
