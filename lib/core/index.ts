@@ -6,7 +6,6 @@
 
 import * as $_Types from "./core.types.js";
 
-import * as $_Abstractions from "./abstractions/index.js";
 import * as $_Decorators from "./decorators/index.js";
 import * as $_Errors from "./errors/index.js";
 import * as $_ProjectConfiguration from "./project-configuration/index.js";
@@ -22,7 +21,6 @@ import * as $_Validators from "./core.validators.js";
 export namespace Core {
     export import Types = $_Types._Types;
 
-    export import Abstractions = $_Abstractions._Abstractions;
     export import Decorators = $_Decorators._Decorators;
     export import Errors = $_Errors._Errors;
     export import ProjectConfiguration = $_ProjectConfiguration._ProjectConfiguration;
