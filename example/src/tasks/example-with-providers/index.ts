@@ -1,5 +1,5 @@
-import * as $_Task from "./Example.task";
+import * as $_Task from "./example-with-providers.task";
 
-export namespace _Example {
+export namespace _ExampleWithProviders {
     export import Task = $_Task._Task;
 }

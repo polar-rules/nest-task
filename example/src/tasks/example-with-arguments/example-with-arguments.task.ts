@@ -5,7 +5,7 @@ import { _Runner } from "./example-with-arguments.runner";
 
 @Decorators.Task({
     name: "ExampleTaskWithArguments",
-    description: "Task create for demonstration how you should pass arguments to task",
+    description: "Task created for demonstration how you should pass arguments to task",
     runner: _Runner,
     module: AppModule,
     providers: [],
