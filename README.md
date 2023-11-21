@@ -1,7 +1,7 @@
 
 
 <p align="center">
-    <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+    <img src="https://github.com/bear-hugs/nest-task/blob/main/assets/mascot.png?raw=true" width="120" alt="Nest Logo" />
 </p>
 
 <p align="center">
@@ -10,20 +10,48 @@
     basic tools and approaches.
 </p>
 
-<div style="text-align:center">
-
-  [![Main](https://github.com/bear-hugs/nest-task/actions/workflows/main.yml/badge.svg?branch=main)](https://github.com/bear-hugs/nest-task/actions/workflows/main.yml)
-
+<div style="margin: 0 auto; text-align: center;">
+  <img src="https://github.com/bear-hugs/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
 </div>
 
 ## Description
 
-Nest is a framework for building efficient, scalable <a href="https://nodejs.org" target="_blank">Node.js</a> server-side applications. It uses modern JavaScript, is built with <a href="https://www.typescriptlang.org" target="_blank">TypeScript</a> (preserves compatibility with pure JavaScript) and combines elements of OOP (Object Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).
+@bear-hugs/nest-task is the ultimate tool for generating and executing tasks within 
+<a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> environment using it's 
+classes, services, etc. We are fully following <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
+conventions, rules and approaches to make our library as simple and as familiar as Nest.js itself.
 
-<p>Under the hood, Nest makes use of <a href="https://expressjs.com/" target="_blank">Express</a>, but also, provides compatibility with a wide range of other libraries, like e.g. <a href="https://github.com/fastify/fastify" target="_blank">Fastify</a>, allowing for easy use of the myriad third-party plugins which are available.</p>
+Under the hood we are using the same tool set as <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
+do: Reflect, class-transformer, class-validator, etc.
 
+### Features
 
-Please make sure to read the [Issue Reporting Checklist](https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md#-submitting-an-issue) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+- **Easy Setup**: Quickly set up and integrate tasks within your Nest.js environment with a simple setup command.
+- **Convention-based**: Follows Nest.js conventions and supports different file naming conventions for flexibility.
+- **Interactive Assistant**: Use the interactive assistant (`jarvis`) for a more human-friendly and guided experience.
+- **CLI Commands**: Execute a variety of commands for task creation, information retrieval, and task execution.
+- **Documentation**: Well-documented with examples and explanations to guide users through the process.
+
+### Table of content
+
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+  - [Help](#help)
+  - [Guides](#guides)
+  - [Creating task](#creating-task)
+  - [Receiving the list of tasks](#receiving-the-list-of-tasks)
+  - [Running task](#running-task)
+- [Documentation](#documentation)
+  - [Nest integration](#nest-integration)
+  - [Entrypoint](#entrypoint)
+  - [TasksModule](#tasksmodule)
+  - [Task](#task)
+- [CLI](#cli)
+- [Issues](#issues)
+- [Contributing](#contributing)
+- [Stay in touch](#stay-in-touch)
+- [Acknowledgments](#acknowledgments)
+- [License](#license)
 
 ## Getting started
 
@@ -137,14 +165,29 @@ npx nest-task jarvis
 In purpose to integrate with Nest.js we modify `nest-cli.json` file located inside your root directory. We add 
 key `task` in this file on top level. The object should have the following format:
 
-`<root>/nest.-cli.json`
+`<root>/nest-cli.json`
 ```json
 {
-  // other nest.cli declarations
-  "task": {
-    "path": "src/tasks",
-    "entryPoint": "main.ts",
-    "convention": "kebab-case"
+    "task": {
+        "path": "src/tasks",
+        "entryPoint": "main.ts",
+        "convention": "kebab-case"
+    }
+}
+```
+
+Or if you use `projects` feature from Nest.js then your `nest-cli.json` should look like this:
+`<root>/nest-cli.json`
+```json
+{
+    "task": {
+        "convention": "kebab-case", 
+        "projects" : {
+            "example": {
+                "path": "src/example/tasks",
+                "entryPoint": "main.ts"
+            }
+        }
   }
 }
 ```
@@ -222,7 +265,7 @@ Array of `Task` classes.
 
 ------------------------------
 
-### Creating task
+### Task
 
 Defining `Task` class.
 
@@ -350,72 +393,28 @@ too, but we still recommend to use simple primitive types like:
 
 If you want to use more complex type we recommend to use string and JSON combination.
 
-### Documentation
+class and variable naming.
 
-#### CLI
+## CLI
 
-`@bear-hugs/nest-task` is supplied with 2 versions of CLI, basic commands and interactive assistant.
-
-##### Basic syntax:
-
-`nest-task <command> --<argument-name> <argument-value>`
-
-For example:
-
-`nest-task info --project-name example`
-
-##### Commands:
-
-`help`
-List of available commands, AKA this prompt
-
-`jarvis`
-Interactive assistant. Can perform the same actions as basic commands but in more human friendly way.
-
-`info`
-Provide a list of tasks names and description.
-
-Arguments:
-- `project-name` Optional. In case your `nest-cli.json` have `projects` key defined.
-
-`run`
-Execute the task, can be found by name
-
-Arguments:
-- `project-name` Optional. In case your `nest-cli.json` have `projects` key defined. This argument should come first before 
-name of the task
-- `other-arguments` Optional. In case your you need to pass additional arguments to your task you can easily 
-achieve this with same syntax as you pass `name` or `project-name`
-  - For example: `--userId 3 --bio "I'm awesome"`
-- `name` Required. Name of the task defined in `@Decorators.Task` `name` key
-
-`create`
-Run this command as a generator to create task boilerplate, that includes `@Decorators.Runner` and `@Decorators.Task`.
-
-Arguments:
-- `project-name` Optional. In case your `nest-cli.json` have `projects` key defined.
-- `name` Required. Expect to receive a task name, which should converted to file name and class name.
-- `description` Required. Short description of task. In case if it's a long sentence use `"` to screen it.
-  - For example: `--description "The task example"`
-
-`setup`
-Used in purpose to run first initial setup of the @bear-hugs/nest-task. Performs 3 basic actions: modify 
-`nest-cli.json`, creates an entrypoint for tasks to run and creates an example of task.
-- `project-name` Optional. In case your `nest-cli.json` have `projects` key defined. 
-- `convention` Required. Specify naming convention for files and classes. Options are `camel-case`, `snake-case`, `kebab-case`, `bear-hugs`
-  - `camel-case` - tells us to create files with camel case convention. For example: `camelCase.example.ts`
-  - `snake-case` - tells us to create files with snake case convention. For example: `snake_case.example.ts`
-  - `kebab-case` - tells us to create files with camel case convention. For example: `kebab-case.example.ts`
-  - `bear-hugs` - combination of kebab case and specific class and variable naming.
+More details CLI documentation you can read [CLI Documentation](documentation/CLI.md) section.
 
 ## Issues
 
 Please make sure to read the [Issue Reporting Checklist](https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md#-submitting-an-issue)
 before opening an issue. Issues not conforming to the guidelines may be closed immediately.
 
+## Contributing
+We welcome contributions! Please read our [Contribution Guidelines](documentation/CONTRIBUTING.md) before submitting a pull request.
+
 ## Stay in touch
 
 - Author - [Andrii Drozdov](https://github.com/d4ins)
+
+## Acknowledgments
+
+- The `@nestjs/cli` for providing a solid foundation for Nest.js projects.
+- The `class-validator` and `class-transformer` for easy class validation
 
 ## License
 
