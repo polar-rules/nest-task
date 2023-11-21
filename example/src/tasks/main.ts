@@ -1,12 +1,11 @@
 import { Factory } from "@bear-hugs/nest-task";
 
-import { _Module } from "./tasks.module";
+import { TasksModule } from "./tasks.module";
 
 async function main(): Promise<void> {
-    const app = await Factory.create(_Module);
+    const app = await Factory.create(TasksModule);
 
     await app.run();
 }
 
 main();
-
