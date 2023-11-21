@@ -1,13 +1,14 @@
 import { Decorators } from "@bear-hugs/nest-task";
 
 import { AppModule } from "../../app.module";
-import { _Runner } from "./example-with-arguments.runner";
+
+import { ExampleWithArgumentsRunner } from "./example-with-arguments.runner";
 
 @Decorators.Task({
     name: "ExampleTaskWithArguments",
     description: "Task created for demonstration how you should pass arguments to task",
-    runner: _Runner,
+    runner: ExampleWithArgumentsRunner,
     module: AppModule,
     providers: [],
 })
-export class _Task {}
+export class ExampleWithArgumentsTask {}

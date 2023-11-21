@@ -3,7 +3,7 @@ import { IsNumber, IsString } from "class-validator";
 
 import { Decorators } from "@bear-hugs/nest-task";
 
-export class _Dto {
+export class ExampleWithArgumentsDto {
     @Decorators.Property()
     @Type(() => String)
     @IsString()
