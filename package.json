@@ -5,6 +5,9 @@
     "repository": "git@github.com:bear-hugs/nest-task.git",
     "type": "module",
     "main": "dist/cjs/index.js",
+    "engines": {
+        "node": ">=14.0.0"
+    },
     "exports": {
         "require": "./dist/cjs/index.js",
         "import": "./dist/esm/index.js"
