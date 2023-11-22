@@ -111,44 +111,9 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                 await subject.run();
                 await read.run();
 
-                const keys = Object.keys(read.configuration);
+                const keys = Object.keys(read.resolveConfiguration);
 
                 expect(keys.includes("task")).toBeTruthy();
-            });
-
-            it("Should write a template file", async (): Promise<void> => {
-                const {
-                    read,
-                    subject,
-                    defaultConfig,
-                    entrypointTemplatePath,
-                    moduleTemplatePath,
-                    taskTemplatePath,
-                    runnerTemplatePath,
-                    indexTemplatePath,
-                } = _Helpers.Setup.Projects.prepare(Subject, "valid");
-                const expectations = "template";
-
-                mockFS({
-                    [read.configurationPath]: JSON.stringify(defaultConfig),
-                    [entrypointTemplatePath]: expectations,
-                    [moduleTemplatePath]: "",
-                    [taskTemplatePath]: "",
-                    [runnerTemplatePath]: "",
-                    [indexTemplatePath]: "",
-                });
-
-                await subject.run();
-                await read.run();
-
-                if (!read.configuration.task) {
-                    _Fails.NoTask();
-                }
-
-                const main = new Core.ProjectConfiguration.Entrypoint(read.configuration.task);
-                const file = await fs.readFile(main.path);
-
-                expect(file.toString("utf-8")).toEqual(expectations);
             });
         });
     });

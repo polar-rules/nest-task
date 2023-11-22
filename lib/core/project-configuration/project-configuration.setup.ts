@@ -86,7 +86,25 @@ export class _Setup {
     private async createConfiguration(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
         this.processProjectAndTryToConfigure(configuration);
 
-        await this.save(read, configuration);
+        const clonedConfiguration = cloneDeep(read.configuration);
+
+        if (this.projectName) {
+            if (!clonedConfiguration.projects) {
+                throw new _Errors.MissingProjectConfiguration(this.projectName);
+            }
+
+            const project = clonedConfiguration.projects[this.projectName];
+
+            if (!project) {
+                throw new _Errors.MissingProjectConfiguration(this.projectName);
+            }
+
+            project.task = <_Types.Task>configuration.task;
+        } else {
+            clonedConfiguration.task = <_Types.Task>configuration.task;
+        }
+
+        await this.save(read, clonedConfiguration);
     }
 
     private async createEntrypoint(configuration: _Types.Configuration.Approximate): Promise<void> {

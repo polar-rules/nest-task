@@ -124,6 +124,8 @@ npx nest-task jarvis
 
 ### Receiving the list of tasks
 
+**IMPORTANT.** In purpose for your tasks run correctly you need to build your project firstly.
+
 To receive a list of tasks
 ```Bash
 npx nest-task info
@@ -141,6 +143,8 @@ npx nest-task jarvis
 ```
 
 ### Running task
+
+**IMPORTANT.** In purpose for your tasks run correctly you need to build your project firstly.
 
 To create a task you need to run:
 ```Bash
@@ -178,17 +182,18 @@ key `task` in this file on top level. The object should have the following forma
 
 Or if you use `projects` feature from Nest.js then your `nest-cli.json` should look like this:
 `<root>/nest-cli.json`
+
 ```json
 {
-    "task": {
-        "convention": "kebab-case", 
-        "projects" : {
-            "example": {
-                "path": "src/example/tasks",
-                "entryPoint": "main.ts"
+    "projects": {
+        "example": {
+            "task": {
+                "path": "src/tasks",
+                "entryPoint": "main.ts",
+                "convention": "kebab-case"
             }
         }
-  }
+    }
 }
 ```
 

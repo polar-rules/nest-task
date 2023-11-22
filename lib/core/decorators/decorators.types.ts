@@ -24,4 +24,13 @@ export namespace _Types {
 
         export type MetadataKeys = keyof Metadata;
     }
+
+    export namespace Property {
+        export type Types = "string" | "number" | "boolean" | "null" | "undefined";
+
+        export interface Property {
+            name: string;
+            type: Types;
+        }
+    }
 }
