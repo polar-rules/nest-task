@@ -1,0 +1,132 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'What will be the release version?'
+        required: true
+        type: string
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  eslint:
+    name: ESlint
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Setup] Install dependencies'
+        run: npm install
+
+      - name: '[Run] ESlint'
+        run: npm run check:lint
+
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Setup] Install dependencies'
+        run: npm install
+      - name: '[Run] Prettier'
+        run: npm run check:prettier
+
+  typescript:
+    name: Typescript
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Setup] Install dependencies'
+        run: npm install
+      - name: '[Run] Typescript'
+        run: npm run check:typescript
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Setup] Install dependencies'
+        run: npm install
+      - name: '[Run] Tests'
+        run: npm run test:run
+
+  release:
+    name: Release
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - name: '[Prepare] Change version'
+        uses: reedyuk/npm-version@1.1.1
+        with:
+          version: {{ inputs.version }}
+      - name: '[Setup] Install dependencies'
+        run: npm install
+      - name: '[Build] Run'
+        run: npm run build
+      - name: '[Publish] NPM'
+        uses: pascalgn/npm-publish-action@1.3.9
+        with:
+          tag_name: "v%s"
+          tag_message: "v%s"
+          create_tag: "true"
+          commit_pattern: "^Release v(\\S+)"
+          workspace: "."
+          publish_command: "npm"
+          publish_args: "--non-interactive --prod --verbose"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+

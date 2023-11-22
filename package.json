@@ -1,6 +1,6 @@
 {
     "name": "@bear-hugs/nest-task",
-    "version": "0.0.1",
+    "version": "0.0.0",
     "description": "Execute commands from from NestJS environment",
     "repository": "git@github.com:bear-hugs/nest-task.git",
     "type": "module",
