@@ -17,6 +17,17 @@
         "require": "./dist/cjs/index.js",
         "import": "./dist/esm/index.js"
     },
+    "files": [
+        "dist",
+        "documentation",
+        "package.json",
+        "package-lock.json",
+        "LICENSE",
+        "README.md",
+        "tsconfig.cjs.json",
+        "tsconfig.esm.json",
+        "tsconfig.json"
+    ],
     "scripts": {
         "dev": "node ./dist/esm/bin/dev/dev.exec.js",
         "dev:assembler": "npm run dev -- generate assembler",
@@ -87,6 +98,7 @@
         "jest-message-util": "^29.7.0",
         "mock-fs": "^5.2.0",
         "node-notifier": "^10.0.1",
+        "npm-packlist": "^8.0.0",
         "prettier": "^3.0.3",
         "ts-jest": "^29.1.1",
         "tsc-alias": "^1.8.8",
