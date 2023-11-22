@@ -125,7 +125,7 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         id: "tag_create"
         with:
-          tag: "v${inputs.version}"
+          tag: "v${{ inputs.version }}"
           tag_exists_error: true
-          message: "Release v${inputs.version}"
+          message: "Release ${{ context.version }}"
 
