@@ -1,10 +1,15 @@
 {
-    "name": "@bear-hugs/nest-task",
+    "name": "@polar-rules/nest-task",
     "version": "0.0.0",
     "description": "Execute commands from from NestJS environment",
     "repository": "git@github.com:bear-hugs/nest-task.git",
     "type": "module",
     "main": "dist/cjs/index.js",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
     "engines": {
         "node": ">=14.0.0"
     },
