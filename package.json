@@ -1,10 +1,15 @@
 {
-    "name": "@bear-hugs/nest-task",
-    "version": "0.0.1",
+    "name": "@polar-rules/nest-task",
+    "version": "0.0.0",
     "description": "Execute commands from from NestJS environment",
-    "repository": "git@github.com:bear-hugs/nest-task.git",
+    "repository": "git@github.com:polar-rules/nest-task.git",
     "type": "module",
     "main": "dist/cjs/index.js",
+    "private": false,
+    "publishConfig": {
+        "access": "public",
+        "registry": "https://registry.npmjs.org/"
+    },
     "engines": {
         "node": ">=14.0.0"
     },
@@ -12,6 +17,17 @@
         "require": "./dist/cjs/index.js",
         "import": "./dist/esm/index.js"
     },
+    "files": [
+        "dist",
+        "documentation",
+        "package.json",
+        "package-lock.json",
+        "LICENSE",
+        "README.md",
+        "tsconfig.cjs.json",
+        "tsconfig.esm.json",
+        "tsconfig.json"
+    ],
     "scripts": {
         "dev": "node ./dist/esm/bin/dev/dev.exec.js",
         "dev:assembler": "npm run dev -- generate assembler",
@@ -82,6 +98,7 @@
         "jest-message-util": "^29.7.0",
         "mock-fs": "^5.2.0",
         "node-notifier": "^10.0.1",
+        "npm-packlist": "^8.0.0",
         "prettier": "^3.0.3",
         "ts-jest": "^29.1.1",
         "tsc-alias": "^1.8.8",

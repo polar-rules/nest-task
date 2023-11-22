@@ -8,12 +8,12 @@ export class _Help {
     public async run(): Promise<void> {
         const emptyString = new Patches.String(" ");
 
-        console.info(Messages.Chalk.cyan("Thank you for using @bear-hugs/nest-task!"));
+        console.info(Messages.Chalk.cyan("Thank you for using @polar-rules/nest-task!"));
 
         console.info();
 
         console.info(
-            "@bear-hugs/nest-task is supplied with 2 versions of CLI, basic commands and interactive assistant.",
+            "@polar-rules/nest-task is supplied with 2 versions of CLI, basic commands and interactive assistant.",
         );
 
         console.info();
@@ -117,7 +117,10 @@ export class _Help {
         console.info();
 
         console.info(Messages.Chalk.cyan("nest-task setup --projectName <project-name> --convention <convention>"));
-        console.info("Used in purpose to run first initial setup of the", Messages.Chalk.cyan("@bear-hugs/nest-task."));
+        console.info(
+            "Used in purpose to run first initial setup of the",
+            Messages.Chalk.cyan("@polar-rules/nest-task."),
+        );
         console.info(
             "Performs 3 basic actions: modify",
             Messages.Chalk.cyan("`nest-cli.json`,"),

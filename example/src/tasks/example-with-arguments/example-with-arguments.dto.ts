@@ -1,7 +1,7 @@
 import { Type } from "class-transformer";
 import { IsNumber, IsString } from "class-validator";
 
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 export class ExampleWithArgumentsDto {
     @Decorators.Property()

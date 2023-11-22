@@ -4,7 +4,7 @@
 
 ### Q: How can I customize the naming convention for files and classes?
 
-A: During the initial setup, use the `--convention` flag with options like `kebab-case`, `camel-case`, `snake-case`, or `bear-hugs`.
+A: During the initial setup, use the `--convention` flag with options like `kebab-case`, `camel-case`, `snake-case`, or `polar-rules`.
 
 ### Q: Can I pass additional arguments to my tasks?
 

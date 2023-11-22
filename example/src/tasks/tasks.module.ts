@@ -1,4 +1,4 @@
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { ExampleBasicTask } from "./example-basic/example-basic.task";
 import { ExampleWithAppTask } from "./example-with-app/example-with-app.task";

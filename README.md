@@ -1,7 +1,7 @@
 
 
 <p align="center">
-    <img src="https://github.com/bear-hugs/nest-task/blob/main/assets/mascot.png?raw=true" width="120" alt="Nest Logo" />
+    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/mascot.png?raw=true" width="120" alt="Nest Logo" />
 </p>
 
 <p align="center">
@@ -11,12 +11,12 @@
 </p>
 
 <div style="margin: 0 auto; text-align: center;">
-  <img src="https://github.com/bear-hugs/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
+  <img src="https://github.com/polar-rules/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
 </div>
 
 ## Description
 
-@bear-hugs/nest-task is the ultimate tool for generating and executing tasks within 
+@polar-rules/nest-task is the ultimate tool for generating and executing tasks within 
 <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> environment using it's 
 classes, services, etc. We are fully following <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
 conventions, rules and approaches to make our library as simple and as familiar as Nest.js itself.
@@ -60,13 +60,13 @@ do: Reflect, class-transformer, class-validator, etc.
 Via `NPM`:
 
 ```Bash
-npm install @bear-hugs/nest-task
+npm install @polar-rules/nest-task
 ```
 
 Via `Yarn`:
 
 ```Bash
-yarn add @bear-hugs/nest-task
+yarn add @polar-rules/nest-task
 ```
 
 ### Help
@@ -215,7 +215,7 @@ directory specified in `path` key.
 Required.
 
 Directive the specifies what kind of file naming convention we should use when using `create`
-command. Available options are: `"camel-case"`, `"snake-case"`, `"kebab-case"` or `"bear-hugs"`.
+command. Available options are: `"camel-case"`, `"snake-case"`, `"kebab-case"` or `"polar-rules"`.
 
 ------------------------------
 
@@ -228,7 +228,7 @@ Its implementation is straight forward, and one time. You don't need make change
 
 `<root>/src/tasks/main.ts`
 ```Typescript
-import { Factory } from "@bear-hugs/nest-task";
+import { Factory } from "@polar-rules/nest-task";
 
 import { TasksModule } from "./tasks.module";
 
@@ -249,7 +249,7 @@ The implementation is close to Nest.js `@Module` implementation.
 
 `<root>/src/tasks/tasks.module.ts`
 ```Typescript
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { ExampleTask } from "./example/example.task";
 
@@ -276,7 +276,7 @@ Defining `Task` class.
 
 `<root>/src/tasks/example/example.task.ts`
 ```Typescript
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { AppModule } from "../../app.module";
 import { AppService } from "../../app.service";
@@ -335,7 +335,7 @@ Defining `Runner` class.
 ```Typescript
 import { INestApplication } from "@nestjs/common";
 
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { ExampleDto } from "./example.dto";
 
@@ -369,7 +369,7 @@ Defining `DTO` class.
 import { Type } from "class-transformer";
 import { IsNumber, IsString } from "class-validator";
 
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 export class ExampleDto {
     @Decorators.Property()
@@ -423,4 +423,4 @@ We welcome contributions! Please read our [Contribution Guidelines](documentatio
 
 ## License
 
-@bear-hugs/nest-task is [MIT licensed](LICENSE).
+@polar-rules/nest-task is [MIT licensed](LICENSE).

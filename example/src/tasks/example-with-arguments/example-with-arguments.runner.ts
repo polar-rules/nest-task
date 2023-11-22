@@ -1,4 +1,4 @@
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { ExampleWithArgumentsDto } from "./example-with-arguments.dto";
 
