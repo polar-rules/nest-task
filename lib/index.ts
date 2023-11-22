@@ -5,6 +5,3 @@ import * as _Factory from "./factory/index.js";
 
 export const Decorators = _Core.Core.Decorators;
 export const Factory = _Factory.Factory.Main;
-export const Core = {
-    App: _Core.Core.App,
-};
