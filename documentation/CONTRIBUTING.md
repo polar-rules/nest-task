@@ -1,4 +1,4 @@
-# Contributing to @bear-hugs/nest-task
+# Contributing to @polar-rules/nest-task
 
 We would love for you to contribute to NestTask and help make it even better than it is
 today! As a contributor, here are the guidelines we would like you to follow:
@@ -25,7 +25,7 @@ To save your and our time, we will systematically close all issues that are requ
 ## <a name="issue"></a> Found a Bug?
 
 If you find a bug in the source code, you can help us by
-[submitting an issue](#submit-issue) to our [GitHub Repository](https://github.com/bear-hugs/nest-task). Even better, you can
+[submitting an issue](#submit-issue) to our [GitHub Repository](https://github.com/polar-rules/nest-task). Even better, you can
 [submit a Pull Request](#submit-pr) with a fix.
 
 ## <a name="feature"></a> Missing a Feature?
@@ -53,7 +53,7 @@ In order to reproduce bugs we will systematically ask you to provide a minimal r
 or [Gist](https://gist.github.com/). Having a live, reproducible scenario gives us wealth of important information
 without going back & forth to you with additional questions like:
 
-- version of @bear-hugs/nest-task used
+- version of @polar-rules/nest-task used
 - 3rd-party libraries and their versions
 - and most importantly - a use-case that fails
 
@@ -93,7 +93,7 @@ Before you submit your Pull Request (PR) consider the following guidelines:
    git push origin task-number-task-title
    ```
 
-1. In GitHub, send a pull request to `bear-hugs/nest-task:master`.
+1. In GitHub, send a pull request to `polar-rules/nest-task:master`.
 
 - If we suggest changes then:
 

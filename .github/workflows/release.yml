@@ -29,7 +29,6 @@ jobs:
           cache-dependency-path: package-lock.json
       - name: '[Setup] Install dependencies'
         run: npm install
-
       - name: '[Run] ESlint'
         run: npm run check:lint
 
@@ -109,10 +108,7 @@ jobs:
           check-latest: false
           cache: npm
           cache-dependency-path: package-lock.json
-      - name: '[Setup] Login to NPM'
-        run: npm login --scope=@polar-rules/nest-task --registry=https://registry.npmjs.org/ --//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+          registry-url: 'https://registry.npmjs.org'
       - name: '[Prepare] Change version'
         uses: reedyuk/npm-version@1.1.1
         with:

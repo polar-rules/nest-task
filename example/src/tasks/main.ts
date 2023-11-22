@@ -1,4 +1,4 @@
-import { Factory } from "@bear-hugs/nest-task";
+import { Factory } from "@polar-rules/nest-task";
 
 import { TasksModule } from "./tasks.module";
 

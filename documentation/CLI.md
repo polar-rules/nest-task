@@ -4,7 +4,7 @@
 
 ## CLI
 
-`@bear-hugs/nest-task` is supplied with 2 versions of CLI, basic commands and interactive assistant.
+`@polar-rules/nest-task` is supplied with 2 versions of CLI, basic commands and interactive assistant.
 
 ---
 
@@ -53,11 +53,11 @@ Run this command as a generator to create task boilerplate, that includes `@Deco
     - For example: `--description "The task example"`
 
 #### `setup`
-Used in purpose to run first initial setup of the @bear-hugs/nest-task. Performs 3 basic actions: modify
+Used in purpose to run first initial setup of the @polar-rules/nest-task. Performs 3 basic actions: modify
 `nest-cli.json`, creates an entrypoint for tasks to run and creates an example of task.
 - `project-name` Optional. In case your `nest-cli.json` have `projects` key defined.
-- `convention` Required. Specify naming convention for files and classes. Options are `camel-case`, `snake-case`, `kebab-case`, `bear-hugs`
+- `convention` Required. Specify naming convention for files and classes. Options are `camel-case`, `snake-case`, `kebab-case`, `polar-rules`
     - `camel-case` - tells us to create files with camel case convention. For example: `camelCase.example.ts`
     - `snake-case` - tells us to create files with snake case convention. For example: `snake_case.example.ts`
     - `kebab-case` - tells us to create files with camel case convention. For example: `kebab-case.example.ts`
-    - `bear-hugs` - combination of kebab case and specific 
+    - `polar-rules` - combination of kebab case and specific 

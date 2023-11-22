@@ -51,9 +51,9 @@ body:
 
   - type: input
     attributes:
-      label: "@bear-hugs/nest-task version"
+      label: "@polar-rules/nest-task version"
       description: |
-        Which version of `@bear-hugs/nest-task` are you using?
+        Which version of `@polar-rules/nest-task` are you using?
       placeholder: "0.0.1"
 
   - type: input

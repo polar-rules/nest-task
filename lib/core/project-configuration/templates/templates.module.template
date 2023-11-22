@@ -1,4 +1,4 @@
-import { Decorators } from "@bear-hugs/nest-task";
+import { Decorators } from "@polar-rules/nest-task";
 
 import { $importEntity } from "./example/$importFrom";
 

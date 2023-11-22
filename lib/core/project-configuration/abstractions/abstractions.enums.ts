@@ -3,6 +3,6 @@ export namespace _Enums {
         CamelCase = "camel-case",
         SnakeCase = "snake-case",
         KebabCase = "kebab-case",
-        BearHugs = "bear-hugs",
+        BearHugs = "polar-rules",
     }
 }
