@@ -127,5 +127,5 @@ jobs:
         with:
           tag: "v${{ inputs.version }}"
           tag_exists_error: true
-          message: "Release ${{ context.version }}"
+          message: "Release ${{ inputs.version }}"
 
