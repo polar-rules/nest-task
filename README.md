@@ -19,11 +19,11 @@
 <div align="center">
   <div style="display: inline-block; text-align: center;">
     <p><strong>List tasks:</strong></p>
-    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-list.gif?raw=true" width="400" />
+    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-list.gif?raw=true" width="800" />
   </div>
   <div style="display: inline-block; text-align: center;">
     <p><strong>Call task:</strong></p>
-    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-run.gif?raw=true" width="400" /> 
+    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-run.gif?raw=true" width="800" /> 
   </div>
 </div>
 
