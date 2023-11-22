@@ -6,6 +6,7 @@ on:
       version:
         description: 'What will be the release version?'
         required: true
+        default: 0.0.1
         type: string
 
 permissions:
@@ -125,7 +126,7 @@ jobs:
           commit_pattern: "^Release v(\\S+)"
           workspace: "."
           publish_command: "npm"
-          publish_args: "--non-interactive --prod --verbose"
+          publish_args: "--non-interactive --prod"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
