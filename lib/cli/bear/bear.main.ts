@@ -4,8 +4,8 @@ import { _Run } from "./run/index.js";
 import { _Info } from "./info/index.js";
 import { _Create } from "./create/index.js";
 import { _Setup } from "./setup/index.js";
-import { _Types } from "./jarvis.types.js";
-import { _Enums } from "./jarvis.enums.js";
+import { _Types } from "./bear.types.js";
+import { _Enums } from "./bear.enums.js";
 
 export class _Main {
     private action!: _Enums.Actions;

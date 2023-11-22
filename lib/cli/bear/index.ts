@@ -4,16 +4,16 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-import * as $_Types from "./jarvis.types.js";
+import * as $_Types from "./bear.types.js";
 
 import * as $_Create from "./create/index.js";
 import * as $_Info from "./info/index.js";
 import * as $_Run from "./run/index.js";
 import * as $_Setup from "./setup/index.js";
-import * as $_Enums from "./jarvis.enums.js";
-import * as $_Main from "./jarvis.main.js";
+import * as $_Enums from "./bear.enums.js";
+import * as $_Main from "./bear.main.js";
 
-export namespace _Jarvis {
+export namespace _Bear {
     export import Types = $_Types._Types;
 
     export import Create = $_Create._Create;

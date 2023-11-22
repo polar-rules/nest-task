@@ -3,7 +3,7 @@ import "reflect-metadata";
 import { Messages } from "@messages/index.js";
 
 import { _Command } from "./command/index.js";
-import { _Jarvis } from "./jarvis/index.js";
+import { _Bear } from "./bear/index.js";
 import { _Enums } from "./bin.enums.js";
 
 export async function _Runner(): Promise<void> {
@@ -14,8 +14,8 @@ export async function _Runner(): Promise<void> {
     }
 
     switch (command) {
-        case _Enums.Commands.Jarvis:
-            await _Jarvis.Runner();
+        case _Enums.Commands.Bear:
+            await _Bear.Runner();
             break;
         default:
             await _Command.Runner();
