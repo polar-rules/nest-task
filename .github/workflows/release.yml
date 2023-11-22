@@ -117,10 +117,10 @@ jobs:
         run: npm ci --ignore-scripts
       - name: '[Build] Run'
         run: npm run build
-#      - name: '[Publish] NPM'
-#        run: npm publish
-#        env:
-#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: '[Publish] NPM'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: '[Publish] Tag'
         uses: rickstaa/action-create-tag@v1
         id: "tag_create"
