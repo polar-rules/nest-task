@@ -4,8 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-import * as $_Runner from "./jarvis.runner.js";
+import * as $_Runner from "./bear.runner.js";
 
-export namespace _Jarvis {
+export namespace _Bear {
     export import Runner = $_Runner._Runner;
 }

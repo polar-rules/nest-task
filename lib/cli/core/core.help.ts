@@ -29,7 +29,7 @@ export class _Help {
         console.info("List of available commands, AKA this prompt");
         console.info();
 
-        console.info(Messages.Chalk.cyan("nest-task jarvis"));
+        console.info(Messages.Chalk.cyan("nest-task bear"));
         console.info(
             "Interactive assistant. Can perform the same actions as basic commands but in more human friendly way.",
         );

@@ -35,7 +35,7 @@ do: Reflect, class-transformer, class-validator, etc.
 
 - **Easy Setup**: Quickly set up and integrate tasks within your Nest.js environment with a simple setup command.
 - **Convention-based**: Follows Nest.js conventions and supports different file naming conventions for flexibility.
-- **Interactive Assistant**: Use the interactive assistant (`jarvis`) for a more human-friendly and guided experience.
+- **Interactive Assistant**: Use the interactive assistant (`bear`) for a more human-friendly and guided experience.
 - **CLI Commands**: Execute a variety of commands for task creation, information retrieval, and task execution.
 - **Documentation**: Well-documented with examples and explanations to guide users through the process.
 
@@ -102,7 +102,7 @@ npx nest-task setup --project-name <project> --convention kebab-case
 
 Or run interactive assistant and pick `Setup` option, and then just follow installation steps:
 ```Bash
-npx nest-task jarvis
+npx nest-task bear
 ```
 
 This action will do the following:
@@ -126,7 +126,7 @@ npx nest-task create --project-name <project> --name <name> --description <descr
 
 You can run interactive assistant and pick `create` option and just follow proposed steps to generate task:
 ```Bash
-npx nest-task jarvis
+npx nest-task bear
 ```
 
 ### Receiving the list of tasks
@@ -146,7 +146,7 @@ npx nest-task info --project-name <project>
 
 You can run interactive assistant and pick `info` option and just follow proposed steps to generate task:
 ```Bash
-npx nest-task jarvis
+npx nest-task bear
 ```
 
 ### Running task
@@ -166,7 +166,7 @@ npx nest-task run --project-name <project> --name <name> <other-arguments>
 
 You can run interactive assistant and pick `run` option and just follow proposed steps to generate task:
 ```Bash
-npx nest-task jarvis
+npx nest-task bear
 ```
 
 ## Documentation
