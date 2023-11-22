@@ -10,16 +10,22 @@
     basic tools and approaches.
 </p>
 
-<div style="margin: 0 auto; text-align: center;">
+<p align="center">
   <img src="https://github.com/polar-rules/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
-</div>
+</p>
 
 ## Preview
 
-<p align="center">
-  <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-list.gif?raw=true" width="500" />
-  <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-run.gif?raw=true" width="500" /> 
-</p>
+<div align="center">
+  <div style="display: inline-block; text-align: center;">
+    <p><strong>List tasks:</strong></p>
+    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-list.gif?raw=true" width="400" />
+  </div>
+  <div style="display: inline-block; text-align: center;">
+    <p><strong>Call task:</strong></p>
+    <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-run.gif?raw=true" width="400" /> 
+  </div>
+</div>
 
 ## Description
 
