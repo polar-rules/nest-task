@@ -14,12 +14,19 @@
   <img src="https://github.com/polar-rules/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
 </div>
 
+## Preview
+
+<p align="center">
+  <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-list.gif?raw=true" width="500" />
+  <img src="https://github.com/polar-rules/nest-task/blob/main/assets/nest-task-run.gif?raw=true" width="500" /> 
+</p>
+
 ## Description
 
-@polar-rules/nest-task is the ultimate tool for generating and executing tasks within 
-<a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> environment using it's 
+[`@polar-rules/nest-task`](https://github.com/polar-rules/nest-task) is the ultimate tool for generating and executing tasks within 
+<a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> environment using its 
 classes, services, etc. We are fully following <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
-conventions, rules and approaches to make our library as simple and as familiar as Nest.js itself.
+conventions, rules and approaches to make our library as simple and as familiar as <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>  itself.
 
 Under the hood we are using the same tool set as <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
 do: Reflect, class-transformer, class-validator, etc.
@@ -166,7 +173,7 @@ npx nest-task jarvis
 
 ### Nest integration
 
-In purpose to integrate with Nest.js we modify `nest-cli.json` file located inside your root directory. We add 
+In purpose to integrate with <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> we modify `nest-cli.json` file located inside your root directory. We add 
 key `task` in this file on top level. The object should have the following format:
 
 `<root>/nest-cli.json`
@@ -180,7 +187,7 @@ key `task` in this file on top level. The object should have the following forma
 }
 ```
 
-Or if you use `projects` feature from Nest.js then your `nest-cli.json` should look like this:
+Or if you use `projects` feature from <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> then your `nest-cli.json` should look like this:
 `<root>/nest-cli.json`
 
 ```json
@@ -221,7 +228,7 @@ command. Available options are: `"camel-case"`, `"snake-case"`, `"kebab-case"` o
 
 ### Entrypoint
 
-Entrypoint file, `main.ts` it's similar to Nest.js `main.ts` file. Basically after you run `npx nest-task setup` you 
+Entrypoint file, `main.ts` it's similar to <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> `main.ts` file. Basically after you run `npx nest-task setup` you 
 don't need to change it, except the cases when you want to use custom paths.
 
 Its implementation is straight forward, and one time. You don't need make changes afterward.
@@ -245,7 +252,7 @@ The only thing that you can possibly would like to change here is path to `Tasks
 
 ### TasksModule
 
-The implementation is close to Nest.js `@Module` implementation.
+The implementation is close to <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> `@Module` implementation.
 
 `<root>/src/tasks/tasks.module.ts`
 ```Typescript
@@ -319,12 +326,12 @@ executed by the task.
 #### `module`
 Required.
 
-Main Nest.js application module is required to correctly initialise Nest.js environment.
+Main <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> application module is required to correctly initialise <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> environment.
 
 #### `providers`
 Optional.
 
-Array of Nest.js services, entities and just classes that you want to use withing task in a same way as you do this 
+Array of <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> services, entities and just classes that you want to use withing task in a same way as you do this 
 within `@Controller`, `@Injectable`, etc.
 
 ------------------------------
@@ -351,14 +358,14 @@ export class _Runner {
 ------------------------------
 
 #### `providers`
-Are matched from `@Decorators.Task` `providers` field into `constructor` by type. The same way as you do with Nest.js.
+Are matched from `@Decorators.Task` `providers` field into `constructor` by type. The same way as you do with <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>.
 
 #### `app`
-By using `@Decorators.App()` for an argument you can pass the Nest.js application variable.
+By using `@Decorators.App()` for an argument you can pass the <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> application variable.
 
 #### `args`
 If you need to pass additional arguments from command line to the task you can use `@Decorators.Arguments()` with `DTO`
-in a same way as you do for Nest.js `@Controller`.
+in a same way as you do for <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> `@Controller`.
 
 ------------------------------
 
@@ -384,7 +391,7 @@ export class ExampleDto {
 }
 ```
 
-The same way that you do with Nest.js DTO.
+The same way that you do with <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> DTO.
 
 **However**
 
@@ -418,9 +425,9 @@ We welcome contributions! Please read our [Contribution Guidelines](documentatio
 
 ## Acknowledgments
 
-- The `@nestjs/cli` for providing a solid foundation for Nest.js projects.
+- The `@nestjs/cli` for providing a solid foundation for <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> projects.
 - The `class-validator` and `class-transformer` for easy class validation
 
 ## License
 
-@polar-rules/nest-task is [MIT licensed](LICENSE).
+[`@polar-rules/nest-task`](https://github.com/polar-rules/nest-task) is [MIT licensed](LICENSE).
