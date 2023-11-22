@@ -110,7 +110,7 @@ jobs:
           cache: npm
           cache-dependency-path: package-lock.json
       - name: '[Setup] Login to NPM'
-        run: npm login --scope=@bear-hugs --registry=https://registry.npmjs.org/ --//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+        run: npm login --scope=@bear-hugs-test --registry=https://registry.npmjs.org/ --//registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: '[Prepare] Change version'
