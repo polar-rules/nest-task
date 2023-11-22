@@ -331,7 +331,7 @@ within `@Controller`, `@Injectable`, etc.
 
 Defining `Runner` class.
 
-`<root>/src/tasks/example/runner.task.ts`
+`<root>/src/tasks/example/example.runner.ts`
 ```Typescript
 import { INestApplication } from "@nestjs/common";
 
@@ -364,7 +364,7 @@ in a same way as you do for Nest.js `@Controller`.
 
 Defining `DTO` class.
 
-`<root>/src/tasks/example/runner.dto.ts`
+`<root>/src/tasks/example/example.dto.ts`
 ```Typescript
 import { Type } from "class-transformer";
 import { IsNumber, IsString } from "class-validator";
