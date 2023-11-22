@@ -1,11 +1,7 @@
-import { defaultMetadataStorage } from "class-transformer/cjs/storage.js";
-
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 
 import { _Decorators } from "./decorators/index.js";
-
-import { _Types } from "./core.types.js";
 
 export class _Task {
     private nameMemo: string | undefined;
@@ -24,7 +20,7 @@ export class _Task {
 
     private providersMemo: Interfaces.General.AnyClass[] | undefined;
 
-    private argsMemo: _Types.Task.Argument[] = [];
+    private argsMemo: _Decorators.Types.Property.Property[] = [];
 
     private dtoInitialised: boolean = false;
 
@@ -128,7 +124,7 @@ export class _Task {
         return this.providersMemo;
     }
 
-    public get args(): _Types.Task.Argument[] {
+    public get args(): _Decorators.Types.Property.Property[] {
         if (!this.dto) {
             return this.argsMemo;
         }
@@ -136,12 +132,12 @@ export class _Task {
         if (!this.argsInitialised) {
             this.argsInitialised = true;
 
-            const argKeys = Patches.Reflect.getMetadata<string[] | undefined>(
+            const args = Patches.Reflect.getMetadata<_Decorators.Types.Property.Property[] | undefined>(
                 _Decorators.Enums.Metadata.Dto.Property,
                 this.dto,
             );
 
-            if (!argKeys?.length) {
+            if (!args?.length) {
                 return this.argsMemo;
             }
 
@@ -149,11 +145,7 @@ export class _Task {
                 return this.argsMemo;
             }
 
-            for (const arg of argKeys) {
-                const metadata = defaultMetadataStorage.findTypeMetadata(this.dto, arg);
-
-                this.argsMemo.push({ metadata, name: arg, type: metadata.reflectedType.name });
-            }
+            this.argsMemo = [...args];
         }
 
         return this.argsMemo;

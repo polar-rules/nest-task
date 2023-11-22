@@ -105,22 +105,20 @@ export class _Perform {
 
             const argument = _ArgumentsManager.taskArguments[arg.name];
 
-            if (argument === undefined) {
-                dto[arg.name] = argument;
-                continue;
+            switch (arg.type) {
+                case "boolean":
+                    dto[arg.name] = Boolean(argument);
+                    break;
+                case "number":
+                    dto[arg.name] = Number(argument);
+                    break;
+                case "string":
+                case "undefined":
+                case "null":
+                default:
+                    dto[arg.name] = argument;
+                    break;
             }
-
-            if (argument === null) {
-                dto[arg.name] = argument;
-                continue;
-            }
-
-            if (!arg.metadata.reflectedType) {
-                dto[arg.name] = argument;
-                continue;
-            }
-
-            dto[arg.name] = arg.metadata.reflectedType(argument);
         }
 
         try {

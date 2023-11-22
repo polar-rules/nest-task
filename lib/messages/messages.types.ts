@@ -2,13 +2,8 @@ import { Core } from "@core/index.js";
 
 export namespace _Types {
     export namespace FoundTasks {
-        export interface Argument {
-            name: string;
-            type: string;
-        }
-
         export interface Options extends Core.Decorators.Types.Descriptable {
-            args?: Argument[];
+            args?: Core.Decorators.Types.Property.Property[];
         }
     }
 
