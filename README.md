@@ -16,6 +16,10 @@
   <a href="https://www.npmjs.com/package/@polar-rules/nest-task?activeTab=versions" target="_blank"><img src="https://img.shields.io/badge/License-MIT-pink" alt="Package License" /></a>
 </p>
 
+<p align="center">
+  <a href="https://github.com/polar-rules/nest-task/actions" target="_blank"><img src="https://polar-rules.github.io/nest-task/badges/coverage.svg" alt="Coverage" /></a>
+</p>
+
 ## Preview
 
 <div align="center">
