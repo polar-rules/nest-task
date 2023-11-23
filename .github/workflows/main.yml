@@ -96,7 +96,7 @@ jobs:
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
       - name: '[Setup] Node.js'
         uses: actions/setup-node@v3
         with:
@@ -143,22 +143,15 @@ jobs:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
       - name: '[GIT] Create PR'
-        env:
-          GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: |
-          gh pr create \
-            --base gh-pages \
-            --head bot-badge-update \
-            --title "[Bot] Badge update" \
-            --body "This PR is automatically created by BOT and will be merge automatically as well." \
-      - name: '[GIT] Find PR'
-        id: find_pr
-        env:
-          GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: |
-          pr_number=$(gh pr list --state open --base main --json number,title --limit 1 | jq -r '.[] | select(.title == "[Bot] Badge update") | .number')
-          echo "pull-request-number=$pr_number" >> $GITHUB_OUTPUT
+        id: create_pr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.BOT_KEY }}
+          branch: bot-badge-update
+          base: gh-pages
+          title: "[Bot] Badge update"
+          body: "This PR is automatically created by BOT and will be merge automatically as well."
       - name: '[GIT] Merge PR'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: gh pr merge "${{ steps.find_pr.outputs.pull-request-number }}" --auto-merge --squash --delete-branch
+        run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --auto-merge --squash --delete-branch
