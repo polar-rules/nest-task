@@ -12,6 +12,8 @@
 
 <p align="center">
   <img src="https://github.com/polar-rules/nest-task/actions/workflows/main.yml/badge.svg?branch=main" alt="Main" style="max-width: 100%;">
+  <a href="https://www.npmjs.com/package/@polar-rules/nest-task?activeTab=versions" target="_blank"><img src="https://img.shields.io/github/release/polar-rules/nest-task?include_prereleases=&sort=semver&color=blue" alt="NPM Version" /></a>
+  <a href="https://www.npmjs.com/package/@polar-rules/nest-task?activeTab=versions" target="_blank"><img src="https://img.shields.io/badge/License-MIT-pink" alt="Package License" /></a>
 </p>
 
 ## Preview
@@ -436,4 +438,4 @@ We welcome contributions! Please read our [Contribution Guidelines](documentatio
 
 ## License
 
-[`@polar-rules/nest-task`](https://github.com/polar-rules/nest-task) is [MIT licensed](LICENSE).
+Released under [MIT](/LICENSE) by [@polar-rules](https://github.com/polar-rules).
