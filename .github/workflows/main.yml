@@ -114,10 +114,6 @@ jobs:
         run: |
           COV=$(node -p 't=require(`./coverage/coverage-summary.json`).total,Math.min(...`lines|statements|functions|branches`.split(`|`).map(k=>t[k].pct))')
           echo "coverage=$COV" >> $GITHUB_OUTPUT
-      - name: '[Git] User'
-        run: |
-          git config --local user.email "${{ env.BOT_EMAIL }}"
-          git config --local user.name "${{ env.BOT_USERNAME }}"
       - name: '[GIT] Switch branch'
         uses: actions/checkout@v3
         with:
@@ -132,6 +128,10 @@ jobs:
           export COV=${{ steps.get-values.outputs.coverage }}
           COLOR=$(node -p '+process.env.COV >= 95 ? `green` : `orange`')
           badgen -j coverage -s $COV% -c $COLOR > badges/coverage.svg
+      - name: '[GIT] User'
+        run: |
+          git config --global user.email "${{ vars.BOT_EMAIL }}"
+          git config --global user.name "${{ vars.BOT_USERNAME }}"
       - name: '[GIT] Commit'
         run:  git commit -a -m "[Bot] Update coverage badge"
       - name: '[GIT] Push'

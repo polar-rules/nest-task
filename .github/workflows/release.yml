@@ -123,8 +123,8 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: '[GIT] User'
         run: |
-          git config --local user.email "${{ env.BOT_EMAIL }}"
-          git config --local user.name "${{ env.BOT_USERNAME }}"
+          git config --global user.email "${{ vars.BOT_EMAIL }}"
+          git config --global user.name "${{ vars.BOT_USERNAME }}"
       - name: '[GIT] Commit'
         run:  git commit -a -m "[Bot] Update package.json version"
       - name: '[GIT] Push'
