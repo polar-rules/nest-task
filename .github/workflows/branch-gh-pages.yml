@@ -1,9 +1,8 @@
-name: GH Pages
+name: 'Branch: gh-pages'
 
 on:
   push:
     branches: ["gh-pages"]
-  workflow_dispatch:
 
 permissions:
   contents: read
