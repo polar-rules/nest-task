@@ -121,6 +121,17 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: '[Prepare] User'
+        run: |
+          git config --local user.email "${{ env.BOT_EMAIL }}"
+          git config --local user.name "${{ env.BOT_USERNAME }}"
+      - name: '[GIT] Commit'
+        run:  git commit -a -m "[Bot] Update package.json version"
+      - name: '[GIT] Push'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.BOT_KEY }}
+          branch: ${{ github.ref }}
       - name: '[Publish] Tag'
         uses: rickstaa/action-create-tag@v1
         id: "tag_create"
