@@ -1,8 +1,7 @@
-name: Bot Pull Request
+name: 'Bot: Pull Request'
 
 on:
   pull_request:
-    branches: ['main', 'gh-pages']
     types:
       - opened
 
@@ -60,7 +59,7 @@ jobs:
       - name: '[GIT] Merge'
         if: steps.wait-for-checks.outputs.checksComplete == 'true'
         run: |
-          gh pr merge ${{ github.event.number }} --auto --squash
+          gh pr merge ${{ github.event.number }} --auto --squash --admin
 
       - name: '[GIT] Clean branch'
         env:
