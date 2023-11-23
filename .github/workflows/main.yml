@@ -140,4 +140,4 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.BOT_KEY }}
-          branch: ${{ github.ref }}
+          branch: gh-pages

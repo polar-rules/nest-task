@@ -133,7 +133,7 @@ jobs:
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.BOT_KEY }}
-          branch: ${{ github.ref }}
+          branch: gh-pages
       - name: '[Publish] Tag'
         uses: rickstaa/action-create-tag@v1
         id: "tag_create"
