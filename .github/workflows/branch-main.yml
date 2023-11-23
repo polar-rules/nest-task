@@ -77,7 +77,7 @@ jobs:
       - name: '[GIT] Push'
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
-        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-actions-update
 
       - name: '[GIT] Create PR'
         env:
