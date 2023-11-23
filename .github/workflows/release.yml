@@ -1,0 +1,86 @@
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'What will be the release version?'
+        required: true
+        default: 0.0.1
+        type: string
+
+permissions:
+  id-token: write
+  contents: write
+
+jobs:
+  eslint:
+    name: 'ESlint'
+    uses: ./.github/workflows/re-eslint.yml
+
+  prettier:
+    name: 'Prettier'
+    uses: ./.github/workflows/re-prettier.yml
+
+  typescript:
+    name: 'Typescript'
+    uses: ./.github/workflows/re-typescript.yml
+
+  tests:
+    name: 'Tests'
+    uses: ./.github/workflows/re-tests.yml
+
+  release:
+    name: Release
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+          registry-url: 'https://registry.npmjs.org'
+      - name: '[Prepare] Change version'
+        uses: reedyuk/npm-version@1.1.1
+        with:
+          version: ${{ inputs.version }}
+      - name: '[Setup] Install dependencies'
+        run: npm ci --ignore-scripts
+      - name: '[Build] Run'
+        run: npm run build
+      - name: '[Publish] NPM'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: '[GIT] User'
+        run: |
+          git config --global user.email "${{ vars.BOT_EMAIL }}"
+          git config --global user.name "${{ vars.BOT_USERNAME }}"
+      - name: '[GIT] Add package.json'
+        run: git add package.json
+      - name: '[GIT] Commit'
+        run:  git commit -a -m "[Bot] Update package.json version"
+      - name: '[GIT] Push'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.BOT_KEY }}
+          branch: main
+      - name: '[Publish] Tag'
+        uses: rickstaa/action-create-tag@v1
+        id: "tag_create"
+        with:
+          tag: "v${{ inputs.version }}"
+          tag_exists_error: true
+          message: "Release ${{ inputs.version }}"
+
