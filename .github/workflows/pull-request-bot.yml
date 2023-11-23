@@ -21,10 +21,10 @@ jobs:
         run: |
           if [[ ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
             echo "PR with specific name detected. Proceeding to check if required checks have passed."
-            echo "merge='true'" >> $GITHUB_ENV
+            echo "merge=true" >> $GITHUB_ENV
           else
             echo "PR does not have the specific name. Skipping merge."
-            echo "merge='false'" >> $GITHUB_ENV
+            echo "merge=false" >> $GITHUB_ENV
           fi
 
       - name: '[GIT] Merge'
