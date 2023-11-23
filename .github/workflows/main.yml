@@ -24,13 +24,61 @@ jobs:
     name: 'Tests'
     uses: ./.github/workflows/re-tests.yml
 
-  coverage:
-    name: Coverage
+  copy-actions:
+    name: 'Copy actions'
     needs:
       - eslint
       - prettier
       - typescript
       - tests
+  runs-on: ubuntu-latest
+  steps:
+    - name: '[Setup] Checkout'
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: '[GIT] Add user.email'
+      run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+    - name: '[GIT] Add user.name'
+      run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+    - name: '[Prepare] Copy actions directory'
+      run: cp -r ./.github/workflows ./.github/tmp
+
+    - name: '[GIT] Create branch'
+      run: git checkout -b bot-actions-update
+
+    - name: '[Prepare] Copy actions directory'
+      run: cp -rf ./.github/tmp ./.github/workflows
+
+    - name: '[GIT] Add workflows'
+      run: git add github/workflows
+
+    - name: '[GIT] Commit'
+      run: git commit -a -m "[Bot] Update actions"
+
+    - name: '[GIT] Push'
+      env:
+        TOKEN: ${{ secrets.BOT_KEY }}
+      run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+
+    - name: '[GIT] Create PR'
+      env:
+        GH_TOKEN: ${{ secrets.BOT_KEY }}
+      run: |
+        gh pr create \
+          --base gh-pages \
+          --head bot-actions-update \
+          --title "[Bot] Actions update" \
+          --body "This PR is automatically created by BOT and will be merge automatically as well."
+      
+
+  coverage:
+    name: Coverage
+    needs:
+      - copy-actions
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
