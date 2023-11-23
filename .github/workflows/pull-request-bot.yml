@@ -1,8 +1,10 @@
-name: 'Bot: Pull Request'
+name: 'Pull Request: Bot'
 
 on:
   pull_request:
-    branches: ['main', 'gh-pages']
+    branches:
+      - main
+      - gh-pages
 
 jobs:
   merge:
@@ -16,7 +18,7 @@ jobs:
           fetch-depth: 0
       - name: '[Check] PR name'
         run: |
-          if [[ ${{ github.event_name }} == 'pull_request' && ${{ github.event.action }} == 'opened' && ${{ github.event.pull_request.title }} == '[Bot] Badge update' ]]; then
+          if [[ ${{ github.event_name }} == 'pull_request' && ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
             echo "PR with specific name detected. Proceeding to check if required checks have passed."
           else
             echo "PR does not have the specific name. Skipping auto-merge."
