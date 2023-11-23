@@ -47,5 +47,4 @@ jobs:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: |
           git push origin -d bot-badge-update ||
-            echo "Branch bot-badge-update does not exist, skipping deletion" \
-            exit 0
+            echo "Branch bot-badge-update does not exist, skipping deletion"
