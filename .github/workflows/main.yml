@@ -153,6 +153,8 @@ jobs:
             --body "This PR is automatically created by BOT and will be merge automatically as well." \
       - name: '[GIT] Find PR'
         id: find_pr
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: |
           pr_number=$(gh pr list --state open --base main --json number,title --limit 1 | jq -r '.[] | select(.title == "[Bot] Badge update") | .number')
           echo "pull-request-number=$pr_number" >> $GITHUB_OUTPUT
