@@ -1,6 +1,7 @@
-name: Main
+name: 'Branch: main'
 
 on:
+  workflow_dispatch:
   push:
     branches: ['main']
 
@@ -44,8 +45,11 @@ jobs:
       - name: '[GIT] Add user.name'
         run: git config --global user.name "${{ vars.BOT_USERNAME }}"
 
-      - name: '[Prepare] Copy actions directory'
-        run: cp -r ./.github/workflows ./.github/tmp
+      - name: '[Upload] Artifacts'
+        uses: actions/upload-artifact@v2
+        with:
+          name: workflows
+          path: .github/workflows
 
       - name: '[GIT] Switch to gh-pages'
         uses: actions/checkout@v4
@@ -55,11 +59,17 @@ jobs:
       - name: '[GIT] Create branch'
         run: git checkout -b bot-actions-update
 
-      - name: '[Prepare] Copy actions directory'
-        run: cp -rf ./.github/tmp/ ./.github/workflows/
+      - name: '[Download] Artifacts'
+        uses: actions/download-artifact@v2
+        with:
+          name: workflows
+          path: .github/workflows
+
+      - name: '[Debug] Artifacts'
+        run: ls -R .github/workflows
 
       - name: '[GIT] Add workflows'
-        run: git add github/workflows
+        run: git add .github/workflows
 
       - name: '[GIT] Commit'
         run: git commit -a -m "[Bot] Update actions"
@@ -67,7 +77,7 @@ jobs:
       - name: '[GIT] Push'
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
-        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-actions-update
 
       - name: '[GIT] Create PR'
         env:
