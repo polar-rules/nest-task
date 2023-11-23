@@ -2,8 +2,9 @@ name: 'Bot: Pull Request'
 
 on:
   pull_request:
+    branches: ['main', 'gh-pages']
     types:
-      - opened
+      - created
 
 jobs:
   merge:
