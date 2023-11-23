@@ -16,6 +16,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: '[Check] PR name'
         run: |
           if [[ ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
@@ -26,9 +27,20 @@ jobs:
           fi
 
       - name: '[GIT] Merge'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: gh pr merge ${{ github.event.number }} --auto --squash --admin
+
+      - name: '[GIT] Add user.email'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
 
       - name: '[GIT] Clean branch'
         env:
-          GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: git push origin -d bot-badge-update || echo "Branch bot-badge-update does not exist, skipping deletion"
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          git push origin -d bot-badge-update ||
+            echo "Branch bot-badge-update does not exist, skipping deletion" \
+            exit 0

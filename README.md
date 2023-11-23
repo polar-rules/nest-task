@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/polar-rules/nest-task/actions" target="_blank"><img src="https://polar-rules.github.io/nest-task/badges/coverage.svg" alt="Coverage" /></a>
+  <a href="https://github.com/polar-rules/nest-task/actions" target="_blank"><img src="https://polar-rules.github.io/nest-task/assets/badges/coverage.svg" alt="Coverage" /></a>
 </p>
 
 ## Preview
