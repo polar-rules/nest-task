@@ -1,0 +1,39 @@
+name: GH Pages
+
+on:
+  push:
+    branches: ["gh-pages"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[Setup] Setup Pages'
+        uses: actions/configure-pages@v3
+
+      - name: '[Deploy] Upload artifact'
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: '.'
+
+      - name: '[Deploy ] GitHub Pages'
+        id: deployment
+        uses: actions/deploy-pages@v2
