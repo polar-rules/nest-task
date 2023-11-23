@@ -46,6 +46,7 @@ do: Reflect, class-transformer, class-validator, etc.
 ### Features
 
 - **Easy Setup**: Quickly set up and integrate tasks within your Nest.js environment with a simple setup command.
+- **Support ESM & CJS**: Fully support latest modules, `CJS` and `ESM`.
 - **Convention-based**: Follows Nest.js conventions and supports different file naming conventions for flexibility.
 - **Interactive Assistant**: Use the interactive assistant (`bear`) for a more human-friendly and guided experience.
 - **CLI Commands**: Execute a variety of commands for task creation, information retrieval, and task execution.
