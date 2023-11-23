@@ -31,48 +31,53 @@ jobs:
       - prettier
       - typescript
       - tests
-  runs-on: ubuntu-latest
-  steps:
-    - name: '[Setup] Checkout'
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: '[GIT] Add user.email'
-      run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+      - name: '[GIT] Add user.email'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
 
-    - name: '[GIT] Add user.name'
-      run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+      - name: '[GIT] Add user.name'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
 
-    - name: '[Prepare] Copy actions directory'
-      run: cp -r ./.github/workflows ./.github/tmp
+      - name: '[Prepare] Copy actions directory'
+        run: cp -r ./.github/workflows ./.github/tmp
 
-    - name: '[GIT] Create branch'
-      run: git checkout -b bot-actions-update
+      - name: '[GIT] Switch to gh-pages'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
 
-    - name: '[Prepare] Copy actions directory'
-      run: cp -rf ./.github/tmp ./.github/workflows
+      - name: '[GIT] Create branch'
+        run: git checkout -b bot-actions-update
 
-    - name: '[GIT] Add workflows'
-      run: git add github/workflows
+      - name: '[Prepare] Copy actions directory'
+        run: cp -rf ./.github/tmp/ ./.github/workflows/
 
-    - name: '[GIT] Commit'
-      run: git commit -a -m "[Bot] Update actions"
+      - name: '[GIT] Add workflows'
+        run: git add github/workflows
 
-    - name: '[GIT] Push'
-      env:
-        TOKEN: ${{ secrets.BOT_KEY }}
-      run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+      - name: '[GIT] Commit'
+        run: git commit -a -m "[Bot] Update actions"
 
-    - name: '[GIT] Create PR'
-      env:
-        GH_TOKEN: ${{ secrets.BOT_KEY }}
-      run: |
-        gh pr create \
-          --base gh-pages \
-          --head bot-actions-update \
-          --title "[Bot] Actions update" \
-          --body "This PR is automatically created by BOT and will be merge automatically as well."
+      - name: '[GIT] Push'
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+
+      - name: '[GIT] Create PR'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          gh pr create \
+            --base gh-pages \
+            --head bot-actions-update \
+            --title "[Bot] Actions update" \
+            --body "This PR is automatically created by BOT and will be merge automatically as well."
       
 
   coverage:
