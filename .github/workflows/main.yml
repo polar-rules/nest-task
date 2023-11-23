@@ -96,7 +96,7 @@ jobs:
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - name: '[Setup] Node.js'
         uses: actions/setup-node@v3
         with:
@@ -115,7 +115,7 @@ jobs:
           COV=$(node -p 't=require(`./coverage/coverage-summary.json`).total,Math.min(...`lines|statements|functions|branches`.split(`|`).map(k=>t[k].pct))')
           echo "coverage=$COV" >> $GITHUB_OUTPUT
       - name: '[GIT] Switch to gh-pages'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: gh-pages
       - name: '[GIT] Create branch'
@@ -142,8 +142,18 @@ jobs:
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
-      - name: '[GIT] Fetch'
-        run: git fetch
+
+  merge:
+    name: Merge
+    needs:
+      - coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[GIT] Switch to gh-pages'
+        uses: actions/checkout@v4
+        with:
+          ref: bot-badge-update
+          fetch-depth: 1
       - name: '[GIT] Create PR'
         id: create_pr
         uses: peter-evans/create-pull-request@v3
