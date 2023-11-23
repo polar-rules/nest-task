@@ -125,6 +125,8 @@ jobs:
         run: |
           git config --global user.email "${{ vars.BOT_EMAIL }}"
           git config --global user.name "${{ vars.BOT_USERNAME }}"
+      - name: '[GIT] Add package.json'
+        run: git add package.json
       - name: '[GIT] Commit'
         run:  git commit -a -m "[Bot] Update package.json version"
       - name: '[GIT] Push'

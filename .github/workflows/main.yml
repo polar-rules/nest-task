@@ -132,6 +132,8 @@ jobs:
         run: |
           git config --global user.email "${{ vars.BOT_EMAIL }}"
           git config --global user.name "${{ vars.BOT_USERNAME }}"
+      - name: '[GIT] Add badges'
+        run: git add badges
       - name: '[GIT] Commit'
         run:  git commit -a -m "[Bot] Update coverage badge"
       - name: '[GIT] Push'
