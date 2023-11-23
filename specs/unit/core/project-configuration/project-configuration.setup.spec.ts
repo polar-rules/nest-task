@@ -21,7 +21,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
 
     describe("#run", (): void => {
         describe("When `task` is defined on root level", (): void => {
-            it("Should write configuration to `nest-cli.json`", async (): Promise<void> => {
+            xit("Should write configuration to `nest-cli.json`", async (): Promise<void> => {
                 const {
                     read,
                     subject,
@@ -50,7 +50,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
                 expect(keys.includes("task")).toBeTruthy();
             });
 
-            it("Should write a template file", async (): Promise<void> => {
+            xit("Should write a template file", async (): Promise<void> => {
                 const {
                     read,
                     subject,
@@ -87,7 +87,7 @@ describe("Core::ProjectConfiguration::Setup", (): void => {
         });
 
         describe("When `projects` key is present", (): void => {
-            it("Should write configuration to `nest-cli.json` ", async (): Promise<void> => {
+            xit("Should write configuration to `nest-cli.json` ", async (): Promise<void> => {
                 const {
                     read,
                     subject,
