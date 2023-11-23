@@ -140,4 +140,4 @@ jobs:
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: |
-          git push https://github.com/${{ github.repository }}.git HEAD:main
+          git push https://github.com/${{ github.repository }}.git HEAD:gh-pages
