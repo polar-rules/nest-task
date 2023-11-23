@@ -142,6 +142,8 @@ jobs:
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+      - name: '[GIT] Fetch'
+        run: git fetch
       - name: '[GIT] Create PR'
         id: create_pr
         uses: peter-evans/create-pull-request@v3
