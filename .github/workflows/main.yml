@@ -137,7 +137,7 @@ jobs:
       - name: '[GIT] Commit'
         run:  git commit -a -m "[Bot] Update coverage badge"
       - name: '[GIT] Push'
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.BOT_KEY }}
-          branch: gh-pages
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          git push https://github.com/${{ github.repository }}.git HEAD:main
