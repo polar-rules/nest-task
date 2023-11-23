@@ -48,7 +48,7 @@ jobs:
       - name: '[Upload] Artifacts'
         uses: actions/upload-artifact@v2
         with:
-          name: my-artifacts
+          name: workflows
           path: .github/workflows
 
       - name: '[GIT] Switch to gh-pages'
@@ -62,14 +62,14 @@ jobs:
       - name: '[Download] Artifacts'
         uses: actions/download-artifact@v2
         with:
-          name: my-artifacts
+          name: workflows
           path: .github/workflows
 
       - name: '[Debug] Artifacts'
         run: ls -R .github/workflows
 
       - name: '[GIT] Add workflows'
-        run: git add github/workflows
+        run: git add .github/workflows
 
       - name: '[GIT] Commit'
         run: git commit -a -m "[Bot] Update actions"
