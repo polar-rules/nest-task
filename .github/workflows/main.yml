@@ -143,19 +143,15 @@ jobs:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
       - name: '[GIT] Create PR'
-        env:
-          GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: |
-          gh pr create \
-            --base gh-pages \
-            --head bot-badge-update \
-            --title "[Bot] Badge update" \
-            --body "This PR is automatically created by BOT and will be merge automatically as well." \
-      - name: '[GIT] Find PR'
-        id: find_pr
-        run: |
-          pr_number=$(gh pr list --state open --base main --json number,title --limit 1 | jq -r '.[] | select(.title == "[Bot] Badge update") | .number')
-          echo "::set-output name=pull-request-number::$pr_number"
+        id: create_pr
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.BOT_KEY }}
+          branch: bot-badge-update
+          base: gh-pages
+          title: "[Bot] Badge update"
+          body: "This PR is automatically created by BOT and will be merge automatically as well."
+
       - name: '[GIT] Merge PR'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
