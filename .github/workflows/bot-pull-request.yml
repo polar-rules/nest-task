@@ -1,0 +1,68 @@
+name: Bot Pull Request
+
+on:
+  pull_request:
+    branches: ['main', 'gh-pages']
+    types:
+      - opened
+
+jobs:
+  merge:
+    name: "Merge"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: '[Check] PR name'
+        run: |
+          if [[ ${{ github.event_name }} == 'pull_request' && ${{ github.event.action }} == 'opened' && ${{ github.event.pull_request.title }} == '[Bot] Badge update' ]]; then
+            echo "PR with specific name detected. Proceeding to check if required checks have passed."
+          else
+            echo "PR does not have the specific name. Skipping auto-merge."
+            exit 78
+          fi
+      - name: '[Wait] Checks'
+        id: wait-for-checks
+        uses: actions/github-script@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_KEY }}
+        with:
+          script: |
+            const { data: checks } = await github.checks.listForSuite({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_suite_id: context.payload.check_suite.id,
+            });
+
+            const checksInProgress = checks.check_runs.some(check => check.status === 'in_progress');
+            
+            if (checksInProgress) {
+              console.log("Checks are still in progress. Waiting...");
+            
+              return { checksComplete: false };
+            }
+
+            const checksPassed = checks.check_runs.every(check => check.conclusion === 'success');
+            
+            if (!checksPassed) {
+              console.log("Not all checks have passed. Skipping auto-merge.");
+            
+              return { checksComplete: false };
+            }
+
+            console.log("All checks have passed. Proceeding to auto-merge.");
+            
+            return { checksComplete: true };
+
+      - name: '[GIT] Merge'
+        if: steps.wait-for-checks.outputs.checksComplete == 'true'
+        run: |
+          gh pr merge ${{ github.event.number }} --auto --squash
+
+      - name: '[GIT] Clean branch'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: git push origin -d bot-badge-update || echo "Branch bot-badge-update does not exist, skipping deletion"

@@ -142,34 +142,12 @@ jobs:
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
-
-  merge:
-    name: Merge
-    needs:
-      - coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: '[GIT] Switch to gh-pages'
-        uses: actions/checkout@v4
-        with:
-          ref: bot-badge-update
-          fetch-depth: 1
       - name: '[GIT] Create PR'
-        id: create_pr
-        uses: peter-evans/create-pull-request@v3
-        with:
-          token: ${{ secrets.BOT_KEY }}
-          branch: bot-badge-update
-          base: gh-pages
-          branch-suffix: timestamp
-          title: "[Bot] Badge update"
-          body: "This PR is automatically created by BOT and will be merge automatically as well."
-      - name: '[GIT] Merge PR'
-        if: success() && steps.create_pr.outputs.pull-request-created
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --squash --delete-branch --admin
-#      - name: '[GIT] Clean branch'
-#        env:
-#          GH_TOKEN: ${{ secrets.BOT_KEY }}
-#        run: git push origin -d bot-badge-update || echo "Branch bot-badge-update does not exist, skipping deletion"
+        run: |
+          gh pr create \
+            --base gh-pages \
+            --head bot-badge-update \
+            --title "[Bot] Badge update" \
+            --body "This PR is automatically created by BOT and will be merge automatically as well."
