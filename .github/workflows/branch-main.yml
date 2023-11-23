@@ -49,7 +49,7 @@ jobs:
         run: cp -r ./.github/workflows ./.github/tmp
 
       - name: '[Debug] ls'
-        run: ls -la './.github
+        run: ls -la ./.github
 
       - name: '[GIT] Switch to gh-pages'
         uses: actions/checkout@v4
@@ -57,13 +57,13 @@ jobs:
           ref: gh-pages
 
       - name: '[Debug] ls'
-        run: ls -la './.github
+        run: ls -la ./.github
 
       - name: '[GIT] Create branch'
         run: git checkout -b bot-actions-update
 
       - name: '[Debug] ls'
-        run: ls -la './.github
+        run: ls -la ./.github
 
       - name: '[Prepare] Copy actions directory'
         run: cp -rf ./.github/tmp/ ./.github/workflows/
