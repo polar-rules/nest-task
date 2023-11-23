@@ -3,8 +3,7 @@ name: 'Bot: Pull Request'
 on:
   pull_request:
     branches: ['main', 'gh-pages']
-    types:
-      - created
+    types: ['opened']
 
 jobs:
   merge:
@@ -24,41 +23,8 @@ jobs:
             echo "PR does not have the specific name. Skipping auto-merge."
             exit 78
           fi
-      - name: '[Wait] Checks'
-        id: wait-for-checks
-        uses: actions/github-script@v5
-        env:
-          GITHUB_TOKEN: ${{ secrets.BOT_KEY }}
-        with:
-          script: |
-            const { data: checks } = await github.checks.listForSuite({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              check_suite_id: context.payload.check_suite.id,
-            });
-
-            const checksInProgress = checks.check_runs.some(check => check.status === 'in_progress');
-            
-            if (checksInProgress) {
-              console.log("Checks are still in progress. Waiting...");
-            
-              return { checksComplete: false };
-            }
-
-            const checksPassed = checks.check_runs.every(check => check.conclusion === 'success');
-            
-            if (!checksPassed) {
-              console.log("Not all checks have passed. Skipping auto-merge.");
-            
-              return { checksComplete: false };
-            }
-
-            console.log("All checks have passed. Proceeding to auto-merge.");
-            
-            return { checksComplete: true };
 
       - name: '[GIT] Merge'
-        if: steps.wait-for-checks.outputs.checksComplete == 'true'
         run: |
           gh pr merge ${{ github.event.number }} --auto --squash --admin
 
