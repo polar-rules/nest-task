@@ -1,0 +1,50 @@
+name: 'Pull Request: Bot'
+
+on:
+  pull_request:
+    branches:
+      - main
+      - gh-pages
+
+jobs:
+  merge:
+    name: "Merge"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[Check] PR name'
+        run: |
+          if [[ ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
+            echo "PR with specific name detected. Proceeding to check if required checks have passed."
+            echo "merge='true'" >> $GITHUB_ENV
+          else
+            echo "PR does not have the specific name. Skipping merge."
+            echo "merge='false'" >> $GITHUB_ENV
+          fi
+
+      - name: '[GIT] Merge'
+        if: env.merge == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: gh pr merge ${{ github.event.number }} --squash --admin
+
+      - name: '[GIT] Add user.email'
+        if: env.merge == 'true'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        if: env.merge == 'true'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+      - name: '[GIT] Clean branch'
+        if: env.merge == 'true'
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          git push origin -d bot-badge-update ||
+            echo "Branch bot-badge-update does not exist, skipping deletion"
