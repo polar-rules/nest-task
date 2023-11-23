@@ -156,4 +156,4 @@ jobs:
       - name: '[GIT] Merge PR'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --auto-merge --squash --delete-branch
+        run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --squash --delete-branch --admin
