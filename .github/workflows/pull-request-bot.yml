@@ -18,20 +18,17 @@ jobs:
           fetch-depth: 0
       - name: '[Check] PR name'
         run: |
-          if [[ ${{ github.event_name }} == 'pull_request' && ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
+          if [[ ${{ github.event.action }} == 'opened' && "${{ github.event.pull_request.title }}" == '[Bot] Badge update' ]]; then
             echo "PR with specific name detected. Proceeding to check if required checks have passed."
-            echo "IS_PR_NAME_OK=true" >> $GITHUB_ENV
           else
             echo "PR does not have the specific name. Skipping auto-merge."
-            echo "IS_PR_NAME_OK=false" >> $GITHUB_ENV
+            exit 0 
           fi
 
       - name: '[GIT] Merge'
-        if: env.GITHUB_SHA_SHORT == 'true'
         run: gh pr merge ${{ github.event.number }} --auto --squash --admin
 
       - name: '[GIT] Clean branch'
-        if: env.GITHUB_SHA_SHORT == 'true'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: git push origin -d bot-badge-update || echo "Branch bot-badge-update does not exist, skipping deletion"
