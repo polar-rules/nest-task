@@ -108,5 +108,30 @@ jobs:
         run: npm install
       - name: '[Run] Coverage'
         run: npm run test:summary
-      - name: '[Run] Update Coverage Badge'
-        uses: we-cli/coverage-badge-action@main
+      - name: '[Prepare] Get percentage'
+        id: get-values
+        shell: bash
+        run: |
+          COV=$(node -p 't=require(`./coverage/coverage-summary.json`).total,Math.min(...`lines|statements|functions|branches`.split(`|`).map(k=>t[k].pct))')
+          echo "coverage=$COV" >> $GITHUB_OUTPUT
+      - name: '[GIT] Switch branch'
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: '[Setup] Install badgen'
+        run: npm i -g badgen-cli
+      - name: '[Setup] Create badge directory'
+        run: mkdir -p badges
+      - name: '[Run] Create Badges'
+        shell: bash
+        run: |
+          export COV=${{ steps.get-values.outputs.coverage }}
+          COLOR=$(node -p '+process.env.COV >= 95 ? `green` : `orange`')
+          badgen -j coverage -s $COV% -c $COLOR > badges/coverage.svg
+      - name: '[GIT] Commit'
+        run:  git commit -a -m "[Bot] Update coverage badge"
+      - name: '[GIT] Push'
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.BOT_KEY }}
+          branch: ${{ github.ref }}
