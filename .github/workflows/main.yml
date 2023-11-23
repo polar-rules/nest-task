@@ -154,6 +154,7 @@ jobs:
           title: "[Bot] Badge update"
           body: "This PR is automatically created by BOT and will be merge automatically as well."
       - name: '[GIT] Merge PR'
+        if: success() && steps.create_pr.outputs.pull-request-created
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --squash --delete-branch --admin
