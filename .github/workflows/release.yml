@@ -121,7 +121,7 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - name: '[Prepare] User'
+      - name: '[GIT] User'
         run: |
           git config --local user.email "${{ env.BOT_EMAIL }}"
           git config --local user.name "${{ env.BOT_USERNAME }}"

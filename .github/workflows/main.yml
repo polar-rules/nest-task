@@ -114,6 +114,10 @@ jobs:
         run: |
           COV=$(node -p 't=require(`./coverage/coverage-summary.json`).total,Math.min(...`lines|statements|functions|branches`.split(`|`).map(k=>t[k].pct))')
           echo "coverage=$COV" >> $GITHUB_OUTPUT
+      - name: '[Git] User'
+        run: |
+          git config --local user.email "${{ env.BOT_EMAIL }}"
+          git config --local user.name "${{ env.BOT_USERNAME }}"
       - name: '[GIT] Switch branch'
         uses: actions/checkout@v3
         with:
