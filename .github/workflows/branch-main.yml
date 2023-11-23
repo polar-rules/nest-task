@@ -1,7 +1,6 @@
 name: 'Branch: main'
 
 on:
-  workflow_dispatch:
   push:
     branches: ['main']
 
@@ -24,6 +23,53 @@ jobs:
   tests:
     name: 'Tests'
     uses: ./.github/workflows/re-tests.yml
+
+  tag:
+    name: 'Tag'
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: '[Prepare] Get version'
+        run: echo "version=$(node -pe 'require("./package.json").version')" >> $GITHUB_ENV
+
+      - name: '[Prepare] Get tags'
+        run: echo "tags=$(git tag -l)" >> $GITHUB_ENV
+
+      - name: '[Check] Tag presence'
+        run: echo "is_tag_present=${{ contains(env.tags, env.version) }}"
+
+      - name: '[GIT] Add user.email'
+        if: env.is_tag_present == 'false'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        if: env.is_tag_present == 'false'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+      - name: '[Publish] Tag'
+        if: env.is_tag_present == 'false'
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "v${{ env.version }}"
+          tag_exists_error: true
+          message: "Release ${{ env.version }}"
 
   copy-actions:
     name: 'Copy actions'
@@ -88,10 +134,9 @@ jobs:
             --head bot-actions-update \
             --title "[Bot] Actions update" \
             --body "This PR is automatically created by BOT and will be merge automatically as well."
-      
 
   coverage:
-    name: Coverage
+    name: 'Coverage'
     needs:
       - copy-actions
     runs-on: ubuntu-latest
