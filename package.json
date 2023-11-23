@@ -64,6 +64,7 @@
         "test:verbose": "npm run test:run -- --verbose",
         "test:watch": "npm run test:run -- --watch",
         "test:coverage": "npm run test:run -- --coverage",
+        "test:summary": "npm run test:coverage -- --coverageReporters=\"json-summary\"",
         "test:clean": "npm run test:run -- --clearCache && npm run build:clean"
     },
     "bin": {

@@ -107,6 +107,6 @@ jobs:
       - name: '[Setup] Install dependencies'
         run: npm install
       - name: '[Run] Coverage'
-        run: npm run test:coverage
+        run: npm run test:summary
       - name: '[Run] Update Coverage Badge'
         uses: we-cli/coverage-badge-action@main
