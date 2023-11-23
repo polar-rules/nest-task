@@ -146,7 +146,7 @@ jobs:
         id: create_pr
         uses: peter-evans/create-pull-request@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.BOT_KEY }}
           branch: bot-badge-update
           base: gh-pages
           title: "[Bot] Badge update"
