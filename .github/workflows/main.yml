@@ -159,9 +159,6 @@ jobs:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: gh pr merge ${{ steps.create_pr.outputs.pull-request-number }} --squash --delete-branch --admin
       - name: '[GIT] Clean branch'
-        if: failure()
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
-        run: | 
-          git branch -D bot-badge-update
-          git push origin -d bot-badge-update
+        run: git push origin -d bot-badge-update || echo "Branch bot-badge-update does not exist, skipping deletion"
