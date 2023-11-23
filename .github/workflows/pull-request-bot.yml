@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - gh-pages
+    paths:
+      - '**/*'
 
 jobs:
   merge:

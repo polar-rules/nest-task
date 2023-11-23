@@ -2,7 +2,8 @@ name: 'Pull Request: Default'
 
 on:
   pull_request:
-    branches: ['main']
+    branches:
+      - main
 
 env:
   NODE_ENV: 'test'
