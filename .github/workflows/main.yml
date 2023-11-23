@@ -151,7 +151,8 @@ jobs:
             --head bot-badge-update \
             --title "[Bot] Badge update" \
             --body "This PR is automatically created by BOT and will be merge automatically as well." \
-      - name: '[GIT] Merge Pull Request'
+          echo "::set-output name=pull-request-number::$(gh pr list --state open --base main --json number --limit 1 | jq -r '.[0].number')"
+      - name: '[GIT] Merge PR'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: gh pr merge "${{ steps.create_pr.outputs.pull-request-number }}" --auto-merge --squash --delete-branch
