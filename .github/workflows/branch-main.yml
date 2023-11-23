@@ -53,7 +53,7 @@ jobs:
         run: echo "tags=$(git tag -l)" >> $GITHUB_ENV
 
       - name: '[Check] Tag presence'
-        run: echo "is_tag_present=${{ contains(env.tags, env.version) }}"
+        run: echo "is_tag_present=${{ contains(env.tags, env.version) }}" >> $GITHUB_ENV
 
       - name: '[GIT] Add user.email'
         if: env.is_tag_present == 'false'
