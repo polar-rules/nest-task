@@ -1,0 +1,70 @@
+name: 'Pull Request: Default'
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  NODE_ENV: 'test'
+
+jobs:
+  eslint:
+    name: 'ESlint'
+    uses: ./.github/workflows/re-eslint.yml
+
+  prettier:
+    name: 'Prettier'
+    uses: ./.github/workflows/re-prettier.yml
+
+  typescript:
+    name: 'Typescript'
+    uses: ./.github/workflows/re-typescript.yml
+
+  tests:
+    name: 'Tests'
+    uses: ./.github/workflows/re-tests.yml
+
+  branch-name:
+    name: Branch Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: '[Setup] Install dependencies'
+        run: npm install
+
+      - name: '[Run] Branch Name'
+        run: sh ./.husky/branch-name
+
+  pr-name:
+    name: PR Name
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: '[Setup] Install dependencies'
+        run: npm install
+
+      - name: '[Run] PR Name'
+        run: echo "${{ github.event.pull_request.title }}" | npx --no -- commitlint

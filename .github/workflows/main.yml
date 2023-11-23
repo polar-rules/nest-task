@@ -9,68 +9,35 @@ env:
 
 jobs:
   eslint:
-    name: ESlint
-    runs-on: 'ubuntu-latest'
-    steps:
-      - name: '[Setup] Checkout'
-        uses: actions/checkout@v4
-      - name: '[Setup] Node.js'
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
-          check-latest: false
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: '[Setup] Install dependencies'
-        run: npm install
-
-      - name: '[Run] ESlint'
-        run: npm run check:lint
+    name: 'ESlint'
+    uses: ./.github/workflows/re-eslint.yml
 
   prettier:
-    name: Prettier
-    runs-on: ubuntu-latest
-    steps:
-      - name: '[Setup] Checkout'
-        uses: actions/checkout@v4
-      - name: '[Setup] Node.js'
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
-          check-latest: false
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: '[Setup] Install dependencies'
-        run: npm install
-      - name: '[Run] Prettier'
-        run: npm run check:prettier
+    name: 'Prettier'
+    uses: ./.github/workflows/re-prettier.yml
 
   typescript:
-    name: Typescript
-    runs-on: ubuntu-latest
-    steps:
-      - name: '[Setup] Checkout'
-        uses: actions/checkout@v4
-      - name: '[Setup] Node.js'
-        uses: actions/setup-node@v3
-        with:
-          node-version-file: .nvmrc
-          check-latest: false
-          cache: npm
-          cache-dependency-path: package-lock.json
-      - name: '[Setup] Install dependencies'
-        run: npm install
-      - name: '[Run] Typescript'
-        run: npm run check:typescript
+    name: 'Typescript'
+    uses: ./.github/workflows/re-typescript.yml
 
   tests:
-    name: Tests
+    name: 'Tests'
+    uses: ./.github/workflows/re-tests.yml
+
+  coverage:
+    name: Coverage
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: '[Setup] Node.js'
         uses: actions/setup-node@v3
         with:
@@ -78,7 +45,64 @@ jobs:
           check-latest: false
           cache: npm
           cache-dependency-path: package-lock.json
+
       - name: '[Setup] Install dependencies'
         run: npm install
-      - name: '[Run] Tests'
-        run: npm run test:run
+
+      - name: '[Run] Coverage'
+        run: npm run test:summary
+
+      - name: '[Prepare] Get percentage'
+        id: get-values
+        shell: bash
+        run: |
+          COV=$(node -p 't=require(`./coverage/coverage-summary.json`).total,Math.min(...`lines|statements|functions|branches`.split(`|`).map(k=>t[k].pct))')
+          echo "coverage=$COV" >> $GITHUB_OUTPUT
+
+      - name: '[GIT] Switch to gh-pages'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: '[GIT] Create branch'
+        run: git checkout -b bot-badge-update
+
+      - name: '[Setup] Install badgen'
+        run: npm i -g badgen-cli
+
+      - name: '[Setup] Create badge directory'
+        run: mkdir -p assets/badges
+
+      - name: '[Run] Create Badges'
+        shell: bash
+        run: |
+          export COV=${{ steps.get-values.outputs.coverage }}
+          COLOR=$(node -p '+process.env.COV >= 95 ? `green` : `orange`')
+          badgen -j coverage -s $COV% -c $COLOR > assets/badges/coverage.svg
+
+      - name: '[GIT] Add user.email'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+      - name: '[GIT] Add badges'
+        run: git add assets/badges
+
+      - name: '[GIT] Commit'
+        run:  git commit -a -m "[Bot] Update coverage badge"
+
+      - name: '[GIT] Push'
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-badge-update
+
+      - name: '[GIT] Create PR'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          gh pr create \
+            --base gh-pages \
+            --head bot-badge-update \
+            --title "[Bot] Badge update" \
+            --body "This PR is automatically created by BOT and will be merge automatically as well."
