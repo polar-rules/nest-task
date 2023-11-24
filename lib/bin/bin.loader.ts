@@ -3,8 +3,8 @@ import * as Loader from "ora";
 export class _Loader {
     private ora!: Loader.Ora;
 
-    private get Ora() {
-        return typeof Loader === "function" ? Loader : (<any>Loader).default;
+    private get Ora(): Loader.OraLike {
+        return typeof Loader === "function" ? Loader : (<Loader.Default>Loader).default;
     }
 
     public start(text: string): void {
