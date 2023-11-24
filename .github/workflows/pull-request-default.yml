@@ -70,9 +70,9 @@ jobs:
   pr_name:
     name: PR Name
     needs: check_for_bot
-    if: needs.check_for_bot.outputs.is_bot == 'false'
     runs-on: ubuntu-latest
     steps:
+      - run: echo ${{ needs.check_for_bot.outputs.is_bot }}
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
