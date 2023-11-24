@@ -24,7 +24,7 @@ jobs:
             echo "Not a bot. Proceeding to other jobs.";
             echo "is_bot=false" >> $GITHUB_OUTPUT;
           fi
-          echo "$GITHUB_OUTPUT"
+          cat "$GITHUB_OUTPUT"
 
   eslint:
     name: 'ESlint'
