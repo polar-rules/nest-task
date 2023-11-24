@@ -3,7 +3,7 @@ name: 'Pull Request: Default'
 on:
   push:
     branches:
-      - [ "!bot-*" ]
+      - "!bot-*"
   pull_request:
     branches:
       - main
