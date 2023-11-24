@@ -37,7 +37,7 @@ Please consider what kind of change it is:
 
 - For a **Major Feature**, first open an issue and outline your proposal so that it can be
   discussed. This will also allow us to better coordinate our efforts, prevent duplication of work,
-  and help you to craft the change so that it is successfully accepted into the project. For your issue name 
+  and help you to craft the change so that it is successfully accepted into the project. For your issue name
 - Please add label `status:discussion` and `type:feature` for all **Major Feature**
 - **Small Features** can be crafted and directly [submitted as a Pull Request](#submit-pr) with status `status:waiting-for-review`.
 
@@ -45,11 +45,11 @@ Please consider what kind of change it is:
 
 ### <a name="submit-issue"></a> Submitting an Issue
 
-Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the 
+Before you submit an issue, please search the issue tracker, maybe an issue for your problem already exists and the
 discussion might inform you of workarounds readily available.
 
 We want to fix all the issues as soon as possible, but before fixing a bug we need to reproduce and confirm it.
-In order to reproduce bugs we will systematically ask you to provide a minimal reproduction scenario using a repository 
+In order to reproduce bugs we will systematically ask you to provide a minimal reproduction scenario using a repository
 or [Gist](https://gist.github.com/). Having a live, reproducible scenario gives us wealth of important information
 without going back & forth to you with additional questions like:
 
@@ -166,6 +166,58 @@ To ensure consistency throughout the source code, keep these rules in mind as yo
 
 - All features or bug fixes **must be tested** by one or more specs (unit-tests).
 - Please investigate the project firstly to follow project approaches, patterns, etc.
+
+### Project Overview
+
+NestTask is a project built on NestJS, providing a foundation for managing tasks. It includes various modules, such as core functionality, decorators, errors, and more.
+
+### Getting Started
+
+To set up the project locally, follow these steps:
+
+1. Clone the repository.
+2. Install dependencies using `npm install`.
+3. Run the application using `npm start`.
+
+### Code Standards
+
+#### File Structure
+
+The project follows a modular file structure. Here are the key files related to the core functionality:
+
+- `lib/core/core.app.ts`: Contains the main application logic for NestTask.
+- `lib/core/index.ts`: Auto-generated file, please avoid making direct changes.
+
+#### Naming Conventions
+
+- Classes: Use PascalCase for class names (e.g., `_App`, `_Task`).
+- Enums: Use PascalCase for enum names (e.g., `_Enums`).
+- Variables and functions: Use camelCase (e.g., `handleRun`, `getTasks`).
+
+### Documentation
+
+Ensure that your code is well-documented. Include comments explaining the purpose of classes, methods, and significant code blocks.
+
+## How to Contribute
+
+We welcome contributions from the community! Here's how you can get involved:
+
+### Reporting Issues
+
+If you encounter any issues or have suggestions for improvements, please [create a new issue](https://github.com/yourusername/yourproject/issues).
+
+### Submitting Code Changes
+
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Make your modifications.
+4. Submit a pull request with a detailed description of your changes.
+
+## Contact
+
+If you have any questions or need further assistance, feel free to reach out to us at [yourcontact@email.com].
+
+Happy coding!
 
 ## <a name="commit"></a> Commit Message Guidelines
 
