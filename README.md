@@ -430,7 +430,7 @@ Please make sure to read the [Issue Reporting Checklist](https://github.com/nest
 before opening an issue. Issues not conforming to the guidelines may be closed immediately.
 
 ## Contributing
-We welcome contributions! Please read our [Contribution Guidelines](documentation/CONTRIBUTING.md) before submitting a pull request.
+We welcome contributions! Please read our [Contribution Guidelines](CONTRIBUTING.md) before submitting a pull request.
 
 ## Stay in touch
 
