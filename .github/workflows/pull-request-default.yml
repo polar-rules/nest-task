@@ -28,7 +28,7 @@ jobs:
   eslint:
     name: 'ESlint'
     needs: check_for_bot
-    if: steps.check_for_bot.outputs.is_bot == 'false'
+    if: needs.check_for_bot.outputs.bot_output == 'false'
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
