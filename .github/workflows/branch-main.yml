@@ -54,7 +54,7 @@ jobs:
           tags=$(git tag -l)
           is_tag_present=false
           for tag in $tags; do
-            if [ "$tag" == "${{ env.version }}" ]; then
+            if [ "$tag" == "v${{ env.version }}" ]; then
               is_tag_present=true
               break
             fi
