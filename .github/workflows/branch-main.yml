@@ -49,11 +49,10 @@ jobs:
       - name: '[Prepare] Get version'
         run: echo "version=$(node -pe 'require("./package.json").version')" >> $GITHUB_ENV
 
-      - name: '[Prepare] Get tags'
-        run: echo "tags=$(git tag -l)" >> $GITHUB_ENV
-
       - name: '[Check] Tag presence'
-        run: echo "is_tag_present=${{ contains(env.tags, env.version) }}" >> $GITHUB_ENV
+        run: |
+          tags=$(git tag -l)
+          echo "is_tag_present=${{ contains(tags, env.version) }}" >> $GITHUB_ENV
 
       - name: '[GIT] Add user.email'
         if: env.is_tag_present == 'false'
