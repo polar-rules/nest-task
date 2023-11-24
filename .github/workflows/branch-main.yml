@@ -71,7 +71,7 @@ jobs:
           tag_exists_error: false
           message: "Release ${{ env.version }}"
 
-  copy-actions:
+  copy_actions:
     name: 'Copy actions'
     needs:
       - eslint
@@ -144,7 +144,7 @@ jobs:
   coverage:
     name: 'Coverage'
     needs:
-      - copy-actions
+      - copy_actions
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'

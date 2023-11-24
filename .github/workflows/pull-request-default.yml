@@ -25,22 +25,30 @@ jobs:
 
   prettier:
     name: 'Prettier'
-    if: env.is_bot == 'false'
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     uses: ./.github/workflows/re-prettier.yml
 
   typescript:
     name: 'Typescript'
-    if: env.is_bot == 'false'
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     uses: ./.github/workflows/re-typescript.yml
 
   tests:
     name: 'Tests'
-    if: env.is_bot == 'false'
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     uses: ./.github/workflows/re-tests.yml
 
   branch_name:
     name: Branch Name
-    if: env.is_bot == 'false'
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
@@ -62,7 +70,9 @@ jobs:
 
   pr_name:
     name: PR Name
-    if: env.is_bot == 'false'
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
