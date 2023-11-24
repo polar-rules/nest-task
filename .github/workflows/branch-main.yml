@@ -68,10 +68,10 @@ jobs:
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "v${{ env.version }}"
-          tag_exists_error: true
+          tag_exists_error: false
           message: "Release ${{ env.version }}"
 
-  copy-actions:
+  copy_actions:
     name: 'Copy actions'
     needs:
       - eslint
@@ -118,14 +118,20 @@ jobs:
         run: git add .github/workflows
 
       - name: '[GIT] Commit'
-        run: git commit -a -m "[Bot] Update actions"
+        run: |
+          git commit -a -m "[Bot] Update actions" &&
+            echo "any_changes=true" >> $GITHUB_ENV ||
+            echo "No changes located. Skipping all other actions..." &&
+            echo "any_changes=false" >> $GITHUB_ENV
 
       - name: '[GIT] Push'
+        if: env.any_changes == 'true'
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-actions-update
 
       - name: '[GIT] Create PR'
+        if: env.any_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: |
@@ -138,7 +144,7 @@ jobs:
   coverage:
     name: 'Coverage'
     needs:
-      - copy-actions
+      - copy_actions
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
