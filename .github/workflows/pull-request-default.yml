@@ -13,7 +13,7 @@ jobs:
     name: "Check for bot"
     runs-on: ubuntu-latest
     outputs:
-      from: bot_output
+      is_bot: ${{ steps.step1.outputs.is_bot }}
     steps:
       - name: "[Check] Bot"
         run: |
@@ -28,7 +28,7 @@ jobs:
   eslint:
     name: 'ESlint'
     needs: check_for_bot
-    if: needs.check_for_bot.outputs.bot_output == 'false'
+    if: needs.check_for_bot.outputs.is_bot == 'false'
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
