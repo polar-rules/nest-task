@@ -71,7 +71,7 @@ jobs:
     needs: check_for_bot
     runs-on: ubuntu-latest
     steps:
-      - run:  echo  ${{join(needs.check_for_bot.outputs.*, '\n')}}
+      - run:  echo  ${{join(needs.*, '\n')}}
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
