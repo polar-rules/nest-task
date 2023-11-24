@@ -120,5 +120,21 @@
         "@nestjs/core": "^10.0.0",
         "class-transformer": "^0.5.0",
         "class-validator": "^0.14.0"
-    }
+    },
+    "keywords": [
+        "nest.js",
+        "nest.js tasks",
+        "nest.js environment",
+        "task execution",
+        "esm",
+        "cjs",
+        "cli commands",
+        "creating task",
+        "receiving tasks",
+        "running task",
+        "nest integration",
+        "tasksmodule",
+        "task",
+        "cli"
+    ]
 }
