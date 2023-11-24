@@ -5,7 +5,7 @@ on:
     branches:
       - main
     branches-ignore:
-      - ["106-*"]
+      - '106-*'
 
 env:
   NODE_ENV: 'test'
