@@ -1,12 +1,11 @@
 name: 'Pull Request: Default'
 
 on:
-  push:
-    branches:
-      - "!106-*"
   pull_request:
     branches:
       - main
+    branches-ignore:
+      - 106-*
 
 env:
   NODE_ENV: 'test'
