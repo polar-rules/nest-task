@@ -14,7 +14,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "[Check] Bot"
-        run: echo "is_bot=$(if [[ ${{ github.ref }} == *bot-* ]]; then echo true; else echo false; fi)" >> $GITHUB_OUTPUT
+        run: |
+          if [[ ${{ github.ref }} == *bot-* ]]; then
+            echo "Bot detected. Skipping...";
+            echo "is_bot=true" >> $GITHUB_OUTPUT;
+          else
+            echo "Not a bot. Proceeding to other jobs.";
+            echo "is_bot=true" >> $GITHUB_OUTPUT;
+          fi
 
   eslint:
     name: 'ESlint'
