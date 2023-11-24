@@ -12,6 +12,8 @@ jobs:
   check_for_bot:
     name: "Check for bot"
     runs-on: ubuntu-latest
+    outputs:
+      from: bot_output
     steps:
       - name: "[Check] Bot"
         run: |
@@ -20,12 +22,13 @@ jobs:
             echo "is_bot=true" >> $GITHUB_OUTPUT;
           else
             echo "Not a bot. Proceeding to other jobs.";
-            echo "is_bot=true" >> $GITHUB_OUTPUT;
+            echo "is_bot=false" >> $GITHUB_OUTPUT;
           fi
 
   eslint:
     name: 'ESlint'
-    if: ${{ steps.check_for_bot.outputs.is_bot == 'false' }}
+    needs: check_for_bot
+    if: steps.check_for_bot.outputs.is_bot == 'false'
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
