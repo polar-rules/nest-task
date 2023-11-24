@@ -60,7 +60,7 @@
         "check:typescript": "tsc -p 'tsconfig.check.json' && rm -rf dist:check",
         "check:commit-message": "git log -1 --pretty=format:%s | npx commitlint",
         "check:branch-name": "./.husky/branch-name",
-        "test:run": "node --experimental-vm-modules ./node_modules/.bin/jest",
+        "test:run": "node --experimental-vm-modules --no-warnings ./node_modules/.bin/jest",
         "test:verbose": "npm run test:run -- --verbose",
         "test:watch": "npm run test:run -- --watch",
         "test:coverage": "npm run test:run -- --coverage",
