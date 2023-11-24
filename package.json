@@ -1,6 +1,6 @@
 {
     "name": "@polar-rules/nest-task",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Execute commands from from NestJS environment",
     "repository": "git@github.com:polar-rules/nest-task.git",
     "type": "module",
