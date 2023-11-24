@@ -63,6 +63,14 @@ jobs:
         if: env.is_tag_present == 'false'
         run: git config --global user.name "${{ vars.BOT_USERNAME }}"
 
+      - name: '[GIT] Create branch'
+        if: env.is_tag_present == 'false'
+        run: git checkout -b ${{ env.version }}
+
+      - name: '[GIT] Create branch'
+        if: env.is_tag_present == 'false'
+        run: git push https://github.com/${{ github.repository }}.git HEAD:${{ env.version }}
+
       - name: '[Publish] Tag'
         if: env.is_tag_present == 'false'
         uses: rickstaa/action-create-tag@v1
