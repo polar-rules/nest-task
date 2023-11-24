@@ -1,5 +1,5 @@
 import * as path from "path";
-import * as findPackageJson from "find-package-json";
+import * as FindPackageJson from "find-package-json";
 
 import { _Module as _ToolsModules } from "@tools/tools.module.js";
 
@@ -21,7 +21,7 @@ export class _Main {
     public get projectRoot(): string {
         const someFolderInRoot = process.cwd();
 
-        const finder = <findPackageJson.FinderIterator>this.FindPackageJson(someFolderInRoot);
+        const finder = <FindPackageJson.FinderIterator>this.findPackageJson(someFolderInRoot);
         const packageJson = finder.next().value;
 
         if (!packageJson) {
@@ -31,8 +31,10 @@ export class _Main {
         return path.dirname(packageJson.__path);
     }
 
-    private get FindPackageJson() {
-        return typeof findPackageJson === "function" ? findPackageJson : (<any>findPackageJson).default;
+    private get findPackageJson(): FindPackageJson.FindLike {
+        return typeof FindPackageJson === "function"
+            ? FindPackageJson
+            : (<FindPackageJson.Default>FindPackageJson).default;
     }
 
     public pathResolver(fileOrFolderPath: string): string {
