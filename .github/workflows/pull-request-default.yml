@@ -1,9 +1,6 @@
 name: 'Pull Request: Default'
 
 on:
-  push:
-    branches-ignore:
-      - '106-*'
   pull_request:
     branches:
       - 'main'
@@ -12,22 +9,23 @@ env:
   NODE_ENV: 'test'
 
 jobs:
-#  check_for_bot:
-#    name: "Check for bot"
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: "[Check] Bot"
-#        run: |
-#          if [[ ${{ github.ref }} == *bot-* ]]; then
-#            echo "Bot detected. Skipping...";
-#            echo "is_bot=true" >> $GITHUB_OUTPUT;
-#          else
-#            echo "Not a bot. Proceeding to other jobs.";
-#            echo "is_bot=true" >> $GITHUB_OUTPUT;
-#          fi
+  check_for_bot:
+    name: "Check for bot"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "[Check] Bot"
+        run: |
+          if [[ ${{ github.ref }} == *106-* ]]; then
+            echo "Bot detected. Skipping...";
+            echo "is_bot=true" >> $GITHUB_OUTPUT;
+          else
+            echo "Not a bot. Proceeding to other jobs.";
+            echo "is_bot=true" >> $GITHUB_OUTPUT;
+          fi
 
   eslint:
     name: 'ESlint'
+    if: ${{ steps.check_for_bot.outputs.is_bot == 'false' }}
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
