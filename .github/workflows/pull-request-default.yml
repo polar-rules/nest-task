@@ -18,7 +18,7 @@ jobs:
       - name: "[Check] Bot"
         id: bot
         run: |
-          if [[ ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} == 106-* ]]; then
+          if [[ ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} == bot-* ]]; then
             echo "Bot detected. Skipping...";
             echo "is_bot=true" >> $GITHUB_OUTPUT;
           else
