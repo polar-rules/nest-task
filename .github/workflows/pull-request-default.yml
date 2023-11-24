@@ -24,7 +24,6 @@ jobs:
             echo "Not a bot. Proceeding to other jobs.";
             echo "is_bot=false" >> $GITHUB_OUTPUT;
           fi
-          cat "$GITHUB_OUTPUT"
 
   eslint:
     name: 'ESlint'
@@ -72,7 +71,7 @@ jobs:
     needs: check_for_bot
     runs-on: ubuntu-latest
     steps:
-      - run: echo ${{ needs.check_for_bot.outputs.is_bot }}
+      - run: echo ${{ needs.check_for_bot.outputs }}
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
