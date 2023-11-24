@@ -13,9 +13,10 @@ jobs:
     name: "Check for bot"
     runs-on: ubuntu-latest
     outputs:
-      is_bot: ${{ steps.step1.outputs.is_bot }}
+      is_bot: ${{ steps.bot.outputs.is_bot }}
     steps:
       - name: "[Check] Bot"
+        id: bot
         run: |
           if [[ ${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} == bot-* ]]; then
             echo "Bot detected. Skipping...";
@@ -71,7 +72,7 @@ jobs:
     needs: check_for_bot
     runs-on: ubuntu-latest
     steps:
-      - run:  echo  ${{join(needs.*, '\n')}}
+      - run:  echo  ${{needs.check_for_bot.outputs.is_bot}}
       - name: '[Setup] Checkout'
         uses: actions/checkout@v4
         with:
