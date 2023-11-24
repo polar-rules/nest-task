@@ -18,7 +18,7 @@ jobs:
 
   eslint:
     name: 'ESlint'
-    if: env.is_bot == 'false'
+    if: ${{ env.is_bot == 'false' }}
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
