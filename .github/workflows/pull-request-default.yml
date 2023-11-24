@@ -17,8 +17,7 @@ jobs:
     steps:
       - name: "[Check] Bot"
         run: |
-          echo "${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}"
-          if [[ ${{ github.ref }} == *106-* ]]; then
+          if [[ {GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}} == *106-* ]]; then
             echo "Bot detected. Skipping...";
             echo "is_bot=true" >> $GITHUB_OUTPUT;
           else
