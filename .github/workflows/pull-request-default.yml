@@ -14,11 +14,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "[Check] Bot"
-        run: echo "is_bot=$(if [[ ${GITHUB_REF##*/} == 'bot-'* ]]; then echo false; else echo true; fi)" >> $GITHUB_ENV
+        run: echo "is_bot=$(if [[ ${GITHUB_REF##*/} == 'bot-'* ]]; then echo false; else echo true; fi)" >> $GITHUB_OUTPUT
 
   eslint:
     name: 'ESlint'
-    if: ${{ env.is_bot == 'false' }}
+    needs:
+      - check_for_bot
+    if: ${{ needs.check_for_bot.outputs.is_bot == 'false' }}
     uses: ./.github/workflows/re-eslint.yml
 
   prettier:
