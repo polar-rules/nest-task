@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { Tools } from "@tools/index.js";
 
-import { _Abstractions } from "@bin/abstractions/index.js";
+import { _Abstractions } from "@cli/abstractions/index.js";
 
 import { _Types } from "./config.types.js";
 import { _Constants } from "./config.constants.js";

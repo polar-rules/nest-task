@@ -63,7 +63,7 @@ export namespace _Constants {
 
     export namespace Template {
         export const location: Readonly<string> = Tools.PathManager.Main.instance.moduleTypePathResolver(
-            "bin/dev/generate/assembler/assembler.template",
+            "cli/dev/generate/assembler/assembler.template",
         );
 
         export namespace Import {

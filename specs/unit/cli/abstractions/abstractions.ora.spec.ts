@@ -1,11 +1,11 @@
-import { Bin } from "@bin/index.js";
+import { Cli } from "@cli/index.js";
 
 import { Mocks } from "@specs/mocks/index.js";
 
-describe("Bin::Loader", (): void => {
-    let subject: Bin.Loader;
+describe("Cli::Abstractions::Ora", (): void => {
+    let subject: Cli.Abstractions.Ora;
 
-    const Subject = Bin.Loader;
+    const Subject = Cli.Abstractions.Ora;
 
     beforeEach((): void => {
         subject = new Subject();

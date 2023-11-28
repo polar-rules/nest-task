@@ -1,13 +1,14 @@
-import { _Constants } from "./assembler.constants.js";
-import { _Main } from "./assembler.main.js";
+import { Cli } from "@cli/index.js";
 
 export async function _Runner(): Promise<void> {
     try {
-        const main = new _Main();
+        const main = new Cli.Dev.Generate.Assembler.Main();
 
         main.configure();
-        await main.generate(_Constants.Directories.Paths.lib);
-        await main.generate(_Constants.Directories.Paths.specs);
+
+        await main.generate(Cli.Dev.Generate.Assembler.Constants.Directories.Paths.lib);
+        await main.generate(Cli.Dev.Generate.Assembler.Constants.Directories.Paths.specs);
+
         main.finish();
 
         process.exit(0);

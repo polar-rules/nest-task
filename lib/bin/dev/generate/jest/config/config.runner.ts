@@ -1,8 +1,8 @@
-import { _Main } from "./config.main.js";
+import { Cli } from "@cli/index.js";
 
 export async function _Runner() {
     try {
-        const main = new _Main();
+        const main = new Cli.Dev.Generate.Jest.Config.Main();
 
         main.configure();
         await main.generate();
