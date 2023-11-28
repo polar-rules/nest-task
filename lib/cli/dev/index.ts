@@ -4,4 +4,8 @@
  * In case you need to generate new file run `node bin/generators/generators.index` from project root
  */
 
-export namespace _ProjectConfiguration {}
+import * as $_Generate from "./generate/index.js";
+
+export namespace _Dev {
+    export import Generate = $_Generate._Generate;
+}

@@ -4,10 +4,9 @@ import cloneDeep from "lodash.clonedeep";
 
 import { Patches } from "@patches/index.js";
 
-import { _Abstractions } from "@bin/abstractions/index.js";
+import { _Abstractions } from "@cli/abstractions/index.js";
 
 import { _Errors } from "./errors/index.js";
-
 import { _Types } from "./assembler.types.js";
 import { _Constants } from "./assembler.constants.js";
 import { _Builder } from "./assembler.builder.js";

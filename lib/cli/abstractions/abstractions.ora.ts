@@ -1,10 +1,10 @@
-import * as Loader from "ora";
+import * as Ora from "ora";
 
-export class _Loader {
-    private ora!: Loader.Ora;
+export class _Ora {
+    private ora!: Ora.Ora;
 
-    private get Ora(): Loader.OraLike {
-        return typeof Loader === "function" ? Loader : (<Loader.Default>Loader).default;
+    private get Ora(): Ora.OraLike {
+        return typeof Ora === "function" ? Ora : (<Ora.Default>Ora).default;
     }
 
     public start(text: string): void {

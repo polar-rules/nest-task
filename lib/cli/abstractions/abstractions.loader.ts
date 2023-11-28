@@ -1,9 +1,9 @@
-import { _Loader as _BinLoader } from "@bin/bin.loader.js";
+import { _Ora } from "./abstractions.ora.js";
 
 export abstract class _Loader {
     public constructor() {}
 
-    protected ora: _BinLoader = new _BinLoader();
+    protected ora: _Ora = new _Ora();
 
     public abstract finish(): void;
 
