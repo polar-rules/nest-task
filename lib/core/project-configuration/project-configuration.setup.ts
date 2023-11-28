@@ -139,6 +139,7 @@ export class _Setup {
     }
 
     private async createTask(configuration: _Types.Configuration.Approximate): Promise<void> {
+        console.debug("++++", configuration);
         if (!configuration.task) {
             throw new _Errors.TaskIsMissing();
         }
@@ -185,6 +186,7 @@ export class _Setup {
     }
 
     private async readTemplate(templatePath: string): Promise<Buffer> {
+        console.debug("----", templatePath);
         const resolvedPath = Tools.PathManager.Main.instance.packageResolver(templatePath);
 
         return await fs.readFile(resolvedPath);

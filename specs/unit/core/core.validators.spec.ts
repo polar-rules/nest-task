@@ -1,7 +1,17 @@
 import { Core } from "@core/index.js";
 
+import { Mocks } from "@specs/mocks/index.js";
+
 describe("Core::Validators", (): void => {
     const subject = Core.Validators;
+
+    beforeEach((): void => {
+        Mocks.Nest.CommonLogger.mock();
+    });
+
+    afterEach((): void => {
+        Mocks.Nest.CommonLogger.clean();
+    });
 
     describe(".Perform", (): void => {
         describe(".validateDependencies", (): void => {
