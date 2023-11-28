@@ -1,7 +1,17 @@
 import { Transformers } from "@transformers/index.js";
 
+import { Mocks } from "@specs/mocks/index.js";
+
 describe("Transformers::ToUpperCase", (): void => {
     const subject = Transformers.ToUpperCase;
+
+    beforeEach((): void => {
+        Mocks.Nest.CommonLogger.mock();
+    });
+
+    afterEach((): void => {
+        Mocks.Nest.CommonLogger.clean();
+    });
 
     it("Should convert string to upper case", (): void => {
         const expectations = "HELLO MY NAME";

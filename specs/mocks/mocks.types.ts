@@ -16,4 +16,14 @@ export namespace _Types {
             };
         }
     }
+
+    export namespace Templates {
+        export interface Templates {
+            entrypointPath: string;
+            modulePath: string;
+            taskPath: string;
+            runnerPath: string;
+            indexPath: string;
+        }
+    }
 }

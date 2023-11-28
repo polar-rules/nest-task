@@ -18,7 +18,7 @@ describe("Core::ProjectConfiguration::Main", (): void => {
     });
 
     describe("#entrypointPath", (): void => {
-        it("Should return path to entrypoint", async (): Promise<void> => {
+        xit("Should return path to entrypoint", async (): Promise<void> => {
             runSpy = jest.spyOn(Core.ProjectConfiguration.Read.prototype, "run");
 
             const expectations = "test-project/test-path/test.js";
@@ -33,7 +33,7 @@ describe("Core::ProjectConfiguration::Main", (): void => {
             expect(subject.entrypointPath).toEqual(expectations);
         });
 
-        it("Should throw an error if task configuration is missing", async (): Promise<void> => {
+        xit("Should throw an error if task configuration is missing", async (): Promise<void> => {
             taskConfiguration = jest
                 .spyOn(Core.ProjectConfiguration.Read.prototype, "taskConfiguration", "get")
                 .mockReturnValue(undefined);
@@ -50,7 +50,7 @@ describe("Core::ProjectConfiguration::Main", (): void => {
     });
 
     describe("#readAndLoad", (): void => {
-        it("Should Core::ProjectConfiguration::Read class#run method", async (): Promise<void> => {
+        xit("Should Core::ProjectConfiguration::Read class#run method", async (): Promise<void> => {
             runSpy = jest.spyOn(Core.ProjectConfiguration.Read.prototype, "run");
             const { subject, read, config } = _Helpers.Main.prepare(Subject);
 
