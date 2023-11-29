@@ -43,6 +43,8 @@ conventions, rules and approaches to make our library as simple and as familiar 
 Under the hood we are using the same tool set as <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>
 do: Reflect, class-transformer, class-validator, etc.
 
+More documentation can be found on our [website](https://polar-rules.github.io/nest-task/).
+
 ### Features
 
 - **Easy Setup**: Quickly set up and integrate tasks within your Nest.js environment with a simple setup command.

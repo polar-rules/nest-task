@@ -36,6 +36,7 @@
         "dev:jarvis": "npm run dev:command -- jarvis",
         "prepare": "husky install",
         "build": "npm run build:cjs && npm run build:esm",
+        "build:docs": "npx typedoc",
         "build:pre-compile:cjs": "rm -rf ./dist/cjs && npm run build:copy-platform-file:cjs",
         "build:pre-compile:esm": "rm -rf ./dist/esm && npm run build:copy-platform-file:esm",
         "build:compile:cjs": "tsc -p tsconfig.cjs.json && tsc-alias -p tsconfig.cjs.json",
@@ -103,6 +104,7 @@
         "prettier": "^3.0.3",
         "ts-jest": "^29.1.1",
         "tsc-alias": "^1.8.8",
+        "typedoc": "^0.25.4",
         "typescript": "^5.2.2"
     },
     "dependencies": {

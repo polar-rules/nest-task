@@ -126,7 +126,7 @@ jobs:
           path: .github/workflows
 
       - name: '[Debug] Artifacts'
-        run: ls -R .github/workflows
+        run: ls -la .github/workflows
 
       - name: '[GIT] Add workflows'
         run: git add .github/workflows
@@ -153,6 +153,90 @@ jobs:
             --base gh-pages \
             --head bot-actions-update \
             --title "[Bot] Actions update" \
+            --body "This PR is automatically created by BOT and will be merge automatically as well."
+
+  build_docs:
+    name: 'Build docs'
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[GIT] Add user.email'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: '[Setup] Install dependencies'
+        run: npm install
+
+      - name: '[Build] Documentation'
+        run: npm build:docs
+
+      - name: '[Upload] Artifacts'
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs
+
+      - name: '[GIT] Switch to gh-pages'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: '[GIT] Create branch'
+        run: git checkout -b bot-documentation
+
+      - name: '[Download] Artifacts'
+        uses: actions/download-artifact@v2
+        with:
+          name: docs
+          path: .
+
+      - name: '[Debug] Artifacts'
+        run: ls -la
+
+      - name: '[GIT] Add workflows'
+        run: git add -A
+
+      - name: '[GIT] Commit'
+        run: |
+          git commit -a -m "[Bot] Add documentation" &&
+            echo "any_changes=true" >> $GITHUB_ENV ||
+            echo "No changes located. Skipping all other actions..." &&
+            echo "any_changes=false" >> $GITHUB_ENV
+
+      - name: '[GIT] Push'
+        if: env.any_changes == 'true'
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-documentation
+
+      - name: '[GIT] Create PR'
+        if: env.any_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          gh pr create \
+            --base gh-pages \
+            --head bot-documentation \
+            --title "[Bot] Documentation update" \
             --body "This PR is automatically created by BOT and will be merge automatically as well."
 
   coverage:
