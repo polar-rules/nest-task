@@ -133,10 +133,12 @@ jobs:
 
       - name: '[GIT] Commit'
         run: |
-          git commit -a -m "[Bot] Update actions" &&
-            echo "any_changes=true" >> $GITHUB_ENV ||
-            echo "No changes located. Skipping all other actions..." &&
+          if git commit -a -m "[Bot] Update actions"; then
+            echo "any_changes=true" >> $GITHUB_ENV
+          else
+            echo "No changes located. Skipping all other actions..."
             echo "any_changes=false" >> $GITHUB_ENV
+          fi
 
       - name: '[GIT] Push'
         if: env.any_changes == 'true'
@@ -212,15 +214,17 @@ jobs:
       - name: '[Debug] Artifacts'
         run: ls -la
 
-      - name: '[GIT] Add workflows'
+      - name: '[GIT] Add documentation'
         run: git add -A
 
       - name: '[GIT] Commit'
         run: |
-          git commit -a -m "[Bot] Add documentation" &&
-            echo "any_changes=true" >> $GITHUB_ENV ||
-            echo "No changes located. Skipping all other actions..." &&
+          if git commit -a -m "[Bot] Add documentation"; then
+            echo "any_changes=true" >> $GITHUB_ENV
+          else
+            echo "No changes located. Skipping all other actions..."
             echo "any_changes=false" >> $GITHUB_ENV
+          fi
 
       - name: '[GIT] Push'
         if: env.any_changes == 'true'
