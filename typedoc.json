@@ -1,0 +1,18 @@
+{
+    "entryPoints": [
+        "lib/bin/index.ts",
+        "lib/cli/index.ts",
+        "lib/core/index.ts",
+        "lib/decorators/index.ts",
+        "lib/errors/index.ts",
+        "lib/factory/index.ts",
+        "lib/generators/index.ts",
+        "lib/interfaces/index.ts",
+        "lib/messages/index.ts",
+        "lib/patches/index.ts",
+        "lib/prompts/index.ts",
+        "lib/tools/index.ts",
+        "lib/transformers/index.ts"
+    ],
+    "out": "docs"
+}
