@@ -19,7 +19,7 @@ jobs:
 
       - name: '[Check] PR name'
         run: |
-          if [[ "${{ github.event.pull_request.title }}" == '[Bot] Actions update' || "${{ github.event.pull_request.title }}" == '[Bot] Badge update' || "${{ github.event.pull_request.title }}" == '[Bot] Branch actualisation' ]]; then
+          if [[ "${{ github.event.pull_request.title }}" == '[Bot] Actions update' || "${{ github.event.pull_request.title }}" == '[Bot] Badge update' || "${{ github.event.pull_request.title }}" == '[Bot] Branch actualisation' || "${{ github.event.pull_request.title }}" == '[Bot] Documentation update' ]]; then
             echo "PR with specific name detected. Proceeding to check if required checks have passed."
             echo "merge=true" >> $GITHUB_ENV
           else

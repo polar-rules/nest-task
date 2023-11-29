@@ -49,11 +49,17 @@ jobs:
       - name: '[Prepare] Get version'
         run: echo "version=$(node -pe 'require("./package.json").version')" >> $GITHUB_ENV
 
-      - name: '[Prepare] Get tags'
-        run: echo "tags=$(git tag -l)" >> $GITHUB_ENV
-
       - name: '[Check] Tag presence'
-        run: echo "is_tag_present=${{ contains(env.tags, env.version) }}" >> $GITHUB_ENV
+        run: |
+          tags=$(git tag -l)
+          is_tag_present=false
+          for tag in $tags; do
+            if [ "$tag" == "v${{ env.version }}" ]; then
+              is_tag_present=true
+              break
+            fi
+          done
+          echo "is_tag_present=${is_tag_present}" >> $GITHUB_ENV
 
       - name: '[GIT] Add user.email'
         if: env.is_tag_present == 'false'
@@ -63,15 +69,23 @@ jobs:
         if: env.is_tag_present == 'false'
         run: git config --global user.name "${{ vars.BOT_USERNAME }}"
 
+      - name: '[GIT] Create branch'
+        if: env.is_tag_present == 'false'
+        run: git checkout -b ${{ env.version }}
+
+      - name: '[GIT] Create branch'
+        if: env.is_tag_present == 'false'
+        run: git push https://github.com/${{ github.repository }}.git HEAD:${{ env.version }}
+
       - name: '[Publish] Tag'
         if: env.is_tag_present == 'false'
         uses: rickstaa/action-create-tag@v1
         with:
           tag: "v${{ env.version }}"
-          tag_exists_error: true
+          tag_exists_error: false
           message: "Release ${{ env.version }}"
 
-  copy-actions:
+  copy_actions:
     name: 'Copy actions'
     needs:
       - eslint
@@ -112,20 +126,28 @@ jobs:
           path: .github/workflows
 
       - name: '[Debug] Artifacts'
-        run: ls -R .github/workflows
+        run: ls -la .github/workflows
 
       - name: '[GIT] Add workflows'
         run: git add .github/workflows
 
       - name: '[GIT] Commit'
-        run: git commit -a -m "[Bot] Update actions"
+        run: |
+          if git commit -a -m "[Bot] Update actions"; then
+            echo "any_changes=true" >> $GITHUB_ENV
+          else
+            echo "No changes located. Skipping all other actions..."
+            echo "any_changes=false" >> $GITHUB_ENV
+          fi
 
       - name: '[GIT] Push'
+        if: env.any_changes == 'true'
         env:
           TOKEN: ${{ secrets.BOT_KEY }}
         run: git push https://github.com/${{ github.repository }}.git HEAD:bot-actions-update
 
       - name: '[GIT] Create PR'
+        if: env.any_changes == 'true'
         env:
           GH_TOKEN: ${{ secrets.BOT_KEY }}
         run: |
@@ -135,10 +157,96 @@ jobs:
             --title "[Bot] Actions update" \
             --body "This PR is automatically created by BOT and will be merge automatically as well."
 
+  build_docs:
+    name: 'Build docs'
+    needs:
+      - eslint
+      - prettier
+      - typescript
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: '[Setup] Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: '[GIT] Add user.email'
+        run: git config --global user.email "${{ vars.BOT_EMAIL }}"
+
+      - name: '[GIT] Add user.name'
+        run: git config --global user.name "${{ vars.BOT_USERNAME }}"
+
+      - name: '[Setup] Node.js'
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: .nvmrc
+          check-latest: false
+          cache: npm
+          cache-dependency-path: package-lock.json
+
+      - name: '[Setup] Install dependencies'
+        run: npm install
+
+      - name: '[Build] Documentation'
+        run: npm run build:docs
+
+      - name: '[Upload] Artifacts'
+        uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs
+
+      - name: '[GIT] Switch to gh-pages'
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+
+      - name: '[GIT] Create branch'
+        run: git checkout -b bot-documentation
+
+      - name: '[Download] Artifacts'
+        uses: actions/download-artifact@v2
+        with:
+          name: docs
+          path: .
+
+      - name: '[Debug] Artifacts'
+        run: ls -la
+
+      - name: '[GIT] Add documentation'
+        run: git add -A
+
+      - name: '[GIT] Commit'
+        run: |
+          if git commit -a -m "[Bot] Add documentation"; then
+            echo "any_changes=true" >> $GITHUB_ENV
+          else
+            echo "No changes located. Skipping all other actions..."
+            echo "any_changes=false" >> $GITHUB_ENV
+          fi
+
+      - name: '[GIT] Push'
+        if: env.any_changes == 'true'
+        env:
+          TOKEN: ${{ secrets.BOT_KEY }}
+        run: git push https://github.com/${{ github.repository }}.git HEAD:bot-documentation
+
+      - name: '[GIT] Create PR'
+        if: env.any_changes == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.BOT_KEY }}
+        run: |
+          gh pr create \
+            --base gh-pages \
+            --head bot-documentation \
+            --title "[Bot] Documentation update" \
+            --body "This PR is automatically created by BOT and will be merge automatically as well."
+
   coverage:
     name: 'Coverage'
     needs:
-      - copy-actions
+      - copy_actions
     runs-on: ubuntu-latest
     steps:
       - name: '[Setup] Checkout'
