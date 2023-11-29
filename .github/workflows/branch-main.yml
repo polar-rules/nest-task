@@ -187,7 +187,7 @@ jobs:
         run: npm install
 
       - name: '[Build] Documentation'
-        run: npm build:docs
+        run: npm run build:docs
 
       - name: '[Upload] Artifacts'
         uses: actions/upload-artifact@v2
