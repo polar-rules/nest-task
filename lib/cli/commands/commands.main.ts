@@ -6,15 +6,36 @@ import { _Info } from "./info/index.js";
 import { _Create } from "./create/index.js";
 import { _Run } from "./run/index.js";
 import { _Setup } from "./setup/index.js";
+
 import { _Types } from "./commands.types.js";
 import { _Enums } from "./commands.enums.js";
 
+/**
+ * Main class for handling command-line commands and their associated tasks.
+ * It handles only input coming from CLI.
+ *
+ * @class _Main
+ */
 export class _Main {
+    /**
+     * Creates an instance of _Main.
+     *
+     * @constructor
+     * @param {_Enums.Commands} command - The specified command.
+     * @param {_Types.Args} [args] - Optional arguments associated with the command.
+     */
     public constructor(
         private readonly command: _Enums.Commands,
         private readonly args?: _Types.Args,
     ) {}
 
+    /**
+     * Runs the main process based on the specified command and optional arguments.
+     *
+     * @public
+     * @async
+     * @returns {Promise<void>} A Promise that resolves once the task associated with the command is complete.
+     */
     public async run(): Promise<void> {
         switch (this.command) {
             case _Enums.Commands.Help:

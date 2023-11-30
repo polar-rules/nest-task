@@ -12,15 +12,47 @@ import { _Constants } from "./assembler.constants.js";
 import { _Builder } from "./assembler.builder.js";
 import { _Linter } from "./assembler.linter.js";
 
+/**
+ * Represents the main class responsible for generating `index.ts` files for specified directories.
+ *
+ * @class _Main
+ * @extends _Abstractions.Loader
+ */
 export class _Main extends _Abstractions.Loader {
+    /**
+     * The builder instance used for creating module structures.
+     *
+     * @type {_Builder}
+     * @private
+     */
     private readonly builder: _Builder = new _Builder();
 
+    /**
+     * The linter instance used for linting and formatting code.
+     *
+     * @type {_Linter}
+     * @private
+     */
     private readonly linter: _Linter = new _Linter();
 
+    /**
+     * Finishes the generation process and prints a completion message.
+     *
+     * @method finish
+     * @public
+     * @returns {void}
+     */
     public finish(): void {
         this.ora.finish("Finished creating all `index.ts` files.");
     }
 
+    /**
+     * Retrieves the top-level directories within the specified paths.
+     *
+     * @method topLevelDirectories
+     * @public
+     * @returns {Promise<string[]>} A Promise that resolves to an array of top-level directories.
+     */
     public async topLevelDirectories(): Promise<string[]> {
         const libDir = await fs.readdir(_Constants.Directories.Paths.lib);
         const specsDir = await fs.readdir(_Constants.Directories.Paths.specs);
@@ -35,6 +67,14 @@ export class _Main extends _Abstractions.Loader {
         return [...lib, ...specs];
     }
 
+    /**
+     * Generates `index.ts` files for the specified directory.
+     *
+     * @method generate
+     * @public
+     * @param {string} directory - The directory for which to generate the `index.ts` file.
+     * @returns {Promise<void>} A Promise that resolves when the generation is complete.
+     */
     public async generate(directory: string): Promise<void> {
         this.ora.message(`Creating \`index.ts\` files for ${directory}`);
 
@@ -96,6 +136,16 @@ export class _Main extends _Abstractions.Loader {
         await fs.writeFile(indexPath, formattedContent, { encoding: "utf8", flag: "w" });
     }
 
+    /**
+     * Queues or dives deeper into the directory structure for file processing.
+     *
+     * @method queueOrDiveDeeper
+     * @private
+     * @param {_Types.FileLines} entities - The file lines configuration.
+     * @param {string} directory - The current directory being processed.
+     * @param {string} file - The current file or folder being processed.
+     * @returns {Promise<void>} A Promise that resolves when the processing is complete.
+     */
     private async queueOrDiveDeeper(entities: _Types.FileLines, directory: string, file: string): Promise<void> {
         const filePath = path.join(directory, file);
 

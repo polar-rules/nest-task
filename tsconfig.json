@@ -2,6 +2,7 @@
     "compilerOptions": {
         "module": "NodeNext",
         "declaration": true,
+        "declarationMap": true,
         "removeComments": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
@@ -32,7 +33,6 @@
             "@bin/*": ["lib/bin/*"],
             "@cli/*": ["lib/cli/*"],
             "@core/*": ["lib/core/*"],
-            "@decorators/*": ["lib/decorators/*"],
             "@errors/*": ["lib/errors/*"],
             "@factory/*": ["lib/factory/*"],
             "@generators/*": ["lib/generators/*"],

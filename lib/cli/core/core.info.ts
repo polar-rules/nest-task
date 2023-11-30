@@ -5,9 +5,24 @@ import { Errors } from "@errors/index.js";
 
 import { _Types } from "./core.types.js";
 
+/**
+ * Represents information about the application.
+ *
+ * @class _Info
+ */
 export class _Info {
+    /**
+     * Creates an instance of _Info.
+     *
+     * @param {string | undefined} projectName - The name of the project.
+     */
     public constructor(private readonly projectName: string | undefined) {}
 
+    /**
+     * Runs the application and performs necessary tasks.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the tasks are completed.
+     */
     public async run(): Promise<void> {
         try {
             const loader = new Core.Loader(this.projectName);
@@ -30,6 +45,11 @@ export class _Info {
         }
     }
 
+    /**
+     * Processes tasks and converts them into a specific format.
+     *
+     * @returns {_Types.Info.ProcessTasks} A function that processes tasks.
+     */
     private processTasks(): _Types.Info.ProcessTasks {
         return function (task: Core.Task): Messages.Types.FoundTasks.Options {
             return {

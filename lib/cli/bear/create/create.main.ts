@@ -6,13 +6,36 @@ import { _Core } from "@cli/core/index.js";
 
 import { _Types } from "./create.types.js";
 
+/**
+ * Main class for handling command-line interaction and initiating the creation of a task.
+ *
+ * @class _Main
+ */
 export class _Main {
+    /**
+     * Prompts for the project name.
+     *
+     * @type {Prompts.ProjectName}
+     * @private
+     */
     private readonly projectName: Prompts.ProjectName;
 
+    /**
+     * Creates an instance of _Main.
+     *
+     * @constructor
+     */
     public constructor() {
         this.projectName = new Prompts.ProjectName();
     }
 
+    /**
+     * Runs the main process, prompting for inputs and initiating task creation.
+     *
+     * @public
+     * @async
+     * @returns {Promise<void>} A Promise that resolves once the task creation is complete.
+     */
     public async run(): Promise<void> {
         await this.projectName.run();
 
@@ -21,6 +44,13 @@ export class _Main {
         await new _Core.Create(moduleName, moduleDescription, this.projectName.results).run();
     }
 
+    /**
+     * Prompts the user for the module name and description.
+     *
+     * @private
+     * @async
+     * @returns {Promise<_Types.Prompt>} A Promise that resolves with the user's input for module name and description.
+     */
     private async promptModuleNameAndDescription(): Promise<_Types.Prompt> {
         return inquirer.default.prompt<_Types.Prompt>([
             {

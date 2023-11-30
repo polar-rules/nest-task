@@ -1,10 +1,24 @@
 import { Messages } from "@messages/index.js";
 import { Core } from "@core/index.js";
 import { Patches } from "@patches/index.js";
-
+/**
+ * Class responsible for displaying help information about the @polar-rules/nest-task CLI.
+ *
+ * @class _Help
+ */
 export class _Help {
+    /**
+     * Creates an instance of _Help.
+     *
+     * @constructor
+     */
     public constructor() {}
 
+    /**
+     * Runs the process of displaying help information.
+     *
+     * @returns {Promise<void>}
+     */
     public async run(): Promise<void> {
         const emptyString = new Patches.String(" ");
 

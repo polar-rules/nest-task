@@ -1,7 +1,9 @@
 /**
+ * @fileoverview
+ *
  * File is auto-generated
  * !!! Avoid any changes to this file !!!
- * In case you need to generate new file run `node bin/generators/generators.index` from project root
+ * In case you need to generate a new file, run `node bin/generators/generators.index` from the project root.
  */
 
 import * as $_Assembler from "./assembler/index.js";
@@ -9,9 +11,34 @@ import * as $_Jest from "./jest/index.js";
 import * as $_Enums from "./generate.enums.js";
 import * as $_Runner from "./generate.runner.js";
 
+/**
+ * Namespace containing various modules related to the '_Generate' functionality.
+ *
+ * @namespace
+ */
 export namespace _Generate {
+    /**
+     * Namespace containing functionality related to the 'Assembler' module.
+     *
+     * @namespace
+     */
     export import Assembler = $_Assembler._Assembler;
+    /**
+     * Namespace containing functionality related to the 'Jest' module.
+     *
+     * @namespace
+     */
     export import Jest = $_Jest._Jest;
+    /**
+     * Namespace containing functionality related to the 'Enums' module.
+     *
+     * @namespace
+     */
     export import Enums = $_Enums._Enums;
+    /**
+     * Namespace containing functionality related to the 'Runner' module.
+     *
+     * @namespace
+     */
     export import Runner = $_Runner._Runner;
 }

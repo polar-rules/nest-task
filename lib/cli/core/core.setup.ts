@@ -3,12 +3,28 @@ import { Errors } from "@errors/index.js";
 import { Interfaces } from "@interfaces/index.js";
 import { Messages } from "@messages/index.js";
 
+/**
+ * Represents a class for setting up project.
+ *
+ * @class _Setup
+ */
 export class _Setup {
+    /**
+     * Creates an instance of _Setup.
+     *
+     * @param {string | undefined} projectName - The name of the project.
+     * @param {Core.ProjectConfiguration.Abstractions.Enums.Conventions} convention - The project naming convention.
+     */
     public constructor(
         private readonly projectName: string | undefined,
         private readonly convention: Core.ProjectConfiguration.Abstractions.Enums.Conventions,
     ) {}
 
+    /**
+     * Runs the setup process for project configurations.
+     *
+     * @returns {Promise<void>} A Promise that resolves when the setup is complete.
+     */
     public async run(): Promise<void> {
         try {
             await new Core.ProjectConfiguration.Setup(this.convention, this.projectName).run();

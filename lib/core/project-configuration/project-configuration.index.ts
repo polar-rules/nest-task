@@ -6,7 +6,19 @@ import { _Errors } from "./errors/index.js";
 import { _Abstractions } from "./abstractions/index.js";
 import { _Constants } from "./project-configuration.constants.js";
 
+/**
+ * Represents an index file resolver.
+ *
+ * @class
+ * @extends _Abstractions.FileResolver
+ */
 export class _Index extends _Abstractions.FileResolver {
+    /**
+     * Get the path to the index file.
+     *
+     * @throws {_Errors.TaskIsMissing} Throws an error if the task is missing.
+     * @type {string}
+     */
     public get path(): string {
         if (!this.task) {
             throw new _Errors.TaskIsMissing();
@@ -15,6 +27,12 @@ export class _Index extends _Abstractions.FileResolver {
         return path.join(this.directory, _Constants.Setup.indexPath);
     }
 
+    /**
+     * Get the directory of the index file.
+     *
+     * @throws {_Errors.TaskIsMissing} Throws an error if the task is missing.
+     * @type {string}
+     */
     public get directory(): string {
         if (!this.task) {
             throw new _Errors.TaskIsMissing();
