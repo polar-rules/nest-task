@@ -1,6 +1,13 @@
 import { _Types } from "./messages.types.js";
 import { _Chalk } from "./messages.chalk.js";
 
+/**
+ * Displays information about found tasks, including their names, descriptions, and expected arguments.
+ *
+ * @function _FoundTasks
+ * @param {Array<_Types.FoundTasks.Options>} tasks - An array of objects representing found tasks.
+ * @returns {void}
+ */
 export function _FoundTasks(tasks: _Types.FoundTasks.Options[]): void {
     console.info("We found the followings tasks:");
 

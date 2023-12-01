@@ -6,13 +6,30 @@ import { Messages } from "@messages/index.js";
 import { Interfaces } from "@interfaces/index.js";
 import { Errors } from "@errors/index.js";
 
+/**
+ * Class responsible for creating a new module based on user input.
+ *
+ * @class _Create
+ */
 export class _Create {
+    /**
+     * Creates an instance of _Create.
+     *
+     * @param {string} moduleName - The name of the new module.
+     * @param {string} moduleDescription - The description of the new module.
+     * @param {string | undefined} [projectName] - The name of the project (optional).
+     */
     public constructor(
         private readonly moduleName: string,
         private readonly moduleDescription: string,
         private readonly projectName?: string,
     ) {}
 
+    /**
+     * Runs the process of creating a new module.
+     *
+     * @returns {Promise<void>}
+     */
     public async run(): Promise<void> {
         try {
             const read = new Core.ProjectConfiguration.Read(this.projectName);

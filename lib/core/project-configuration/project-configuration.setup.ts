@@ -18,9 +18,26 @@ import { _Task } from "./project-configuration.task.js";
 import { _Runner } from "./project-configuration.runner.js";
 import { _Index } from "./project-configuration.index.js";
 
+/**
+ * Represents a setup class for creating project configuration files and related files.
+ * @class
+ */
 export class _Setup {
+    /**
+     * Naming utility for various conventions.
+     *
+     * @private
+     * @type {_Naming}
+     */
     private readonly naming: _Naming;
 
+    /**
+     * Creates an instance of `_Setup`.
+     *
+     * @constructor
+     * @param {_Abstractions.Enums.Conventions} convention - The naming convention to follow.
+     * @param {string} [projectName] - The name of the project.
+     */
     public constructor(
         private readonly convention: _Abstractions.Enums.Conventions,
         private readonly projectName?: string,
@@ -28,6 +45,11 @@ export class _Setup {
         this.naming = new _Naming(convention);
     }
 
+    /**
+     * Run the setup process to create project configuration files and related files.
+     *
+     * @returns {Promise<void>}
+     */
     public async run(): Promise<void> {
         const read = new _Read(this.projectName);
 
@@ -44,6 +66,12 @@ export class _Setup {
         await this.createIndex(clonedConfiguration);
     }
 
+    /**
+     * Process the project and attempt to configure it.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration to process.
+     */
     private processProjectAndTryToConfigure(configuration: _Types.Configuration.Approximate): void {
         if ("projects" in configuration) {
             if (!this.projectName) {
@@ -64,6 +92,14 @@ export class _Setup {
         this.createConfigurationObject(configuration);
     }
 
+    /**
+     * Create a configuration object based on project configuration.
+     *
+     * @private
+     * @param {(_Types.Configuration.ApproximateProject | _Types.Configuration.Approximate)} projectConfiguration -
+     * The project configuration to create the object from.
+     * @throws {_Errors.TaskIsPresentInConfig} Throws an error if the task is already present in the configuration.
+     */
     private createConfigurationObject(
         projectConfiguration: _Types.Configuration.ApproximateProject | _Types.Configuration.Approximate,
     ): void | never {
@@ -83,6 +119,14 @@ export class _Setup {
         };
     }
 
+    /**
+     * Create the project configuration file.
+     *
+     * @private
+     * @param {_Read} read - The read instance to access existing configuration.
+     * @param {_Types.Configuration.Approximate} configuration - The new configuration to be saved.
+     * @returns {Promise<void>}
+     */
     private async createConfiguration(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
         this.processProjectAndTryToConfigure(configuration);
 
@@ -107,6 +151,13 @@ export class _Setup {
         await this.save(read, clonedConfiguration);
     }
 
+    /**
+     * Create the entrypoint file.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration.
+     * @returns {Promise<void>}
+     */
     private async createEntrypoint(configuration: _Types.Configuration.Approximate): Promise<void> {
         if (!configuration.task) {
             throw new _Errors.TaskIsMissing();
@@ -120,6 +171,13 @@ export class _Setup {
         await this.createFile(replacedFile.toString(), entrypoint);
     }
 
+    /**
+     * Create the module file.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration.
+     * @returns {Promise<void>}
+     */
     private async createModule(configuration: _Types.Configuration.Approximate): Promise<void> {
         if (!configuration.task) {
             throw new _Errors.TaskIsMissing();
@@ -138,8 +196,14 @@ export class _Setup {
         await this.createFile(replacedFile.toString(), module);
     }
 
+    /**
+     * Create the task file.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration.
+     * @returns {Promise<void>}
+     */
     private async createTask(configuration: _Types.Configuration.Approximate): Promise<void> {
-        console.debug("++++", configuration);
         if (!configuration.task) {
             throw new _Errors.TaskIsMissing();
         }
@@ -155,6 +219,13 @@ export class _Setup {
         await this.createFile(replacedFile.toString(), module);
     }
 
+    /**
+     * Create the runner file.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration.
+     * @returns {Promise<void>}
+     */
     private async createRunner(configuration: _Types.Configuration.Approximate): Promise<void> {
         if (!configuration.task) {
             throw new _Errors.TaskIsMissing();
@@ -168,6 +239,13 @@ export class _Setup {
         await this.createFile(replacedFile.toString(), module);
     }
 
+    /**
+     * Create the index file.
+     *
+     * @private
+     * @param {_Types.Configuration.Approximate} configuration - The project configuration.
+     * @returns {Promise<void>}
+     */
     private async createIndex(configuration: _Types.Configuration.Approximate): Promise<void> {
         if (!this.naming.isBearHugs) {
             return;
@@ -185,18 +263,40 @@ export class _Setup {
         await this.createFile(replacedFile.toString(), module);
     }
 
+    /**
+     * Read the template file.
+     *
+     * @private
+     * @param {string} templatePath - The path to the template file.
+     * @returns {Promise<Buffer>}
+     */
     private async readTemplate(templatePath: string): Promise<Buffer> {
-        console.debug("----", templatePath);
         const resolvedPath = Tools.PathManager.Main.instance.packageResolver(templatePath);
 
         return await fs.readFile(resolvedPath);
     }
 
+    /**
+     * Create a file using the provided content and resolver.
+     *
+     * @private
+     * @param {string} file - The content of the file to be created.
+     * @param {_Entrypoint | _Module | _Runner | _Index} resolver - The file resolver instance.
+     * @returns {Promise<void>}
+     */
     private async createFile(file: string, resolver: _Entrypoint | _Module | _Runner | _Index): Promise<void> {
         await fs.mkdir(resolver.directory, { recursive: true });
         await fs.writeFile(resolver.path, file);
     }
 
+    /**
+     * Save the updated configuration to the configuration file.
+     *
+     * @private
+     * @param {_Read} read - The read instance to access existing configuration path.
+     * @param {_Types.Configuration.Approximate} configuration - The updated configuration.
+     * @returns {Promise<void>}
+     */
     private async save(read: _Read, configuration: _Types.Configuration.Approximate): Promise<void> {
         await fs.writeFile(read.configurationPath, JSON.stringify(configuration, null, 2));
     }

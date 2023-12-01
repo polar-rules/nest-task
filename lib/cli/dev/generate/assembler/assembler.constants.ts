@@ -81,5 +81,19 @@ export namespace _Constants {
                 "export import $moduleName = $subModuleName",
             );
         }
+
+        export namespace Comments {
+            export const start: Readonly<string> = "/**";
+
+            export const namespaceComment: Readonly<Patches.String> = new Patches.String(
+                "* Namespace containing functionality related to the '$moduleName' module.",
+            );
+
+            export const namespace: Readonly<string> = "* @namespace";
+
+            export const empty: Readonly<string> = "*";
+
+            export const end: Readonly<string> = "*/";
+        }
     }
 }
