@@ -1,3 +1,5 @@
+import * as path from "path";
+
 import { _Errors } from "./errors/index.js";
 
 import { _Types } from "./project-configuration.types.js";
@@ -62,9 +64,13 @@ export class _Main {
      * @returns {string} The compiled entrypoint path.
      */
     private compiledEntrypoint(task: _Types.Task): string {
-        const sourceRoot = this.read.configuration.sourceRoot ?? "src";
+        const sourceRoot = this.read.resolveConfiguration.sourceRoot ?? "src";
         const entrypoint = new _Entrypoint(task);
 
-        return entrypoint.path.replace(sourceRoot, _Constants.Main.compiledFolder).replace("ts", "js");
+        const folder = entrypoint.directory.replace(sourceRoot, _Constants.Main.compiledFolder);
+        const plainFilename = path.basename(entrypoint.path, ".ts");
+        const filename = [plainFilename, "js"].join(".");
+
+        return path.join(folder, filename);
     }
 }
