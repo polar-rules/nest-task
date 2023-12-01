@@ -13,11 +13,36 @@ import { _Task } from "./core.task.js";
 import { _Validators } from "./core.validators.js";
 import { _ArgumentsManager } from "./core.arguments-manager.js";
 
+/**
+ * Handles the execution of a task, including dependency resolution and argument handling.
+ *
+ * @class
+ */
 export class _Perform {
+    /**
+     * Logger instance for the _Perform class.
+     *
+     * @private
+     * @readonly
+     * @type {Logger}
+     */
     private readonly logger: Logger = new Logger("NestTask::Core::Perform");
 
+    /**
+     * Constructs a new instance of the _Perform class.
+     *
+     * @constructor
+     * @param { _Task } task - The task to be executed.
+     */
     public constructor(private readonly task: _Task) {}
 
+    /**
+     * Asynchronously runs the task, handling dependencies, validation, and execution.
+     *
+     * @async
+     * @method
+     * @returns {Promise<void | never>} A Promise that resolves when the task has been executed.
+     */
     public async run(): Promise<void | never> {
         const dependencies =
             Patches.Reflect.getMetadata<Interfaces.General.AnyClass[]>(
@@ -47,6 +72,15 @@ export class _Perform {
         this.logger.log(`${this.task.name} execution is done`);
     }
 
+    /**
+     * Resolves dependencies based on the provided application and providers.
+     *
+     * @private
+     * @method
+     * @param {INestApplication} app - The Nest application instance.
+     * @param {Interfaces.General.AnyClass[]} providers - The providers associated with the task.
+     * @returns {_Types.Perform.ResolveDependencies} A function to resolve dependencies for the task.
+     */
     private resolveDependencies(
         app: INestApplication,
         providers: Interfaces.General.AnyClass[],
@@ -55,7 +89,7 @@ export class _Perform {
         const name = this.task.name;
 
         return function (dependency: Interfaces.General.AnyClass, index: number): any | undefined {
-            logger.log(`${name} initialising dependency ${dependency.name}`);
+            logger.log(`${name} initializing dependency ${dependency.name}`);
 
             const found = providers.find(
                 (provider: Interfaces.General.AnyClass): boolean => provider.name === dependency.name,
@@ -70,6 +104,15 @@ export class _Perform {
         };
     }
 
+    /**
+     * Resolves and handles arguments for the task.
+     *
+     * @async
+     * @private
+     * @method
+     * @param {INestApplication} app - The Nest application instance.
+     * @returns {Promise<_Types.Perform.Argument[]>} An array of resolved arguments for the task.
+     */
     private async resolveArguments(app: INestApplication): Promise<_Types.Perform.Argument[]> {
         const args: _Types.Perform.Argument[] = [];
 
@@ -79,6 +122,15 @@ export class _Perform {
         return args;
     }
 
+    /**
+     * Handles the application argument if specified in the task.
+     *
+     * @async
+     * @private
+     * @method
+     * @param {INestApplication} app - The Nest application instance.
+     * @param {_Types.Perform.Argument[]} args - The array of arguments for the task.
+     */
     private async handleAppArgument(app: INestApplication, args: _Types.Perform.Argument[]): Promise<void> {
         if (this.task.appIndex === undefined) {
             return;
@@ -87,6 +139,14 @@ export class _Perform {
         args[this.task.appIndex] = app;
     }
 
+    /**
+     * Handles the DTO (Data Transfer Object) argument if specified in the task.
+     *
+     * @async
+     * @private
+     * @method
+     * @param {_Types.Perform.Argument[]} args - The array of arguments for the task.
+     */
     private async handleDtoArgument(args: _Types.Perform.Argument[]): Promise<void> {
         if (!this.task.dto) {
             return;

@@ -17,8 +17,8 @@ export class _Main {
     /**
      * The selected action to perform.
      *
-     * @type {_Enums.Actions}
      * @private
+     * @type {_Enums.Actions}
      */
     private action!: _Enums.Actions;
 

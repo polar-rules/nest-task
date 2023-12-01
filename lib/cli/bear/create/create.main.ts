@@ -15,8 +15,8 @@ export class _Main {
     /**
      * Prompts for the project name.
      *
-     * @type {Prompts.ProjectName}
      * @private
+     * @type {Prompts.ProjectName}
      */
     private readonly projectName: Prompts.ProjectName;
 
