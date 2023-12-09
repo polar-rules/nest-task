@@ -293,7 +293,7 @@ jobs:
         shell: bash
         run: |
           export COV=${{ steps.get-values.outputs.coverage }}
-          COLOR=$(node -p '+process.env.COV >= 95 ? `green` : `orange`')
+          COLOR=$(node -p '+process.env.COV >= 80 ? `green` : `orange`')
           badgen -j coverage -s $COV% -c $COLOR > assets/badges/coverage.svg
 
       - name: '[GIT] Add user.email'
