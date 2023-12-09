@@ -3,11 +3,11 @@ import FileSystem from "mock-fs/lib/filesystem.js";
 
 import { Core } from "@core/index.js";
 import { Tools } from "@tools/index.js";
-
-import { _Types } from "./mocks.types.js";
+import { Generators } from "@generators/index.js";
+import { Cli } from "@cli/index.js";
 
 export namespace _Templates {
-    export function resolveTemplates(): _Types.Templates.Templates {
+    export function mockSetupMerge(): FileSystem.DirectoryItems {
         const entrypointPath = Tools.PathManager.Main.instance.packageResolver(
             Core.ProjectConfiguration.Constants.Templates.entrypointPath,
         );
@@ -25,37 +25,38 @@ export namespace _Templates {
         );
 
         return {
-            entrypointPath,
-            modulePath,
-            taskPath,
-            runnerPath,
-            indexPath,
+            [entrypointPath]: "",
+            [modulePath]: "",
+            [taskPath]: "",
+            [runnerPath]: "",
+            [indexPath]: "",
         };
     }
 
-    export function mockMerge(): FileSystem.DirectoryItems {
-        const templates = resolveTemplates();
+    export function mockGeneratorMerge(): FileSystem.DirectoryItems {
+        const indexPath = Tools.PathManager.Main.instance.packageResolver(Generators.Constants.Templates.indexPath);
+        const runnerPath = Tools.PathManager.Main.instance.packageResolver(Generators.Constants.Templates.runnerPath);
+        const taskPath = Tools.PathManager.Main.instance.packageResolver(Generators.Constants.Templates.taskPath);
 
         return {
-            [templates.modulePath]: "",
-            // [templates.modulePath]: mockFS.load(
-            //     path.resolve(
-            //         Tools.Module.dirname,
-            //         "..",
-            //         "core",
-            //         "project-configuration",
-            //         "templates",
-            //         "templates.module.template",
-            //     ),
-            // ),
-            [templates.taskPath]: "",
-            [templates.runnerPath]: "",
-            [templates.indexPath]: "",
+            [indexPath]: "indexTemplate",
+            [runnerPath]: "runnerTemplate",
+            [taskPath]: "taskTemplate",
         };
     }
 
-    export function mock(): void {
-        mockFS(mockMerge());
+    export function mockAssemblerMerge(): FileSystem.DirectoryItems {
+        return {
+            [Cli.Dev.Generate.Assembler.Constants.Template.location]: "indexTemplate",
+        };
+    }
+
+    export function mockSetup(): void {
+        mockFS(mockSetupMerge());
+    }
+
+    export function mockGenerators(): void {
+        mockFS(mockGeneratorMerge());
     }
 
     export function clean(): void {

@@ -31,6 +31,7 @@ export class _Info {
 
             if (!Core.State.tasksList.length) {
                 Messages.Errors.NoTasksIsFound();
+                process.exit(1);
             }
 
             const tasks = Core.State.tasksList.map<Messages.Types.FoundTasks.Options>(this.processTasks());
@@ -39,6 +40,7 @@ export class _Info {
         } catch (e: unknown) {
             if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
                 Messages.Errors.Prettify(e);
+                process.exit(1);
             }
 
             Messages.Errors.Unhandled(e);

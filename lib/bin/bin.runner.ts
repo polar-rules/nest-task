@@ -24,6 +24,7 @@ export async function _Runner(): Promise<void> {
 
     if (!command) {
         Messages.Errors.Missing.Command();
+        process.exit(1);
     }
 
     switch (command) {

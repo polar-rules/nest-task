@@ -7,6 +7,7 @@
  */
 
 import * as $_Decorators from "./decorators/index.js";
+import * as $_Errors from "./errors/index.js";
 import * as $_ProjectConfiguration from "./project-configuration/index.js";
 import * as $_Runner from "./runner/index.js";
 
@@ -22,6 +23,12 @@ export namespace _Core {
      * @namespace
      */
     export import Decorators = $_Decorators._Decorators;
+    /**
+     * Namespace containing functionality related to the 'Errors' module.
+     *
+     * @namespace
+     */
+    export import Errors = $_Errors._Errors;
     /**
      * Namespace containing functionality related to the 'ProjectConfiguration' module.
      *

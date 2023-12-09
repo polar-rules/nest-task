@@ -44,10 +44,12 @@ export class _Main {
             case _Enums.Commands.Setup:
                 if (!this.args) {
                     Messages.Errors.Missing.Arguments();
+                    process.exit(1);
                 }
 
                 if (!Interfaces.InstanceOf<_Setup.Types.ExpectedArguments>(this.args, "convention")) {
                     Messages.Errors.Missing.Argument(["convention"]);
+                    process.exit(1);
                 }
 
                 await new _Setup.Main(this.args.projectName, this.args.convention).run();
@@ -55,10 +57,12 @@ export class _Main {
             case _Enums.Commands.Create:
                 if (!this.args) {
                     Messages.Errors.Missing.Arguments();
+                    process.exit(1);
                 }
 
                 if (!Interfaces.InstanceOf<_Create.Types.ExpectedArguments>(this.args, "description")) {
                     Messages.Errors.Missing.Argument(["name", "description"]);
+                    process.exit(1);
                 }
 
                 await new _Create.Main(this.args?.name, this.args?.description, this.args?.projectName).run();
@@ -66,10 +70,12 @@ export class _Main {
             case _Enums.Commands.Run:
                 if (!this.args) {
                     Messages.Errors.Missing.Arguments();
+                    process.exit(1);
                 }
 
                 if (!Interfaces.InstanceOf<_Run.Types.ExpectedArguments>(this.args, "name")) {
                     Messages.Errors.Missing.Argument(["name"]);
+                    process.exit(1);
                 }
 
                 const { name: taskName, projectName, ...otherArguments } = this.args;
@@ -81,6 +87,7 @@ export class _Main {
                 break;
             default:
                 Messages.Errors.Missing.Command();
+                process.exit(1);
         }
     }
 }

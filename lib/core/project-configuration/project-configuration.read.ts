@@ -84,9 +84,8 @@ export class _Read {
     public async run(): Promise<void> {
         try {
             const file = await fs.readFile(this.configurationPath);
-
             this.configuration = Patches.Json.parse<_Types.Configuration.Approximate>(file.toString("utf-8"));
-        } catch {
+        } catch (e) {
             throw new _Errors.MissingNestCli();
         }
     }

@@ -26,7 +26,6 @@ export class _Module {
      * @type {string}
      */
     public static get dirname(): string {
-        // Convert the module URL to a file path and get its directory name
         return path.dirname(url.fileURLToPath(import.meta.url));
     }
 }

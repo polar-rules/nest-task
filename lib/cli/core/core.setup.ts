@@ -36,7 +36,7 @@ export class _Setup {
             await read.run();
 
             if (!read.resolveConfiguration.task) {
-                return;
+                throw new Core.ProjectConfiguration.Errors.TaskIsMissing();
             }
 
             const naming = new Core.ProjectConfiguration.Naming(this.convention);
@@ -58,6 +58,7 @@ export class _Setup {
         } catch (e: unknown) {
             if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
                 Messages.Errors.Prettify(e);
+                process.exit(1);
             }
 
             Messages.Errors.Unhandled(e);

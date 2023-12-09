@@ -7,9 +7,9 @@ import { _Rtfm } from "@messages/messages.rtfm.js";
  * Log an error message indicating missing command-line arguments.
  *
  * @param {string[]} name - An array of argument names that are missing.
- * @returns {never} - Exits the process with an error code.
+ * @returns {void} - Exits the process with an error code.
  */
-export function _Argument(name: string[]): never {
+export function _Argument(name: string[]): void {
     console.error(Transformers.Prettify("Missing arguments!", "red"));
     console.error(
         _Chalk.red("You need to pass"),
@@ -18,6 +18,4 @@ export function _Argument(name: string[]): never {
     );
 
     _Rtfm({ before: true, after: false });
-
-    process.exit(1);
 }

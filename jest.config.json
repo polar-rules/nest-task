@@ -2,6 +2,9 @@
     "preset": "ts-jest",
     "testEnvironment": "node",
     "moduleNameMapper": {
+        "^@platform/(.*).js": [
+            "<rootDir>/platform/$1"
+        ],
         "^@lib/(.*).js": [
             "<rootDir>/lib/$1"
         ],
@@ -13,9 +16,6 @@
         ],
         "^@core/(.*).js": [
             "<rootDir>/lib/core/$1"
-        ],
-        "^@decorators/(.*).js": [
-            "<rootDir>/lib/decorators/$1"
         ],
         "^@errors/(.*).js": [
             "<rootDir>/lib/errors/$1"

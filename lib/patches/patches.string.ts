@@ -15,7 +15,7 @@ export class _String extends String {
      * @returns {string} - The repeated string.
      */
     public times(number: number): string {
-        return Array(number).join(this.toString());
+        return this.toString().repeat(number);
     }
 
     /**
