@@ -37,7 +37,7 @@ export class _Create {
             await read.run();
 
             if (!read.resolveConfiguration.task) {
-                return;
+                throw new Core.ProjectConfiguration.Errors.TaskIsMissing();
             }
 
             Messages.Notes.NamingConvention({ space: true });
@@ -56,6 +56,7 @@ export class _Create {
         } catch (e: unknown) {
             if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
                 Messages.Errors.Prettify(e);
+                process.exit(1);
             }
 
             Messages.Errors.Unhandled(e);

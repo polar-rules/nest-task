@@ -22,6 +22,7 @@ export async function _Runner(): Promise<void> {
 
     if (!command) {
         Messages.Errors.Missing.Command();
+        process.exit(1);
     }
 
     const otherArguments = process.argv.slice(3);
@@ -33,6 +34,7 @@ export async function _Runner(): Promise<void> {
 
         if (!value) {
             Messages.Errors.Missing.ValuePair(key);
+            process.exit(1);
         }
 
         const patchedKey = new Patches.String(key.replace("--", ""));

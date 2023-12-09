@@ -1,7 +1,7 @@
 import * as path from "path";
 import * as FindPackageJson from "find-package-json";
 
-import { _Module as _ToolsModules } from "@tools/tools.module.js";
+import { _Module } from "@tools/tools.module.js";
 import { _Errors } from "./errors/index.js";
 
 /**
@@ -83,7 +83,7 @@ export class _Main {
      * @returns {string} The resolved path based on the module type.
      */
     public moduleTypePathResolver(filePath: string): string {
-        return path.join(this.projectRoot, "dist", _ToolsModules.isCJS ? "cjs" : "esm", filePath);
+        return path.join(this.projectRoot, "dist", _Module.isCJS ? "cjs" : "esm", filePath);
     }
 
     /**
@@ -93,7 +93,7 @@ export class _Main {
      * @returns {string} The resolved path.
      */
     public packageResolver(fileOrFolderPath: string): string {
-        const libPath = path.join(_ToolsModules.dirname, "..");
+        const libPath = path.join(_Module.dirname, "..");
 
         return path.join(libPath, fileOrFolderPath);
     }

@@ -68,6 +68,7 @@ export class _App {
         } catch (e: unknown) {
             if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {
                 Messages.Errors.Prettify(e);
+                process.exit(1);
             }
 
             Messages.Errors.Unhandled(e);

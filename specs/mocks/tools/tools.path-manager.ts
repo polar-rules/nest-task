@@ -4,8 +4,12 @@ import { Tools } from "@tools/index.js";
 
 import { Configs } from "@specs/configs/index.js";
 
+import { _FindPackageJson } from "@specs/mocks/mocks.find-package-json.js";
+
 export namespace _PathManager {
-    export let projectRootSpyOn: jest.SpiedFunction<any>;
+    export let projectRootSpyOn: jest.SpiedFunction<any> | undefined;
+
+    export const projectRoot: Readonly<string> = "test-project";
 
     export function projectRootMock(): void {
         projectRootSpyOn = jest
@@ -13,7 +17,12 @@ export namespace _PathManager {
             .mockImplementation(() => Configs.Constants.Folders.tmp);
     }
 
+    export function findPackageJsonMock(directory: string | null): void {
+        _FindPackageJson.mock(directory);
+    }
+
     export function clean(): void {
-        projectRootSpyOn.mockClear();
+        _FindPackageJson.clean();
+        projectRootSpyOn?.mockClear();
     }
 }

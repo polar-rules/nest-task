@@ -6,9 +6,18 @@
  * In case you need to generate a new file, run `node bin/generators/generators.index` from the project root.
  */
 
+import * as $_Errors from "./errors/index.js";
+
 /**
  * Namespace containing various modules related to the '_Transformers' functionality.
  *
  * @namespace
  */
-export namespace _Transformers {}
+export namespace _Transformers {
+    /**
+     * Namespace containing functionality related to the 'Errors' module.
+     *
+     * @namespace
+     */
+    export import Errors = $_Errors._Errors;
+}

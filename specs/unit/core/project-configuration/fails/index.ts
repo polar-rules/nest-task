@@ -6,6 +6,7 @@
  * In case you need to generate a new file, run `node bin/generators/generators.index` from the project root.
  */
 
+import * as $_NoRead from "./fails.no-read.js";
 import * as $_NoTask from "./fails.no-task.js";
 
 /**
@@ -14,6 +15,12 @@ import * as $_NoTask from "./fails.no-task.js";
  * @namespace
  */
 export namespace _Fails {
+    /**
+     * Namespace containing functionality related to the 'NoRead' module.
+     *
+     * @namespace
+     */
+    export import NoRead = $_NoRead._NoRead;
     /**
      * Namespace containing functionality related to the 'NoTask' module.
      *

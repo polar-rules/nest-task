@@ -5,6 +5,20 @@ import { Patches } from "@patches/index.js";
 describe("Patches::String", (): void => {
     const Subject = Patches.String;
 
+    describe("#times", (): void => {
+        it("Should repeat string n times", (): void => {
+            const subject = new Subject("-");
+
+            expect(subject.times(3)).toEqual("---");
+        });
+
+        it("Should return empty string when empty string is passed", (): void => {
+            const subject = new Subject("");
+
+            expect(subject.times(3)).toEqual("");
+        });
+    });
+
     describe("#namedInterpolation", (): void => {
         let name: string;
         let email: string;

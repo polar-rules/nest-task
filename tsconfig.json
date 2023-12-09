@@ -29,6 +29,7 @@
         "esModuleInterop": false,
         "baseUrl": ".",
         "paths": {
+            "@platform/*": ["platform/*"],
             "@lib/*": ["lib/*"],
             "@bin/*": ["lib/bin/*"],
             "@cli/*": ["lib/cli/*"],

@@ -1,4 +1,4 @@
-import fs from "fs/promises";
+import * as fs from "fs/promises";
 
 import { Core } from "@core/index.js";
 import { Tools } from "@tools/index.js";
@@ -55,9 +55,7 @@ export class _Create {
      * @returns {Promise<void>}
      */
     public async run(): Promise<void> {
-        await this.createRunner();
-        await this.createTask();
-        await this.createIndex();
+        await Promise.all([this.createRunner(), this.createTask(), this.createIndex()]);
     }
 
     /**

@@ -1,11 +1,20 @@
-import { jest } from "@jest/globals";
 import * as path from "path";
 
-import { Mocks } from "@specs/mocks/index.js";
+import { jest } from "@jest/globals";
+
 import { Tools } from "@tools/index.js";
+
+import { Mocks } from "@specs/mocks/index.js";
 
 describe("Tools::PathManager::Main", (): void => {
     const Subject = Tools.PathManager.Main;
+
+    let spyOn: jest.SpiedFunction<any> | undefined;
+
+    afterEach((): void => {
+        Mocks.Tools.PathManager.clean();
+        spyOn?.mockClear();
+    });
 
     describe(".instance", (): void => {
         it("Should have the same instance", (): void => {
@@ -14,22 +23,14 @@ describe("Tools::PathManager::Main", (): void => {
     });
 
     describe("#projectRoot", (): void => {
-        afterEach((): void => {
-            Mocks.FindPackageJson.clean();
+        it("Should return a project root", (): void => {
+            Mocks.Tools.PathManager.findPackageJsonMock(Mocks.Tools.PathManager.projectRoot);
+
+            expect(Subject.instance.projectRoot).toEqual(Mocks.Tools.PathManager.projectRoot);
         });
 
-        xit("Should return a project root", (): void => {
-            Mocks.FindPackageJson.Mocks.module.mockImplementation(() => Mocks.FindPackageJson.Mocks.defaultBehaviour);
-
-            const expectations = Mocks.FindPackageJson.projectRoot;
-
-            expect(Subject.instance.projectRoot).toEqual(expectations);
-        });
-
-        xit("Should raise an error when unable to located `package.json`", (): void => {
-            Mocks.FindPackageJson.Mocks.module.mockImplementation(
-                () => Mocks.FindPackageJson.Mocks.unableToFindPackageJsonBehaviour,
-            );
+        it("Should raise an error when unable to located `package.json`", (): void => {
+            Mocks.Tools.PathManager.findPackageJsonMock(null);
 
             const expectations = Tools.PathManager.Errors.NoPackageJson;
 
@@ -37,13 +38,15 @@ describe("Tools::PathManager::Main", (): void => {
         });
     });
 
-    describe("#pathResolver", (): void => {
-        afterEach((): void => {
-            Mocks.FindPackageJson.clean();
+    describe("#findPackageJson", (): void => {
+        it("Should be defined", (): void => {
+            expect((<any>Subject.instance).findPackageJson).toBeDefined();
         });
+    });
 
+    describe("#pathResolver", (): void => {
         it("Should return a project root", (): void => {
-            Mocks.FindPackageJson.Mocks.module.mockImplementation(() => Mocks.FindPackageJson.Mocks.defaultBehaviour);
+            Mocks.Tools.PathManager.findPackageJsonMock(Mocks.Tools.PathManager.projectRoot);
 
             const expectations = "test";
             const resolvedPath = Subject.instance.pathResolver(expectations);
@@ -54,8 +57,6 @@ describe("Tools::PathManager::Main", (): void => {
 
     describe("#moduleTypePathResolver", (): void => {
         it("Should return `cjs` path if it's CommonJS", (): void => {
-            Mocks.FindPackageJson.Mocks.module.mockImplementation(() => Mocks.FindPackageJson.Mocks.defaultBehaviour);
-
             const spyOn = jest.spyOn(Tools.Module, "isCJS", "get").mockReturnValue(true);
             const argument = "test-path";
             const expectations = path.join("dist", "cjs", argument);
@@ -67,16 +68,27 @@ describe("Tools::PathManager::Main", (): void => {
         });
 
         it("should return `mjs` path if it's Module", (): void => {
-            Mocks.FindPackageJson.Mocks.module.mockImplementation(() => Mocks.FindPackageJson.Mocks.defaultBehaviour);
+            spyOn = jest.spyOn(Tools.Module, "isCJS", "get").mockReturnValue(false);
 
-            const spyOn = jest.spyOn(Tools.Module, "isCJS", "get").mockReturnValue(false);
             const argument = "test-path";
             const expectations = path.join("dist", "esm", argument);
             const value = Subject.instance.moduleTypePathResolver(argument);
 
             expect(value.endsWith(expectations)).toBeTruthy();
+        });
+    });
 
-            spyOn.mockClear();
+    describe("#packageResolver", (): void => {
+        it("Should resolve correctly path to lib", (): void => {
+            const expectations = "lib/test";
+
+            Mocks.Tools.PathManager.findPackageJsonMock(
+                path.join(Mocks.Tools.PathManager.projectRoot, "lib", "tools", "path-manager"),
+            );
+
+            const results = Subject.instance.packageResolver("test").endsWith(expectations);
+
+            expect(results).toBeTruthy();
         });
     });
 });

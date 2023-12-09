@@ -8,9 +8,9 @@ import { _Rtfm } from "@messages/messages.rtfm.js";
  * Provides guidance on the correct syntax.
  *
  * @param {string} key - The key for which the value pair is missing.
- * @returns {never} - Exits the process with an error code.
+ * @returns {void} - Exits the process with an error code.
  */
-export function _ValuePair(key: string): never {
+export function _ValuePair(key: string): void {
     console.error(_Chalk.red("Something is wrong with named arguments!"));
     console.error(Transformers.Prettify(`Unable to detect value pair for argument \`${key}\`.`, "red"));
     console.info("");
@@ -19,6 +19,4 @@ export function _ValuePair(key: string): never {
     console.info("The valid syntax is", _Chalk.cyan("`nest-task <command> --key value`"));
 
     _Rtfm({ before: true, after: false });
-
-    process.exit(1);
 }

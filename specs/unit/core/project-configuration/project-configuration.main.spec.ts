@@ -1,10 +1,9 @@
+import path from "path";
+
 import { jest } from "@jest/globals";
 
-import mockFS from "mock-fs";
-
 import { Core } from "@core/index.js";
-
-import { _Helpers } from "./helpers/index.js";
+import { Mocks } from "@specs/mocks/index.js";
 
 describe("Core::ProjectConfiguration::Main", (): void => {
     let runSpy: jest.SpiedFunction<any> | undefined;
@@ -18,49 +17,36 @@ describe("Core::ProjectConfiguration::Main", (): void => {
     });
 
     describe("#entrypointPath", (): void => {
-        xit("Should return path to entrypoint", async (): Promise<void> => {
-            runSpy = jest.spyOn(Core.ProjectConfiguration.Read.prototype, "run");
+        it("Should return path to entrypoint", async (): Promise<void> => {
+            const subject = new Subject();
 
-            const expectations = "test-project/test-path/test.js";
-            const { subject, read, config } = _Helpers.Main.prepare(Subject);
+            jest.spyOn(subject["read"], "taskConfiguration", "get").mockReturnValue(
+                <any>Mocks.NestCli.mainWithTask["task"],
+            );
+            jest.spyOn(subject["read"], "resolveConfiguration", "get").mockReturnValue(
+                <any>Mocks.NestCli.mainWithTask["task"],
+            );
 
-            mockFS({
-                [read.configurationPath]: JSON.stringify(config),
-            });
-
-            await subject.readAndLoad();
-
-            expect(subject.entrypointPath).toEqual(expectations);
+            expect(subject.entrypointPath.endsWith(path.join("test-path", "test-entrypoint.js"))).toBeTruthy();
         });
 
-        xit("Should throw an error if task configuration is missing", async (): Promise<void> => {
-            taskConfiguration = jest
-                .spyOn(Core.ProjectConfiguration.Read.prototype, "taskConfiguration", "get")
-                .mockReturnValue(undefined);
-            const { subject, read, config } = _Helpers.Main.prepare(Subject);
+        it("Should throw an error if task configuration is missing", async (): Promise<void> => {
+            const subject = new Subject();
 
-            mockFS({
-                [read.configurationPath]: JSON.stringify(config),
-            });
-
-            await subject.readAndLoad();
+            jest.spyOn(subject["read"], "taskConfiguration", "get").mockReturnValue(undefined);
 
             expect(() => subject.entrypointPath).toThrow(Core.ProjectConfiguration.Errors.TaskIsMissing);
         });
     });
 
     describe("#readAndLoad", (): void => {
-        xit("Should Core::ProjectConfiguration::Read class#run method", async (): Promise<void> => {
-            runSpy = jest.spyOn(Core.ProjectConfiguration.Read.prototype, "run");
-            const { subject, read, config } = _Helpers.Main.prepare(Subject);
-
-            mockFS({
-                [read.configurationPath]: JSON.stringify(config),
-            });
+        it("Should Core::ProjectConfiguration::Read class#run method", async (): Promise<void> => {
+            const subject = new Subject();
+            const spyOn = jest.spyOn(subject["read"], "run").mockImplementation(() => Promise.resolve());
 
             await subject.readAndLoad();
 
-            expect(runSpy).toBeCalled();
+            expect(spyOn).toBeCalledTimes(1);
         });
     });
 });

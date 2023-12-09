@@ -22,5 +22,10 @@ describe("Patches::Reflect", (): void => {
             Subject.getMetadata("test", Dummy);
             expect(getMetadataSpy).toBeCalledTimes(1);
         });
+
+        it("Should proxy call to Reflect.getMetadata method when key is passed", (): void => {
+            Subject.getMetadata("test", Dummy, "test");
+            expect(getMetadataSpy).toBeCalledTimes(1);
+        });
     });
 });
