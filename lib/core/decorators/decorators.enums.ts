@@ -75,6 +75,7 @@ export namespace _Enums {
          */
         export enum Runner {
             AppIndex = "app-index",
+            LoggerIndex = "logger-index",
             DtoIndex = "dto-index",
             Dto = "dto",
         }

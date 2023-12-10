@@ -100,6 +100,20 @@ describe("Core::Task", (): void => {
         });
     });
 
+    describe("#loggerIndex", (): void => {
+        it("Should retrieve the task name from metadata", (): void => {
+            const subject = new Subject(DummyTask);
+
+            expect(subject.loggerIndex).toBeUndefined();
+        });
+
+        it("Should have the same value on second call", (): void => {
+            const subject = new Subject(DummyTask);
+            subject.appIndex;
+            expect(subject.loggerIndex).toBeUndefined();
+        });
+    });
+
     describe("#deprecated", (): void => {
         it("Should retrieve the task name from metadata", (): void => {
             const subject = new Subject(DummyTask);

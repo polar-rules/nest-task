@@ -58,6 +58,14 @@ export class _Task {
     private appIndexMemo: number | undefined;
 
     /**
+     * Memoized logger index associated with the task.
+     *
+     * @private
+     * @type {number | undefined}
+     */
+    private loggerIndexMemo: number | undefined;
+
+    /**
      * Memoized module class associated with the task.
      *
      * @private
@@ -112,6 +120,14 @@ export class _Task {
      * @type {boolean}
      */
     private appIndexInitialised: boolean = false;
+
+    /**
+     * Flag indicating whether the logger index is initialized.
+     *
+     * @private
+     * @type {boolean}
+     */
+    private loggerIndexInitialised: boolean = false;
 
     /**
      * Flag indicating whether the arguments are initialized.
@@ -226,6 +242,23 @@ export class _Task {
         }
 
         return this.appIndexMemo;
+    }
+
+    /**
+     * Retrieves the logger index associated with the task.
+     *
+     * @type {number | undefined}
+     */
+    public get loggerIndex(): number | undefined {
+        if (!this.loggerIndexInitialised) {
+            this.loggerIndexInitialised = true;
+            this.loggerIndexMemo = Patches.Reflect.getMetadata<number | undefined>(
+                _Decorators.Enums.Metadata.Runner.LoggerIndex,
+                this.runner,
+            );
+        }
+
+        return this.loggerIndexMemo;
     }
 
     /**

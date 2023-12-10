@@ -12,6 +12,7 @@ import * as $_Errors from "./errors/index.js";
 import * as $_App from "./decorators.app.js";
 import * as $_Arguments from "./decorators.arguments.js";
 import * as $_Enums from "./decorators.enums.js";
+import * as $_Logger from "./decorators.logger.js";
 import * as $_Module from "./decorators.module.js";
 import * as $_Property from "./decorators.property.js";
 import * as $_Runner from "./decorators.runner.js";
@@ -60,6 +61,12 @@ export namespace _Decorators {
      * @namespace
      */
     export import Enums = $_Enums._Enums;
+    /**
+     * Namespace containing functionality related to the 'Logger' module.
+     *
+     * @namespace
+     */
+    export import Logger = $_Logger._Logger;
     /**
      * Namespace containing functionality related to the 'Module' module.
      *
