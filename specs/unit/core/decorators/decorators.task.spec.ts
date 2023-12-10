@@ -134,6 +134,35 @@ describe("Core::Decorators::Task", (): void => {
         expect(value).toEqual(expectations);
     });
 
+    it("Should define `deprecated` metadata", (): void => {
+        Subject({
+            name: faker.person.fullName(),
+            description: faker.person.bio(),
+            module: DummyModule,
+            runner: DummyRunner,
+            providers: [],
+            deprecated: true,
+        })(DummyTask);
+
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.Task.Deprecated, DummyTask);
+
+        expect(value).toBeTruthy();
+    });
+
+    it("Should not throw an error when `deprecated` metadata is missing", (): void => {
+        Subject({
+            name: faker.person.fullName(),
+            description: faker.person.bio(),
+            module: DummyModule,
+            runner: DummyRunner,
+            providers: [],
+        })(DummyTask);
+
+        const value = Reflect.getMetadata(Core.Decorators.Enums.Metadata.Task.Deprecated, DummyTask);
+
+        expect(value).toBeUndefined();
+    });
+
     it("Should throw an error when incorrect key is used", (): void => {
         expect(() => {
             Subject(<any>{

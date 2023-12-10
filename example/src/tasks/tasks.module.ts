@@ -5,6 +5,7 @@ import { ExampleWithAppTask } from "./example-with-app/example-with-app.task";
 import { ExampleWithAppAndArgumentsTask } from "./example-with-app-and-arguments/example-with-app-and-arguments.task";
 import { ExampleWithArgumentsTask } from "./example-with-arguments/example-with-arguments.task";
 import { ExampleWithProvidersTask } from "./example-with-providers/example-with-providers.task";
+import { ExampleDeprecatedTask } from "./example-deprecated/example-deprecated.task";
 
 @Decorators.Module({
     tasks: [
@@ -13,6 +14,7 @@ import { ExampleWithProvidersTask } from "./example-with-providers/example-with-
         ExampleWithAppAndArgumentsTask,
         ExampleWithArgumentsTask,
         ExampleWithProvidersTask,
+        ExampleDeprecatedTask,
     ],
 })
 export class TasksModule {}

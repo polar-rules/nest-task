@@ -7,7 +7,13 @@ describe("Core::Task", (): void => {
 
     class RunnerDummy {}
 
-    @Core.Decorators.Task({ name: "Dummy", description: "DummyDescription", module: ModuleDummy, runner: RunnerDummy })
+    @Core.Decorators.Task({
+        name: "Dummy",
+        description: "DummyDescription",
+        module: ModuleDummy,
+        runner: RunnerDummy,
+        deprecated: true,
+    })
     class DummyTask {}
 
     describe("#name", (): void => {
@@ -91,6 +97,34 @@ describe("Core::Task", (): void => {
             const subject = new Subject(DummyTask);
             subject.appIndex;
             expect(subject.appIndex).toBeUndefined();
+        });
+    });
+
+    describe("#deprecated", (): void => {
+        it("Should retrieve the task name from metadata", (): void => {
+            const subject = new Subject(DummyTask);
+
+            expect(subject.deprecated).toBeTruthy();
+        });
+
+        it("Should have the same value on second call", (): void => {
+            const subject = new Subject(DummyTask);
+            subject.deprecated;
+            expect(subject.deprecated).toBeTruthy();
+        });
+
+        it("Should be set to false by default", (): void => {
+            @Core.Decorators.Task({
+                name: "Dummy",
+                description: "DummyDescription",
+                module: ModuleDummy,
+                runner: RunnerDummy,
+            })
+            class Dummy {}
+
+            const subject = new Subject(Dummy);
+
+            expect(subject.deprecated).toBeFalsy();
         });
     });
 

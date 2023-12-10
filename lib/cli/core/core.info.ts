@@ -55,7 +55,9 @@ export class _Info {
     private processTasks(): _Types.Info.ProcessTasks {
         return function (task: Core.Task): Messages.Types.FoundTasks.Options {
             return {
-                [Core.Decorators.Enums.Metadata.Descriptable.Name]: task.name,
+                [Core.Decorators.Enums.Metadata.Descriptable.Name]: task.deprecated
+                    ? `[Deprecated] ${task.name}`
+                    : task.name,
                 [Core.Decorators.Enums.Metadata.Descriptable.Description]: task.description,
                 args: task.args,
             };

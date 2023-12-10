@@ -7,6 +7,7 @@
  */
 
 import * as $_CannotResolveDependencies from "./errors.cannot-resolve-dependencies.js";
+import * as $_Deprecated from "./errors.deprecated.js";
 import * as $_NoFactoryFound from "./errors.no-factory-found.js";
 import * as $_NoSpecificTaskFound from "./errors.no-specific-task-found.js";
 import * as $_NoTasksFound from "./errors.no-tasks-found.js";
@@ -25,6 +26,12 @@ export namespace _Errors {
      * @namespace
      */
     export import CannotResolveDependencies = $_CannotResolveDependencies._CannotResolveDependencies;
+    /**
+     * Namespace containing functionality related to the 'Deprecated' module.
+     *
+     * @namespace
+     */
+    export import Deprecated = $_Deprecated._Deprecated;
     /**
      * Namespace containing functionality related to the 'NoFactoryFound' module.
      *

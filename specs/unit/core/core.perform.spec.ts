@@ -9,6 +9,7 @@ describe("Core::Perform", (): void => {
     let validateDependenciesSpy: jest.SpiedFunction<any> | undefined;
     let getMock: jest.SpiedFunction<any> | undefined;
     let performMock: jest.SpiedFunction<any> | undefined;
+    let taskSpy: jest.SpiedFunction<any> | undefined;
 
     const Subject = Core.Perform;
 
@@ -48,6 +49,7 @@ describe("Core::Perform", (): void => {
         validateDependenciesSpy?.mockReset();
         createSpy?.mockReset();
         metadataSpy?.mockReset();
+        taskSpy?.mockReset();
     });
 
     describe("#run", (): void => {
@@ -56,6 +58,13 @@ describe("Core::Perform", (): void => {
 
             await subject.run();
             expect(createSpy).toBeCalledTimes(1);
+        });
+
+        it("Should instantly quit when deprecated task", async (): Promise<void> => {
+            taskSpy = jest.spyOn(Core.Task.prototype, "deprecated", "get").mockImplementation(() => true);
+            const subject = new Subject(new Core.Task(DummyTask));
+
+            await expect(() => subject.run()).rejects.toThrow(Core.Errors.Deprecated);
         });
 
         it("Should call DummyRunner#perform method", async (): Promise<void> => {
