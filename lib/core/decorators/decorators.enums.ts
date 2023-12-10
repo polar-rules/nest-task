@@ -54,6 +54,7 @@ export namespace _Enums {
             Module = "module",
             Runner = "runner",
             Providers = "providers",
+            Deprecated = "deprecated",
         }
 
         /**

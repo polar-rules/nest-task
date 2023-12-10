@@ -74,6 +74,14 @@ export class _Task {
     private providersMemo: Interfaces.General.AnyClass[] | undefined;
 
     /**
+     * Memoized if task is deprecated
+     *
+     * @private
+     * @type {Interfaces.General.AnyClass[] | undefined}
+     */
+    private deprecatedMemo: boolean | undefined;
+
+    /**
      * Memoized array of property metadata for arguments associated with the task.
      *
      * @private
@@ -251,6 +259,23 @@ export class _Task {
         }
 
         return this.providersMemo;
+    }
+
+    /**
+     * Retrieves the array of provider classes associated with the task.
+     *
+     * @type {Interfaces.General.AnyClass[]}
+     */
+    public get deprecated(): boolean {
+        if (!this.deprecatedMemo) {
+            this.deprecatedMemo =
+                Patches.Reflect.getMetadata<boolean | undefined>(
+                    _Decorators.Enums.Metadata.Task.Deprecated,
+                    this.task,
+                ) ?? false;
+        }
+
+        return this.deprecatedMemo;
     }
 
     /**

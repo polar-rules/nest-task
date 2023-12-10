@@ -56,7 +56,7 @@ describe("Cli::Core::Info", (): void => {
             await expect(() => subject.run()).rejects.toThrow(CustomError);
         });
 
-        it("Should call Generator.Create", async (): Promise<void> => {
+        it("Should call Messages", async (): Promise<void> => {
             loaderSpyOn = jest.spyOn(Core.Loader.prototype, "run").mockImplementation(() => Promise.resolve());
             messagesSpyOn = <any>jest.spyOn(Messages, "FoundTasks");
             stateSpyOn = <any>(
@@ -70,6 +70,50 @@ describe("Cli::Core::Info", (): void => {
             await subject.run();
 
             expect(messagesSpyOn).toBeCalledTimes(1);
+        });
+
+        it("Should call with correct arguments", async (): Promise<void> => {
+            loaderSpyOn = jest.spyOn(Core.Loader.prototype, "run").mockImplementation(() => Promise.resolve());
+            messagesSpyOn = <any>jest.spyOn(Messages, "FoundTasks");
+            stateSpyOn = <any>(
+                jest
+                    .spyOn(Core.State, "tasksList", "get")
+                    .mockReturnValue([<any>{ name: "Example", description: "description" }])
+            );
+
+            const subject = new Subject(undefined);
+
+            await subject.run();
+
+            expect(messagesSpyOn).toBeCalledWith([
+                {
+                    name: "Example",
+                    description: "description",
+                    args: undefined,
+                },
+            ]);
+        });
+
+        it("Should call Messages with deprecation", async (): Promise<void> => {
+            loaderSpyOn = jest.spyOn(Core.Loader.prototype, "run").mockImplementation(() => Promise.resolve());
+            messagesSpyOn = <any>jest.spyOn(Messages, "FoundTasks");
+            stateSpyOn = <any>(
+                jest
+                    .spyOn(Core.State, "tasksList", "get")
+                    .mockReturnValue([<any>{ name: "Example", description: "description", deprecated: true }])
+            );
+
+            const subject = new Subject(undefined);
+
+            await subject.run();
+
+            expect(messagesSpyOn).toBeCalledWith([
+                {
+                    name: "[Deprecated] Example",
+                    description: "description",
+                    args: undefined,
+                },
+            ]);
         });
     });
 });

@@ -44,6 +44,10 @@ export class _Perform {
      * @returns {Promise<void | never>} A Promise that resolves when the task has been executed.
      */
     public async run(): Promise<void | never> {
+        if (this.task.deprecated) {
+            throw new _Errors.Deprecated();
+        }
+
         const dependencies =
             Patches.Reflect.getMetadata<Interfaces.General.AnyClass[]>(
                 _Decorators.Enums.Metadata.BuildIn.ParamTypes,

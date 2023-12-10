@@ -51,6 +51,7 @@ export namespace _Types {
             [_Enums.Metadata.Task.Module]: Interfaces.General.AnyClass;
             [_Enums.Metadata.Task.Runner]: Interfaces.General.AnyClass;
             [_Enums.Metadata.Task.Providers]?: Interfaces.General.AnyClass[];
+            [_Enums.Metadata.Task.Deprecated]?: boolean;
         }
     }
 
