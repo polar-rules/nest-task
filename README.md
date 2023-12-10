@@ -311,6 +311,7 @@ import { ExampleRunner } from "./example.runner";
     runner: ExampleRunner,
     module: AppModule,
     providers: [AppService],
+    deprecated: false,
 })
 export class ExampleTask {}
 ```
@@ -349,13 +350,19 @@ Optional.
 Array of <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> services, entities and just classes that you want to use withing task in a same way as you do this 
 within `@Controller`, `@Injectable`, etc.
 
+#### `deprecated`
+Optional.
+
+Boolean value. Literally a flag that blocks you from running the task. Useful in cases when your task is meant to be run
+only one time and you want to avoid issues with running it second time.
+
 ------------------------------
 
 Defining `Runner` class.
 
 `<root>/src/tasks/example/example.runner.ts`
 ```Typescript
-import { INestApplication } from "@nestjs/common";
+import { INestApplication, Logger } from "@nestjs/common";
 
 import { Decorators } from "@polar-rules/nest-task";
 
@@ -365,7 +372,7 @@ import { ExampleDto } from "./example.dto";
 export class _Runner {
     public constructor(private readonly appService: AppService) {}
     
-    public async perform(@Decorators.App() app: INestApplication, @Decorators.Arguments() args: ExampleDto): Promise<void> {
+    public async perform(@Decorators.App() app: INestApplication, @Decorators.Logger() logger: Logger, @Decorators.Arguments() args: ExampleDto): Promise<void> {
         // Your code goes here
     }
 }
@@ -377,6 +384,14 @@ Are matched from `@Decorators.Task` `providers` field into `constructor` by type
 
 #### `app`
 By using `@Decorators.App()` for an argument you can pass the <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> application variable.
+
+#### `logger`
+By using `@Decorators.Logger()` for an argument you can pass the <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a> default logger.
+
+Now you can use as you would use default logger that is coming from <a href="https://github.com/nestjs/nest" target="_blank">Nest.js</a>.
+```typescript
+logger.log("Example")
+```
 
 #### `args`
 If you need to pass additional arguments from command line to the task you can use `@Decorators.Arguments()` with `DTO`

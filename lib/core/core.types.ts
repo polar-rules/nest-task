@@ -1,4 +1,4 @@
-import { INestApplication } from "@nestjs/common";
+import { INestApplication, Logger } from "@nestjs/common";
 
 import { Interfaces } from "@interfaces/index.js";
 
@@ -22,6 +22,6 @@ export namespace _Types {
         /**
          * Type representing possible argument types for task execution.
          */
-        export type Argument = string | number | boolean | undefined | null | INestApplication;
+        export type Argument = string | number | boolean | undefined | null | INestApplication | Logger;
     }
 }

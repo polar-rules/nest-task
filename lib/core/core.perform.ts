@@ -122,6 +122,7 @@ export class _Perform {
 
         await this.handleDtoArgument(args);
         await this.handleAppArgument(app, args);
+        await this.loggerArgument(args);
 
         return args;
     }
@@ -141,6 +142,22 @@ export class _Perform {
         }
 
         args[this.task.appIndex] = app;
+    }
+
+    /**
+     * Handles the logger argument if specified in the task.
+     *
+     * @async
+     * @private
+     * @method
+     * @param {_Types.Perform.Argument[]} args - The array of arguments for the task.
+     */
+    private async loggerArgument(args: _Types.Perform.Argument[]): Promise<void> {
+        if (this.task.loggerIndex === undefined) {
+            return;
+        }
+
+        args[this.task.loggerIndex] = new Logger(`NestTask::${this.task.name}`);
     }
 
     /**
