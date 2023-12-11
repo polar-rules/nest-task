@@ -87,9 +87,7 @@ export class _App {
         this.getTasks(module);
 
         for (const task of this.tasks) {
-            const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, task);
-
-            this.logger.log(`Tasks::Module is loading ${name}`);
+            this.logger.log(`Tasks::Module is loading ${task.name}`);
         }
 
         this.logger.log("Tasks::Module tasks have been loaded");
