@@ -62,6 +62,8 @@ export namespace _Constants {
          *
          * @constant {Readonly<_Types.Module.MetadataKeys[]>} metadataKeys
          */
-        export const metadataKeys: Readonly<_Types.Module.MetadataKeys[]> = [_Enums.Metadata.Module.Tasks];
+        export const metadataKeys: Readonly<_Types.Module.MetadataKeys[]> = [
+            _Enums.Metadata.Module.Tasks as unknown as "tasks",
+        ];
     }
 }
