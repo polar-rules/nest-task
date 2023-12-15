@@ -1,9 +1,13 @@
 import { Logger } from "@nestjs/common";
 
+import { Libraries } from "@lib/lib.libraries.js";
+
 import { Interfaces } from "@interfaces/index.js";
 import { Patches } from "@patches/index.js";
 import { Errors } from "@errors/index.js";
 import { Messages } from "@messages/index.js";
+import { Core } from "@core/index.js";
+import { Bin } from "@bin/index.js";
 
 import { _Errors } from "./errors/index.js";
 import { _Decorators } from "./decorators/index.js";
@@ -12,6 +16,7 @@ import { _Task } from "./core.task.js";
 import { _ArgumentsManager } from "./core.arguments-manager.js";
 import { _Perform } from "./core.perform.js";
 import { _State } from "./core.state.js";
+import { Cli } from "@cli/index.js";
 
 /**
  * Represents the core application class for the NestTask application.
@@ -62,7 +67,7 @@ export class _App {
                     await this.handleRun();
                     break;
                 case _Enums.RunTypes.Info:
-                    this.handleInfo();
+                    await this.handleInfo();
                     break;
             }
         } catch (e: unknown) {
@@ -84,7 +89,16 @@ export class _App {
      * @returns {Promise<void>} A Promise that resolves when tasks are loaded.
      */
     public async load(module: Interfaces.General.AnyClass): Promise<void> {
+        await Libraries.initialise();
+
         this.getTasks(module);
+
+        Core.ArgumentsManager.executionSource =
+            Core.ArgumentsManager.executionSource ?? Core.Enums.ExecutionSourceTypes.Direct;
+
+        if (Core.ArgumentsManager.executionSource === Core.Enums.ExecutionSourceTypes.Direct) {
+            await Bin.Command.DirectRun();
+        }
 
         for (const task of this.tasks) {
             const name = Patches.Reflect.getMetadata<string>(_Decorators.Enums.Metadata.Descriptable.Name, task);
@@ -152,8 +166,10 @@ export class _App {
      *
      * @method
      * @private
+     * @returns {Promise<void>} Return void upon completion
      */
-    private handleInfo(): void {
+    private async handleInfo(): Promise<void> {
         _State.tasksList = this.tasks;
+        await new Cli.Core.Info.Results().run();
     }
 }

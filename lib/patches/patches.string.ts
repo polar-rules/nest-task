@@ -1,6 +1,4 @@
-import camelCase from "lodash.camelcase";
-import snakeCase from "lodash.snakecase";
-import kebabCase from "lodash.kebabcase";
+import { Libraries } from "@lib/lib.libraries.js";
 
 /**
  * Class extending the built-in String class with additional utility methods for string manipulation.
@@ -59,7 +57,7 @@ export class _String extends String {
      * @returns {_String} - A new _String in snake_case.
      */
     public toSnakeCase(): _String {
-        return new _String(snakeCase(this.toString()));
+        return new _String(Libraries.lodash.snakeCase(this.toString()));
     }
 
     /**
@@ -68,7 +66,7 @@ export class _String extends String {
      * @returns {_String} - A new _String in camelCase.
      */
     public toCamelCase(): _String {
-        return new _String(camelCase(this.toString())).lowerlize();
+        return new _String(Libraries.lodash.camelCase(this.toString())).lowerlize();
     }
 
     /**
@@ -86,6 +84,6 @@ export class _String extends String {
      * @returns {_String} - A new _String in kebab-case.
      */
     public toKebabCase(): _String {
-        return new _String(kebabCase(this.toString()));
+        return new _String(Libraries.lodash.kebabCase(this.toString()));
     }
 }

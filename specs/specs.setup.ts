@@ -1,6 +1,9 @@
+import { Libraries } from "@lib/lib.libraries.js";
 import { Lifecycles } from "@specs/lifecycles/index.js";
 
-beforeEach((): void => {
+beforeEach(async (): Promise<void> => {
+    await Libraries.initialise();
+
     Lifecycles.Process.Before.Each.exit();
     Lifecycles.Console.Before.Each.global();
     Lifecycles.Essentials.Before.Each.prepareArgv();

@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 
 /**
  * Namespace for constants related to templates.

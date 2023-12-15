@@ -34,6 +34,10 @@ export class _Run {
                 ? this.otherArguments
                 : undefined;
 
+            if (Core.ArgumentsManager.executionSource === Core.Enums.ExecutionSourceTypes.Direct) {
+                return;
+            }
+
             await new Core.Loader(this.projectName).run();
         } catch (e: unknown) {
             if (Interfaces.InstanceOf<Errors.Base>(e, "custom")) {

@@ -70,4 +70,24 @@ export class _ArgumentsManager {
     public static set runType(value: _Enums.RunTypes) {
         Reflect.defineMetadata(_Enums.MetadataKeys.RunType, value, global);
     }
+
+    /**
+     * Retrieves the current run type from global metadata.
+     *
+     * @static
+     * @type {_Enums.ExecutionSourceTypes}
+     */
+    public static get executionSource(): _Enums.ExecutionSourceTypes {
+        return Patches.Reflect.getMetadata<_Enums.ExecutionSourceTypes>(_Enums.MetadataKeys.ExecutionSource, global);
+    }
+
+    /**
+     * Sets the run type in global metadata.
+     *
+     * @static
+     * @param {_Enums.ExecutionSourceTypes} value - The run type to be set.
+     */
+    public static set executionSource(value: _Enums.ExecutionSourceTypes) {
+        Reflect.defineMetadata(_Enums.MetadataKeys.ExecutionSource, value, global);
+    }
 }

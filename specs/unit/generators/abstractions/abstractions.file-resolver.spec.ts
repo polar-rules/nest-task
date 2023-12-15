@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 
 import { Generators } from "@generators/index.js";
 import { Configs } from "@specs/configs/index.js";

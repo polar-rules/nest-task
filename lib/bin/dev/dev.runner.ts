@@ -5,6 +5,7 @@
  */
 
 import { Messages } from "@messages/index.js";
+import { Libraries } from "@lib/lib.libraries.js";
 
 import { _Generate } from "./generate/index.js";
 import { _Enums } from "./dev.enums.js";
@@ -24,6 +25,8 @@ export async function _Runner(): Promise<void> {
         Messages.Dev.Errors.Missing.Command("first");
         process.exit(1);
     }
+
+    await Libraries.initialise();
 
     switch (command) {
         case _Enums.Commands.Generate:

@@ -23,7 +23,7 @@ export function _Property(): PropertyDecorator {
      * @returns {void}
      */
     return (target: object, propertyKey: string | symbol): void => {
-        const type = Patches.Reflect.getMetadata<Interfaces.Reflect.DesignType>(
+        const metadataType = Patches.Reflect.getMetadata<Interfaces.Reflect.DesignType>(
             _Enums.Metadata.BuildIn.DesignType,
             target,
             propertyKey,
@@ -33,8 +33,10 @@ export function _Property(): PropertyDecorator {
             target.constructor,
         );
         const value = metadata ?? [];
+        const name = String(propertyKey);
+        const type = new Patches.String(metadataType.name);
 
-        value.push({ name: String(propertyKey), type: <_Types.Property.Types>type.name });
+        value.push({ name, type: <_Types.Property.Types>type.toLowerCase() });
 
         Reflect.defineMetadata(_Enums.Metadata.Dto.Property, value, target.constructor);
     };
