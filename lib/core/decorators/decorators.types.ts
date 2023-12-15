@@ -11,9 +11,9 @@ export namespace _Types {
     /**
      * Type representing metadata with descriptable properties.
      *
-     * @type {Record<_Enums.Metadata.Descriptable, string>}
+     * @type {Record<"name" | "description", string>}
      */
-    export type Descriptable = Record<_Enums.Metadata.Descriptable, string>;
+    export type Descriptable = Record<"name" | "description", string>;
 
     /**
      * Type representing keys of descriptable metadata.
@@ -48,10 +48,10 @@ export namespace _Types {
          * @interface OwnProperties
          */
         interface OwnProperties {
-            [_Enums.Metadata.Task.Module]: Interfaces.General.AnyClass;
-            [_Enums.Metadata.Task.Runner]: Interfaces.General.AnyClass;
-            [_Enums.Metadata.Task.Providers]?: Interfaces.General.AnyClass[];
-            [_Enums.Metadata.Task.Deprecated]?: boolean;
+            module: Interfaces.General.AnyClass;
+            runner: Interfaces.General.AnyClass;
+            providers?: Interfaces.General.AnyClass[];
+            deprecated?: boolean;
         }
     }
 
@@ -64,9 +64,9 @@ export namespace _Types {
         /**
          * Type representing metadata for a module.
          *
-         * @type {Record<_Enums.Metadata.Module, Interfaces.General.AnyClass[]>}
+         * @type {Record<"tasks", Interfaces.General.AnyClass[]>}
          */
-        export type Metadata = Record<_Enums.Metadata.Module, Interfaces.General.AnyClass[]>;
+        export type Metadata = Record<"tasks", Interfaces.General.AnyClass[]>;
 
         /**
          * Type representing keys of the module metadata.
