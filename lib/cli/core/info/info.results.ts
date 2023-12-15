@@ -3,32 +3,26 @@ import { Messages } from "@messages/index.js";
 import { Interfaces } from "@interfaces/index.js";
 import { Errors } from "@errors/index.js";
 
-import { _Types } from "./core.types.js";
+import { _Types } from "./info.types.js";
 
 /**
- * Represents information about the application.
+ * Represents start of getting information about tasks
  *
- * @class _Info
+ * @class _Results
  */
-export class _Info {
+export class _Results {
     /**
-     * Creates an instance of _Info.
-     *
-     * @param {string | undefined} projectName - The name of the project.
+     * Creates an instance of _Results.
      */
-    public constructor(private readonly projectName: string | undefined) {}
+    public constructor() {}
 
     /**
-     * Runs the application and performs necessary tasks.
+     * Runs the application and show list of tasks
      *
      * @returns {Promise<void>} A Promise that resolves when the tasks are completed.
      */
     public async run(): Promise<void> {
         try {
-            const loader = new Core.Loader(this.projectName);
-
-            await loader.run();
-
             if (!Core.State.tasksList.length) {
                 Messages.Errors.NoTasksIsFound();
                 process.exit(1);
@@ -50,9 +44,9 @@ export class _Info {
     /**
      * Processes tasks and converts them into a specific format.
      *
-     * @returns {_Types.Info.ProcessTasks} A function that processes tasks.
+     * @returns {_Types.ProcessTasks} A function that processes tasks.
      */
-    private processTasks(): _Types.Info.ProcessTasks {
+    private processTasks(): _Types.ProcessTasks {
         return function (task: Core.Task): Messages.Types.FoundTasks.Options {
             return {
                 [Core.Decorators.Enums.Metadata.Descriptable.Name]: task.deprecated

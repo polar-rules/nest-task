@@ -16,6 +16,7 @@ export class _Main {
      */
     public constructor(private readonly projectName: string | undefined) {
         Core.ArgumentsManager.runType = Core.Enums.RunTypes.Info;
+        Core.ArgumentsManager.executionSource = Core.Enums.ExecutionSourceTypes.Command;
     }
 
     /**
@@ -26,6 +27,6 @@ export class _Main {
      * @returns {Promise<void>} A Promise that resolves once the task information process is complete.
      */
     public async run(): Promise<void> {
-        await new _Core.Info(this.projectName).run();
+        await new _Core.Info.Start(this.projectName).run();
     }
 }

@@ -1,4 +1,4 @@
-import path from "path";
+import * as path from "path";
 
 import { Core } from "@core/index.js";
 import { Mocks } from "@specs/mocks/index.js";

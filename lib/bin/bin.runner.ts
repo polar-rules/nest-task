@@ -6,6 +6,7 @@
 
 import "reflect-metadata";
 
+import { Libraries } from "@lib/lib.libraries.js";
 import { Messages } from "@messages/index.js";
 
 import { _Command } from "./command/index.js";
@@ -26,6 +27,8 @@ export async function _Runner(): Promise<void> {
         Messages.Errors.Missing.Command();
         process.exit(1);
     }
+
+    await Libraries.initialise();
 
     switch (command) {
         case _Enums.Commands.Bear:

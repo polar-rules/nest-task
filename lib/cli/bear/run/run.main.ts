@@ -44,6 +44,7 @@ export class _Main {
      */
     public constructor() {
         Core.ArgumentsManager.runType = Core.Enums.RunTypes.Run;
+        Core.ArgumentsManager.executionSource = Core.Enums.ExecutionSourceTypes.Bear;
 
         this.projectName = new Prompts.ProjectName();
         this.taskName = new Prompts.TaskName();

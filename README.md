@@ -184,6 +184,32 @@ You can run interactive assistant and pick `run` option and just follow proposed
 npx nest-task bear
 ```
 
+### Running task without CLI
+
+Yes, starting from `0.2.0` you can run tasks without CLI and directly using `node` command totally bypassing the case
+when default Nest.js configuration is not available. All you need to do is to call compiled `main.js` file with correct
+arguments.
+
+To pass arguments you need literally to do the same thing as you do with default CLI command.
+
+For example:
+
+```Bash
+node ./dist/task/main.js --name <name> <other-arguments>
+```
+
+Since you're calling `main.ts` file directly you don't need to handle project name at all, since we assume that you're
+that location of `main.js` already in default or under correct directory.
+
+If you want to pass additional arguments, it's easy to do with the following syntax:
+
+```Bash
+node ./dist/task/main.js --name <name> --argument1 value
+```
+
+_Note_:
+`--argument1` - can have any desired name, except pre-defined fields, like `name`, `projectName` and other.
+
 ## Documentation
 
 ### Nest integration

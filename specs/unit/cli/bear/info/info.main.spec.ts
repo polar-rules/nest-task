@@ -18,7 +18,7 @@ describe("Cli::Bear::Info::Main", (): void => {
 
     describe("#run", (): void => {
         it("Should call CLI", async (): Promise<void> => {
-            infoSpyOn = jest.spyOn(Cli.Core.Info.prototype, "run").mockImplementation(() => Promise.resolve());
+            infoSpyOn = jest.spyOn(Cli.Core.Info.Start.prototype, "run").mockImplementation(() => Promise.resolve());
             promptSpyOn = jest.spyOn(Prompts.ProjectName.prototype, "run").mockImplementation(() => Promise.resolve());
 
             Mocks.Inquirer.mock({

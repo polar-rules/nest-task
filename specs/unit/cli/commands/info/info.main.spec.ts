@@ -13,7 +13,7 @@ describe("Cli::Command::Info::Main", (): void => {
 
     describe("#run", (): void => {
         it("Should call CLI", async (): Promise<void> => {
-            spyOn = jest.spyOn(Cli.Core.Info.prototype, "run").mockImplementation(() => Promise.resolve());
+            spyOn = jest.spyOn(Cli.Core.Info.Start.prototype, "run").mockImplementation(() => Promise.resolve());
 
             const subject = new Subject("projectExample");
 

@@ -8,9 +8,9 @@
 
 import * as $_Types from "./core.types.js";
 
+import * as $_Info from "./info/index.js";
 import * as $_Create from "./core.create.js";
 import * as $_Help from "./core.help.js";
-import * as $_Info from "./core.info.js";
 import * as $_Run from "./core.run.js";
 import * as $_Setup from "./core.setup.js";
 
@@ -28,6 +28,12 @@ export namespace _Core {
     export import Types = $_Types._Types;
 
     /**
+     * Namespace containing functionality related to the 'Info' module.
+     *
+     * @namespace
+     */
+    export import Info = $_Info._Info;
+    /**
      * Namespace containing functionality related to the 'Create' module.
      *
      * @namespace
@@ -39,12 +45,6 @@ export namespace _Core {
      * @namespace
      */
     export import Help = $_Help._Help;
-    /**
-     * Namespace containing functionality related to the 'Info' module.
-     *
-     * @namespace
-     */
-    export import Info = $_Info._Info;
     /**
      * Namespace containing functionality related to the 'Run' module.
      *

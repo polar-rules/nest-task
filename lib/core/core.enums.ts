@@ -46,5 +46,32 @@ export namespace _Enums {
          * Metadata key for run type.
          */
         RunType = "metadata:run-type",
+
+        /**
+         * Metadata key for execution source.
+         */
+        ExecutionSource = "metadata:execution-source-type",
+    }
+
+    /**
+     * Enumerates the possible execution types for the application.
+     *
+     * @enum {string}
+     */
+    export enum ExecutionSourceTypes {
+        /**
+         * Represents the "command" execution type.
+         */
+        Command = "command",
+
+        /**
+         * Represents the "bear" execution type.
+         */
+        Bear = "bear",
+
+        /**
+         * Represents the "direct" execution type.
+         */
+        Direct = "direct",
     }
 }

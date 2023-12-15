@@ -21,6 +21,7 @@ export class _Main {
         private readonly otherArguments: Record<string, string | number>,
     ) {
         Core.ArgumentsManager.runType = Core.Enums.RunTypes.Run;
+        Core.ArgumentsManager.executionSource = Core.Enums.ExecutionSourceTypes.Command;
     }
 
     /**

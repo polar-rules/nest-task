@@ -8,6 +8,7 @@
 
 import * as $_General from "./interfaces.general.js";
 import * as $_InstanceOf from "./interfaces.instance-of.js";
+import * as $_Libraries from "./interfaces.libraries.js";
 import * as $_Reflect from "./interfaces.reflect.js";
 
 /**
@@ -28,6 +29,12 @@ export namespace Interfaces {
      * @namespace
      */
     export import InstanceOf = $_InstanceOf._InstanceOf;
+    /**
+     * Namespace containing functionality related to the 'Libraries' module.
+     *
+     * @namespace
+     */
+    export import Libraries = $_Libraries._Libraries;
     /**
      * Namespace containing functionality related to the 'Reflect' module.
      *

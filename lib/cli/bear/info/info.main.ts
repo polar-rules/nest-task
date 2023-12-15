@@ -24,6 +24,8 @@ export class _Main {
      */
     public constructor() {
         Core.ArgumentsManager.runType = Core.Enums.RunTypes.Info;
+        Core.ArgumentsManager.executionSource = Core.Enums.ExecutionSourceTypes.Command;
+
         this.projectName = new Prompts.ProjectName();
     }
 
@@ -36,6 +38,6 @@ export class _Main {
      */
     public async run(): Promise<void> {
         await this.projectName.run();
-        await new _Core.Info(this.projectName.results).run();
+        await new _Core.Info.Start(this.projectName.results).run();
     }
 }
