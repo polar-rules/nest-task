@@ -6,6 +6,7 @@
  * In case you need to generate a new file, run `node bin/generators/generators.index` from the project root.
  */
 
+import * as $_E2E from "./e2e/index.js";
 import * as $_Console from "./lifecycles.console.js";
 import * as $_Essentials from "./lifecycles.essentials.js";
 import * as $_Fs from "./lifecycles.fs.js";
@@ -17,6 +18,12 @@ import * as $_Process from "./lifecycles.process.js";
  * @namespace
  */
 export namespace Lifecycles {
+    /**
+     * Namespace containing functionality related to the 'E2E' module.
+     *
+     * @namespace
+     */
+    export import E2E = $_E2E._E2E;
     /**
      * Namespace containing functionality related to the 'Console' module.
      *

@@ -95,7 +95,7 @@ export class _Main extends _Abstractions.Loader {
             await this.queueOrDiveDeeper(entities, directory, file);
         }
 
-        const shouldIgnoreDirectory = _Constants.Directories.ignore.some((item: string): boolean =>
+        const shouldIgnoreDirectory = _Constants.Directories.ignoreFolders.some((item: string): boolean =>
             directory.endsWith(item),
         );
 
@@ -187,9 +187,19 @@ export class _Main extends _Abstractions.Loader {
             return;
         }
 
-        const shouldIgnore = _Constants.Directories.ignore.some((item: string): boolean => filePath.endsWith(item));
+        const shouldIgnoreTree = _Constants.Directories.ignoreTrees.some((item: string): boolean =>
+            filePath.endsWith(item),
+        );
 
-        if (!shouldIgnore) {
+        if (shouldIgnoreTree) {
+            return;
+        }
+
+        const shouldIgnoreFolder = _Constants.Directories.ignoreFolders.some((item: string): boolean =>
+            filePath.endsWith(item),
+        );
+
+        if (!shouldIgnoreFolder) {
             entities.imports.folders.push(importFrom);
         }
 

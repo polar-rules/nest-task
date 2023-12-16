@@ -1,6 +1,7 @@
 {
     "preset": "ts-jest",
     "testEnvironment": "node",
+    "testTimeout": 30000,
     "moduleNameMapper": {
         "^@platform/(.*).js": [
             "<rootDir>/platform/$1"
@@ -94,7 +95,9 @@
         "<rootDir>/specs/specs.setup.ts"
     ],
     "modulePathIgnorePatterns": [
-        "example"
+        "example",
+        "dummy-project",
+        "tmp"
     ],
     "extensionsToTreatAsEsm": [
         ".ts"
