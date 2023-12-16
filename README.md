@@ -190,6 +190,9 @@ Yes, starting from `0.2.0` you can run tasks without CLI and directly using `nod
 when default Nest.js configuration is not available. All you need to do is to call compiled `main.js` file with correct
 arguments.
 
+_Note_: In case you don't have `package.json` or for some reason you're missing `nest-cli.json` on your server
+youre force to run this commands directly.
+
 To pass arguments you need literally to do the same thing as you do with default CLI command.
 
 For example:
@@ -223,7 +226,8 @@ key `task` in this file on top level. The object should have the following forma
     "task": {
         "path": "src/tasks",
         "entryPoint": "main.ts",
-        "convention": "kebab-case"
+        "convention": "kebab-case",
+        "distDirectory": "dist"
     }
 }
 ```
@@ -238,7 +242,8 @@ Or if you use `projects` feature from <a href="https://github.com/nestjs/nest" t
             "task": {
                 "path": "src/tasks",
                 "entryPoint": "main.ts",
-                "convention": "kebab-case"
+                "convention": "kebab-case",
+                "distDirectory": "dist"
             }
         }
     }
@@ -246,6 +251,24 @@ Or if you use `projects` feature from <a href="https://github.com/nestjs/nest" t
 ```
 
 ------------------------------
+
+#### `distDirectory`
+Optional.
+
+By default, we assume that your script is compiled to the `"dist"` directory.
+
+So for example, in default setup, you use your `"dist"` folder as compiled folder. This is basically where we will be
+looking for tasks when you're using CLI. (This will be ignored when you're using `node` command on entrypoint directly).
+
+But, sometimes your configuration on server may be a bit different, since sometimes you're deploying your project as is, which may
+include you dist folder, and in this case you don't need to do anything, but there may the cases when transpiled
+code is located in other directory (not the on that is mentioned in `tsconfig`). So in this case we will recommend you
+to use specific path to this directory.
+
+We're heavy really on `package.json` location and build our path to task from `package.json` and we assume that this 
+is the project root. Then we will use `distDirectory` as a next folder from there.
+
+For example this is how we build path `<package.json root folder>/${distDirectory}/${path.replace("src", "")/${entryPoint}}`
 
 #### `path`
 Required.
@@ -471,6 +494,12 @@ More details CLI documentation you can read [CLI Documentation](documentation/CL
 
 Please make sure to read the [Issue Reporting Checklist](https://github.com/nestjs/nest/blob/master/CONTRIBUTING.md#-submitting-an-issue)
 before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+
+- We're heavy really on `package.json` location and build our path to task from `package.json` and we assume that this
+is the project root, when you're using our CLI, hence do development be sure that you have package.json inside your
+project. Same rules applied when you're running our CLI on server that's why you need to be sure that you have `package.json`
+on your server, if you want to use CLI. In case, for some reason you don't have `package.json` on server - then
+you can run your tasks with `node entrypoint.js` command.
 
 ## Contributing
 We welcome contributions! Please read our [Contribution Guidelines](CONTRIBUTING.md) before submitting a pull request.

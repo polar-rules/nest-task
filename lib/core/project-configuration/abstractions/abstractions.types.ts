@@ -21,6 +21,7 @@ export namespace _Types {
             path: string;
             entryPoint: string;
             convention: _Enums.Conventions;
+            distDirectory?: string;
         }
     }
 }

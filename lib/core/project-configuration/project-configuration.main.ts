@@ -67,7 +67,10 @@ export class _Main {
         const sourceRoot = this.read.resolveConfiguration.sourceRoot ?? "src";
         const entrypoint = new _Entrypoint(task);
 
-        const folder = entrypoint.directory.replace(sourceRoot, _Constants.Main.compiledFolder);
+        const folder = entrypoint.directory.replace(
+            sourceRoot,
+            this.read.resolveConfiguration.task?.distDirectory ?? _Constants.Main.compiledFolder,
+        );
         const plainFilename = path.basename(entrypoint.path, ".ts");
         const filename = [plainFilename, "js"].join(".");
 
