@@ -39,14 +39,9 @@ export namespace _Constants {
             export const specs: Readonly<string> = path.join(root, "specs");
         }
 
-        export const ignore: Readonly<string[]> = [
-            "lib",
-            "lib/tmp",
-            "specs",
-            "specs/unit",
-            "specs/integration",
-            "specs/integration/cli",
-        ];
+        export const ignoreFolders: Readonly<string[]> = ["lib", "specs"];
+
+        export const ignoreTrees: Readonly<string[]> = ["lib/tmp", "specs/sample-projects", "specs/unit"];
     }
 
     export namespace Files {

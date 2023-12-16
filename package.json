@@ -75,8 +75,8 @@
     "license": "MIT",
     "devDependencies": {
         "@faker-js/faker": "^8.2.0",
-        "@nestjs/platform-express": "^10.2.7",
-        "@nestjs/testing": "^10.2.7",
+        "@nestjs/platform-express": "*",
+        "@nestjs/testing": "*",
         "@types/eslint": "^8.44.4",
         "@types/find-package-json": "^1.2.4",
         "@types/inquirer": "^9.0.6",
@@ -120,9 +120,8 @@
     },
     "peerDependencies": {
         "@nestjs/core": "^10.0.0",
-        "class-transformer": "^0.5.0",
-        "class-validator": "^0.14.0"
-
+        "class-transformer": "*",
+        "class-validator": "*"
     },
     "keywords": [
         "nest.js",

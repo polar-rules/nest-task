@@ -77,6 +77,11 @@ More documentation can be found on our [website](https://polar-rules.github.io/n
 
 ## Getting started
 
+### Nest.js version
+
+At this point we support only 10.x.x version of Nest.js (at least this is the version that is fully tested), however
+this package should theoretically work with 9.x.x and lower, but it wasn't tested.
+
 ### Installation
 
 Via `NPM`:
