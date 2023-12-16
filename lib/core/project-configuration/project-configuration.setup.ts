@@ -41,6 +41,7 @@ export class _Setup {
     public constructor(
         private readonly convention: _Abstractions.Enums.Conventions,
         private readonly projectName?: string,
+        private readonly distDirectory?: string,
     ) {
         this.naming = new _Naming(convention);
     }
@@ -117,6 +118,10 @@ export class _Setup {
             entryPoint: _Constants.Setup.defaultConfiguration.entryPoint,
             convention: this.convention ?? _Constants.Setup.defaultConfiguration.convention,
         };
+
+        if (this.distDirectory) {
+            projectConfiguration.task.distDirectory = this.distDirectory;
+        }
     }
 
     /**
